@@ -17,4 +17,5 @@
 ^codecov\.yml$
 ^\.Rproj\.user$
 ^\.cuvis$
+^\.data$
 ^configure\.log$

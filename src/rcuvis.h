@@ -10,6 +10,9 @@
 #include "cuvis.h"
 #endif
 
+/* SDK alive flag — finalizers skip if 0 */
+extern int rcuvis_sdk_alive;
+
 /* Tag symbols for external pointer type checking */
 extern SEXP cuvis_session_tag;
 extern SEXP cuvis_mesu_tag;

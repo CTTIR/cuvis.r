@@ -51,12 +51,7 @@ summary.cuvis_session <- function(object, ...) {
   for (i in seq_len(min(object$count, 10L))) {
     mesu <- cuvis_get_measurement(object, i)
     md <- cuvis_get_metadata(mesu)
-    mode_name <- if (md$processing_mode >= 1L &&
-                     md$processing_mode <= length(.proc_mode_names)) {
-      .proc_mode_names[md$processing_mode]
-    } else {
-      "Unknown"
-    }
+    mode_name <- .get_proc_mode_name(md$processing_mode)
     cli_text("  [{i}] {md$name} \u2014 {mode_name}, {md$integration_time} ms")
   }
   if (object$count > 10L) {

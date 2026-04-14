@@ -6,6 +6,7 @@
 docs/
 inst/doc/
 _build.R
+.data/
 DROPHERE/
 .cuvis/
 src/*.o

@@ -17,23 +17,21 @@ Type 'q()' to quit R.
 
 > library(testthat)
 > library(cuvis.r)
-Note: Cubert CUVIS SDK not detected. Install from https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m and set the CUVIS_SDK environment variable.
 > 
 > test_check("cuvis.r")
-[ FAIL 0 | WARN 0 | SKIP 20 | PASS 3 ]
+[ FAIL 0 | WARN 0 | SKIP 17 | PASS 8 ]
 
-══ Skipped tests (20) ══════════════════════════════════════════════════════════
-• CUVIS SDK not installed -- skipping cuvis.r tests (20): 'test-cube.R:2:3',
+══ Skipped tests (17) ══════════════════════════════════════════════════════════
+• No sample .cu3s data found -- skipping data tests (17): 'test-cube.R:2:3',
   'test-cube.R:28:3', 'test-export.R:2:3', 'test-export.R:20:3',
-  'test-export.R:38:3', 'test-init.R:13:3', 'test-init.R:19:3',
-  'test-measurement.R:2:3', 'test-measurement.R:11:3',
+  'test-export.R:38:3', 'test-measurement.R:2:3', 'test-measurement.R:11:3',
   'test-measurement.R:26:3', 'test-measurement.R:35:3',
   'test-processing.R:2:3', 'test-processing.R:11:3', 'test-processing.R:24:3',
   'test-processing.R:37:3', 'test-processing.R:50:3', 'test-processing.R:65:3',
-  'test-session.R:2:3', 'test-session.R:11:3', 'test-session.R:19:3'
+  'test-session.R:2:3', 'test-session.R:11:3'
 
-[ FAIL 0 | WARN 0 | SKIP 20 | PASS 3 ]
+[ FAIL 0 | WARN 0 | SKIP 17 | PASS 8 ]
 > 
 > proc.time()
    user  system elapsed 
-   0.78    0.51    1.23 
+   0.78    0.64    1.31 

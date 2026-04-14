@@ -16,11 +16,11 @@ Used internally by \code{\link[=cuvis_reprocess]{cuvis_reprocess()}}.
 }
 \details{
 \itemize{
-\item \code{Preview} (1): Low-resolution preview
-\item \code{Raw} (2): Raw sensor data, no processing
-\item \code{DarkSubtract} (3): Dark current subtracted
-\item \code{Reflectance} (4): Normalized reflectance (0-1)
-\item \code{SpectralRadiance} (5): Calibrated to physical radiance (W/m^2/sr/nm)
+\item \code{Raw} (0): Raw sensor data, no processing
+\item \code{DarkSubtract} (1): Dark current subtracted
+\item \code{Reflectance} (2): Normalized reflectance (0-1)
+\item \code{SpectralRadiance} (3): Calibrated to physical radiance (W/m^2/sr/nm)
+\item \code{Preview} (5): Low-resolution preview only
 }
 }
 \keyword{datasets}

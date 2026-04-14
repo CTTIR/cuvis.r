@@ -32,7 +32,6 @@ Type 'q()' to quit R.
 > 
 > ### * </HEADER>
 > library('cuvis.r')
-Note: Cubert CUVIS SDK not detected. Install from https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m and set the CUVIS_SDK environment variable.
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
@@ -115,7 +114,7 @@ Note: Cubert CUVIS SDK not detected. Install from https://cloud.cubert-gmbh.de/s
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.25 0.05 0.28 NA NA 
+Time elapsed:  0.3 0.11 0.36 NA NA 
 > grDevices::dev.off()
 null device 
           1 

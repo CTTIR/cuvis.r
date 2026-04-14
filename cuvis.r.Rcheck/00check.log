@@ -10,7 +10,7 @@
 * checking for file 'cuvis.r/DESCRIPTION' ... OK
 * this is package 'cuvis.r' version '0.1.0'
 * package encoding: UTF-8
-* checking CRAN incoming feasibility ... [12s] NOTE
+* checking CRAN incoming feasibility ... [13s] NOTE
 Maintainer: 'Raban Heller <raban.heller@charite.de>'
 
 New submission
@@ -51,11 +51,12 @@ Found the following (possibly) invalid URLs:
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
-* checking whether package 'cuvis.r' can be installed ... [20s] OK
+* checking whether package 'cuvis.r' can be installed ... [21s] OK
 * used C compiler: 'gcc.exe (GCC) 14.3.0'
 * checking installed package size ... OK
 * checking package directory ... OK
-* checking for future file timestamps ... OK
+* checking for future file timestamps ... NOTE
+unable to verify current time
 * checking 'build' directory ... OK
 * checking DESCRIPTION meta-information ... OK
 * checking top-level files ... OK
@@ -109,4 +110,4 @@ Found the following (possibly) invalid URLs:
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 1 NOTE
+Status: 2 NOTEs
