@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# configure.win script for cuvis.r on Windows
+# Locates the Cubert CUVIS SDK
+
+echo "* Configuring cuvis.r for Windows ..."
+
+CUVIS_INCLUDE=""
+CUVIS_LIB=""
+
+# Check CUVIS_SDK then CUVIS environment variables
+if [ -n "$CUVIS_SDK" ]; then
+  CUVIS_INCLUDE="$CUVIS_SDK/include"
+  CUVIS_LIB="$CUVIS_SDK/lib"
+elif [ -n "$CUVIS" ]; then
+  CUVIS_INCLUDE="$CUVIS/include"
+  CUVIS_LIB="$CUVIS/lib"
+fi
+
+# Check common Windows install location
+if [ -z "$CUVIS_INCLUDE" ]; then
+  for dir in "C:/Program Files/Cubert GmbH/Cuvis" "C:/Cuvis"; do
+    if [ -f "$dir/include/cuvis.h" ]; then
+      CUVIS_INCLUDE="$dir/include"
+      CUVIS_LIB="$dir/lib"
+      break
+    fi
+  done
+fi
+
+if [ -n "$CUVIS_INCLUDE" ] && [ -f "$CUVIS_INCLUDE/cuvis.h" ]; then
+  echo "  - CUVIS SDK found: $CUVIS_INCLUDE"
+  cat > src/Makevars.win <<MAKEVARS_EOF
+PKG_CPPFLAGS = -I"$CUVIS_INCLUDE"
+PKG_LIBS = -L"$CUVIS_LIB" -lcuvis
+MAKEVARS_EOF
+else
+  echo "  - CUVIS SDK not found, using stub mode"
+  cat > src/Makevars.win <<'MAKEVARS_EOF'
+PKG_CPPFLAGS = -DCUVIS_STUB
+PKG_LIBS =
+MAKEVARS_EOF
+fi
+
+echo "* Configuration complete."
