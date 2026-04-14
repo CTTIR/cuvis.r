@@ -1,0 +1,32 @@
+Package: cuvis.r
+Title: R Bindings for the Cubert CUVIS Hyperspectral SDK
+Version: 0.1.0
+Authors@R: person("Raban", "Heller", email = "raban.heller@charite.de",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0001-8006-9742"))
+Description: Provides R bindings to the Cubert CUVIS C SDK for reading,
+    processing, and exporting hyperspectral imaging data from Cubert snapshot
+    cameras. Supports loading proprietary '.cu3s' session files, applying the
+    full calibration pipeline (dark subtraction, white reference normalization,
+    spectral radiance, reflectance), and exporting to standard formats (ENVI,
+    TIFF). Requires the Cubert CUVIS SDK to be installed separately. This
+    package mirrors the API of 'cuvis.python'
+    (<https://github.com/cubert-hyperspectral/cuvis.python>) for R users.
+License: Apache License (>= 2) | file LICENSE
+URL: https://github.com/r-heller/cuvis.r,
+        https://r-heller.github.io/cuvis.r/
+BugReports: https://github.com/r-heller/cuvis.r/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+SystemRequirements: Cubert CUVIS SDK (>= 3.4.0) - download from
+        <https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m>
+Depends: R (>= 4.1.0)
+Imports: cli, rlang
+Suggests: testthat (>= 3.0.0), withr, knitr, rmarkdown
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+NeedsCompilation: yes
+Packaged: 2026-04-14 12:49:51 UTC; raban
+Author: Raban Heller [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-8006-9742>)
+Maintainer: Raban Heller <raban.heller@charite.de>

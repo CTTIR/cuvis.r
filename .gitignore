@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+docs/
+inst/doc/
+_build.R
+DROPHERE/
+.cuvis/
+src/*.o
+src/*.so
+src/*.dll
+src/Makevars
+configure.log

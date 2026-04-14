@@ -1,0 +1,39 @@
+
+R version 4.5.2 (2025-10-31 ucrt) -- "[Not] Part in a Rumble"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(cuvis.r)
+Note: Cubert CUVIS SDK not detected. Install from https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m and set the CUVIS_SDK environment variable.
+> 
+> test_check("cuvis.r")
+[ FAIL 0 | WARN 0 | SKIP 20 | PASS 3 ]
+
+══ Skipped tests (20) ══════════════════════════════════════════════════════════
+• CUVIS SDK not installed -- skipping cuvis.r tests (20): 'test-cube.R:2:3',
+  'test-cube.R:28:3', 'test-export.R:2:3', 'test-export.R:20:3',
+  'test-export.R:38:3', 'test-init.R:13:3', 'test-init.R:19:3',
+  'test-measurement.R:2:3', 'test-measurement.R:11:3',
+  'test-measurement.R:26:3', 'test-measurement.R:35:3',
+  'test-processing.R:2:3', 'test-processing.R:11:3', 'test-processing.R:24:3',
+  'test-processing.R:37:3', 'test-processing.R:50:3', 'test-processing.R:65:3',
+  'test-session.R:2:3', 'test-session.R:11:3', 'test-session.R:19:3'
+
+[ FAIL 0 | WARN 0 | SKIP 20 | PASS 3 ]
+> 
+> proc.time()
+   user  system elapsed 
+   0.78    0.51    1.23 
