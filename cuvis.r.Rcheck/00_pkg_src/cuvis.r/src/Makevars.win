@@ -1,0 +1,2 @@
+PKG_CPPFLAGS = -I"C:/Program Files/Cuvis/sdk/cuvis_c"
+PKG_LIBS = "C:/Program Files/Cuvis/bin/cuvis.lib"
