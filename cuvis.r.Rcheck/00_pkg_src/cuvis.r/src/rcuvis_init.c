@@ -6,6 +6,9 @@ SEXP cuvis_mesu_tag;
 SEXP cuvis_proc_tag;
 SEXP cuvis_exporter_tag;
 
+/* SDK state: 1 if initialized, 0 if shut down. Finalizers check this. */
+int rcuvis_sdk_alive = 0;
+
 /* ---- Utility functions ---- */
 
 SEXP rcuvis_make_handle(void *ptr, SEXP tag, R_CFinalizer_t finalizer) {
@@ -54,6 +57,7 @@ SEXP rcuvis_init(SEXP settings_dir) {
     const char *dir = CHAR(STRING_ELT(settings_dir, 0));
     int status = cuvis_init(dir, loglevel_info, NULL);
     rcuvis_check_status(status, "cuvis_init");
+    rcuvis_sdk_alive = 1;
 #else
     Rf_error("cuvis.r was installed without the CUVIS SDK. "
              "Reinstall with CUVIS_SDK set to the SDK path.");
@@ -63,15 +67,21 @@ SEXP rcuvis_init(SEXP settings_dir) {
 
 SEXP rcuvis_shutdown(void) {
 #ifndef CUVIS_STUB
-    cuvis_shutdown();
+    if (rcuvis_sdk_alive) {
+        rcuvis_sdk_alive = 0;
+        cuvis_shutdown();
+    }
 #endif
     return R_NilValue;
 }
 
 SEXP rcuvis_version(void) {
 #ifndef CUVIS_STUB
-    const char *ver = cuvis_version_swig();
-    return Rf_ScalarString(Rf_mkChar(ver ? ver : "unknown"));
+    char ver[CUVIS_MAXBUF];
+    memset(ver, 0, sizeof(ver));
+    int status = cuvis_version(ver);
+    rcuvis_check_status(status, "cuvis_version");
+    return Rf_ScalarString(Rf_mkChar(ver));
 #else
     return Rf_ScalarString(Rf_mkChar("stub-0.0.0"));
 #endif

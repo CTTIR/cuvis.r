@@ -16,11 +16,11 @@ Used by \code{\link[=cuvis_set_reference]{cuvis_set_reference()}}.
 }
 \details{
 \itemize{
-\item \code{Dark} (1): Dark reference frame
-\item \code{White} (2): White reference frame
-\item \code{WhiteDark} (3): Dark reference for the white reference
-\item \code{SpRad} (4): Spectral radiance calibration
-\item \code{Distance} (5): Distance calibration
+\item \code{Dark} (0): Dark reference frame
+\item \code{White} (1): White reference frame
+\item \code{WhiteDark} (2): Dark reference for the white reference
+\item \code{SpRad} (3): Spectral radiance calibration
+\item \code{Distance} (4): Distance calibration
 }
 }
 \keyword{datasets}

@@ -52,12 +52,7 @@ cuvis_get_metadata <- function(measurement) {
 #' @export
 print.cuvis_measurement <- function(x, ...) {
   md <- cuvis_get_metadata(x)
-  mode_name <- if (md$processing_mode >= 1L &&
-                   md$processing_mode <= length(.proc_mode_names)) {
-    .proc_mode_names[md$processing_mode]
-  } else {
-    "Unknown"
-  }
+  mode_name <- .get_proc_mode_name(md$processing_mode)
   cli_h3("CUVIS Measurement")
   cli_text("Name: {md$name}")
   cli_text("Integration time: {md$integration_time} ms")
@@ -69,12 +64,7 @@ print.cuvis_measurement <- function(x, ...) {
 #' @export
 summary.cuvis_measurement <- function(object, ...) {
   md <- cuvis_get_metadata(object)
-  mode_name <- if (md$processing_mode >= 1L &&
-                   md$processing_mode <= length(.proc_mode_names)) {
-    .proc_mode_names[md$processing_mode]
-  } else {
-    "Unknown"
-  }
+  mode_name <- .get_proc_mode_name(md$processing_mode)
   cli_h3("CUVIS Measurement Summary")
   cli_text("Name: {md$name}")
   cli_text("Path: {.path {md$path}}")

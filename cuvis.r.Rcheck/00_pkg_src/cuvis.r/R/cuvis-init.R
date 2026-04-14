@@ -44,6 +44,9 @@ cuvis_shutdown <- function() {
 
 #' Get CUVIS SDK Version
 #'
+#' Note: The SDK must be initialized with [cuvis_init()] before calling
+#' this function.
+#'
 #' @return Character string with the SDK version.
 #' @export
 cuvis_version <- function() {

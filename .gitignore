@@ -7,6 +7,7 @@ docs/
 inst/doc/
 _build.R
 .claude/
+.data/
 CLAUDE.md
 CLAUDE_CODE_PROMPT.md
 CLAUDE_CODE_BUILD_cuvis_r.md

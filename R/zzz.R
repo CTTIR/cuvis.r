@@ -1,5 +1,31 @@
 .onLoad <- function(libname, pkgname) {
-  # Nothing — user must call cuvis_init() explicitly
+  # On Windows, add CUVIS bin directory to DLL search path so that
+  # cuvis.dll and its dependencies can be found at runtime.
+  if (.Platform$OS.type == "windows") {
+    cuvis_bin <- NULL
+    cuvis_sdk <- Sys.getenv("CUVIS_SDK", unset = "")
+    cuvis_env <- Sys.getenv("CUVIS", unset = "")
+    if (nzchar(cuvis_sdk)) {
+      cuvis_bin <- file.path(cuvis_sdk, "bin")
+    } else if (nzchar(cuvis_env)) {
+      cuvis_bin <- cuvis_env
+    } else {
+      # Check default install locations
+      candidates <- c(
+        "C:/Program Files/Cuvis/bin",
+        "C:/Program Files/Cubert GmbH/Cuvis/bin"
+      )
+      for (d in candidates) {
+        if (dir.exists(d)) {
+          cuvis_bin <- d
+          break
+        }
+      }
+    }
+    if (!is.null(cuvis_bin) && dir.exists(cuvis_bin)) {
+      Sys.setenv(PATH = paste(cuvis_bin, Sys.getenv("PATH"), sep = ";"))
+    }
+  }
 }
 
 .onUnload <- function(libpath) {

@@ -10,5 +10,6 @@ cuvis_version()
 Character string with the SDK version.
 }
 \description{
-Get CUVIS SDK Version
+Note: The SDK must be initialized with \code{\link[=cuvis_init]{cuvis_init()}} before calling
+this function.
 }
