@@ -1,7 +1,9 @@
-# cuvis.r
+# cuvis.r <img src="man/figures/logo.svg" align="right" height="180" alt="cuvis.r logo" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/r-heller/cuvis.r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-heller/cuvis.r/actions/workflows/R-CMD-check.yaml)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
 **cuvis.r** provides R bindings to the [Cubert CUVIS SDK](https://cubert-hyperspectral.com/en/cuvis-sdk/)
