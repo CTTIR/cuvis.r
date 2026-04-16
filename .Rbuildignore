@@ -12,7 +12,7 @@
 ^README\.Rmd$
 ^cran-comments\.md$
 ^LICENSE\.md$
-^.*\.svg$
+^cuvis\.r_icon\.svg$
 ^\.lintr$
 ^codecov\.yml$
 ^\.Rproj\.user$
