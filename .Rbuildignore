@@ -1,0 +1,17 @@
+^_build\.R$
+^DROPHERE$
+^\.github$
+^docs$
+^pkgdown$
+^_pkgdown\.ya?ml$
+^README\.Rmd$
+^cran-comments\.md$
+^LICENSE\.md$
+^cuvis\.r_icon\.svg$
+^\.lintr$
+^codecov\.yml$
+^\.Rproj\.user$
+^\.cuvis$
+^\.data$
+^configure\.log$
+^\.claude$
