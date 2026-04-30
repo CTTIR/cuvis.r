@@ -1,7 +1,5 @@
 test_that("cuvis_processing_context can be created from session", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
   session <- cuvis_sample_session()
   ctx <- cuvis_processing_context(session)
   expect_s3_class(ctx, "cuvis_processing_context")
@@ -9,9 +7,6 @@ test_that("cuvis_processing_context can be created from session", {
 
 test_that("cuvis_reprocess works with raw mode", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
-
   session <- cuvis_sample_session()
   mesu <- cuvis_get_measurement(session, 1)
   ctx <- cuvis_processing_context(session)
@@ -22,9 +17,6 @@ test_that("cuvis_reprocess works with raw mode", {
 
 test_that("cuvis_reprocess works with dark_subtract mode", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
-
   session <- cuvis_sample_session()
   mesu <- cuvis_get_measurement(session, 1)
   ctx <- cuvis_processing_context(session)
@@ -35,9 +27,6 @@ test_that("cuvis_reprocess works with dark_subtract mode", {
 
 test_that("cuvis_reprocess works with reflectance mode", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
-
   session <- cuvis_sample_session()
   mesu <- cuvis_get_measurement(session, 1)
   ctx <- cuvis_processing_context(session)
@@ -48,9 +37,6 @@ test_that("cuvis_reprocess works with reflectance mode", {
 
 test_that("cuvis_has_reference returns logical", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
-
   session <- cuvis_sample_session()
   ctx <- cuvis_processing_context(session)
 
@@ -63,9 +49,6 @@ test_that("cuvis_has_reference returns logical", {
 
 test_that("cuvis_reprocess rejects invalid mode", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
-
   session <- cuvis_sample_session()
   mesu <- cuvis_get_measurement(session, 1)
   ctx <- cuvis_processing_context(session)

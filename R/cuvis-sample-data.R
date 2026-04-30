@@ -1,7 +1,7 @@
 #' Get Path to Sample Data
 #'
 #' Returns the path to Cubert sample data. Searches in order:
-#' 1. `.cuvis/` directory relative to the working directory
+#' 1. `.cuvis/` directory in the working directory or any parent (up to 5 levels)
 #' 2. `CUVIS_DATA` environment variable
 #' 3. SDK default install location
 #'
@@ -11,8 +11,20 @@
 #' @return Character path, or `NULL` if not found.
 #' @export
 cuvis_sample_data <- function(file = NULL) {
+  dot_cuvis <- character(0)
+  d <- getwd()
+  for (i in seq_len(6L)) {
+    cand <- file.path(d, ".cuvis")
+    if (dir.exists(cand)) {
+      dot_cuvis <- c(dot_cuvis, cand)
+    }
+    parent <- dirname(d)
+    if (parent == d) break
+    d <- parent
+  }
+
   candidates <- c(
-    file.path(getwd(), ".cuvis"),
+    dot_cuvis,
     Sys.getenv("CUVIS_DATA", unset = NA_character_),
     file.path(Sys.getenv("CUVIS_SDK", unset = ""), "sample_data"),
     "/opt/cuvis/sample_data"

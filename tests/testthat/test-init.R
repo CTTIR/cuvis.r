@@ -3,21 +3,13 @@ test_that("cuvis_available returns logical", {
 })
 
 test_that("cuvis_version returns string", {
-  # Even in stub mode, version should return a string
   ver <- cuvis_version()
   expect_type(ver, "character")
   expect_true(nzchar(ver))
 })
 
-test_that("cuvis_init and shutdown work", {
+test_that("cuvis_init is idempotent when SDK already initialized", {
   skip_if_no_sdk()
+  # setup.R has already initialized the SDK; calling init again should be safe
   expect_no_error(cuvis_init())
-  expect_no_error(cuvis_shutdown())
-})
-
-test_that("cuvis_init accepts custom settings dir", {
-  skip_if_no_sdk()
-  tmp <- withr::local_tempdir()
-  expect_no_error(cuvis_init(settings_dir = tmp))
-  expect_no_error(cuvis_shutdown())
 })
