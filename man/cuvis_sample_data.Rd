@@ -16,7 +16,7 @@ Character path, or \code{NULL} if not found.
 \description{
 Returns the path to Cubert sample data. Searches in order:
 \enumerate{
-\item \verb{.cuvis/} directory relative to the working directory
+\item \verb{.cuvis/} directory in the working directory or any parent (up to 5 levels)
 \item \code{CUVIS_DATA} environment variable
 \item SDK default install location
 }

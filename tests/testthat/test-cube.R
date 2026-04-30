@@ -1,8 +1,5 @@
 test_that("cuvis_get_cube returns 3D array with wavelengths", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
-
   session <- cuvis_sample_session()
   mesu <- cuvis_get_measurement(session, 1)
 
@@ -26,9 +23,6 @@ test_that("cuvis_get_cube returns 3D array with wavelengths", {
 
 test_that("cuvis_get_wavelengths returns numeric vector", {
   skip_if_no_sample_data()
-  cuvis_init()
-  withr::defer(cuvis_shutdown())
-
   session <- cuvis_sample_session()
   mesu <- cuvis_get_measurement(session, 1)
   ctx <- cuvis_processing_context(session)
