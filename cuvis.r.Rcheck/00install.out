@@ -1,0 +1,57 @@
+* installing *source* package 'cuvis.r' ...
+** this is package 'cuvis.r' version '0.1.0'
+** using staged installation
+* Configuring cuvis.r for Windows ...
+  - CUVIS SDK headers: C:/Program Files/Cuvis/sdk/cuvis_c
+  - CUVIS SDK library: C:/Program Files/Cuvis/bin
+* Configuration complete.
+** libs
+using C compiler: 'gcc.exe (GCC) 14.3.0'
+gcc  -I"C:/PROGRA~1/R/R-45~1.2/include" -DNDEBUG -I"C:/Program Files/Cuvis/sdk/cuvis_c"    -I"C:/rtools45/x86_64-w64-mingw32.static.posix/include"      -O2 -Wall -std=gnu2x  -mfpmath=sse -msse2 -mstackrealign   -c rcuvis_export.c -o rcuvis_export.o
+In file included from rcuvis.h:10,
+                 from rcuvis_export.c:1:
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:1611:3: warning: "/*" within comment [-Wcomment]
+ 1611 |   /* TODO Add more eventhandler
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:2620:45: warning: "/*" within comment [-Wcomment]
+ 2620 |     * the measurement given ( ../Calibration/* ) . This directory is present in the normal camera operation
+gcc  -I"C:/PROGRA~1/R/R-45~1.2/include" -DNDEBUG -I"C:/Program Files/Cuvis/sdk/cuvis_c"    -I"C:/rtools45/x86_64-w64-mingw32.static.posix/include"      -O2 -Wall -std=gnu2x  -mfpmath=sse -msse2 -mstackrealign   -c rcuvis_init.c -o rcuvis_init.o
+In file included from rcuvis.h:10,
+                 from rcuvis_init.c:1:
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:1611:3: warning: "/*" within comment [-Wcomment]
+ 1611 |   /* TODO Add more eventhandler
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:2620:45: warning: "/*" within comment [-Wcomment]
+ 2620 |     * the measurement given ( ../Calibration/* ) . This directory is present in the normal camera operation
+gcc  -I"C:/PROGRA~1/R/R-45~1.2/include" -DNDEBUG -I"C:/Program Files/Cuvis/sdk/cuvis_c"    -I"C:/rtools45/x86_64-w64-mingw32.static.posix/include"      -O2 -Wall -std=gnu2x  -mfpmath=sse -msse2 -mstackrealign   -c rcuvis_measurement.c -o rcuvis_measurement.o
+In file included from rcuvis.h:10,
+                 from rcuvis_measurement.c:1:
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:1611:3: warning: "/*" within comment [-Wcomment]
+ 1611 |   /* TODO Add more eventhandler
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:2620:45: warning: "/*" within comment [-Wcomment]
+ 2620 |     * the measurement given ( ../Calibration/* ) . This directory is present in the normal camera operation
+gcc  -I"C:/PROGRA~1/R/R-45~1.2/include" -DNDEBUG -I"C:/Program Files/Cuvis/sdk/cuvis_c"    -I"C:/rtools45/x86_64-w64-mingw32.static.posix/include"      -O2 -Wall -std=gnu2x  -mfpmath=sse -msse2 -mstackrealign   -c rcuvis_processing.c -o rcuvis_processing.o
+In file included from rcuvis.h:10,
+                 from rcuvis_processing.c:1:
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:1611:3: warning: "/*" within comment [-Wcomment]
+ 1611 |   /* TODO Add more eventhandler
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:2620:45: warning: "/*" within comment [-Wcomment]
+ 2620 |     * the measurement given ( ../Calibration/* ) . This directory is present in the normal camera operation
+gcc  -I"C:/PROGRA~1/R/R-45~1.2/include" -DNDEBUG -I"C:/Program Files/Cuvis/sdk/cuvis_c"    -I"C:/rtools45/x86_64-w64-mingw32.static.posix/include"      -O2 -Wall -std=gnu2x  -mfpmath=sse -msse2 -mstackrealign   -c rcuvis_session.c -o rcuvis_session.o
+In file included from rcuvis.h:10,
+                 from rcuvis_session.c:1:
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:1611:3: warning: "/*" within comment [-Wcomment]
+ 1611 |   /* TODO Add more eventhandler
+C:/Program Files/Cuvis/sdk/cuvis_c/cuvis.h:2620:45: warning: "/*" within comment [-Wcomment]
+ 2620 |     * the measurement given ( ../Calibration/* ) . This directory is present in the normal camera operation
+gcc -shared -s -static-libgcc -o cuvis.r.dll tmp.def rcuvis_export.o rcuvis_init.o rcuvis_measurement.o rcuvis_processing.o rcuvis_session.o C:/Program Files/Cuvis/bin/cuvis.lib -LC:/rtools45/x86_64-w64-mingw32.static.posix/lib/x64 -LC:/rtools45/x86_64-w64-mingw32.static.posix/lib -LC:/PROGRA~1/R/R-45~1.2/bin/x64 -lR
+installing to C:/Users/raban/Documents/GitHub/cuvis.r/cuvis.r.Rcheck/00LOCK-cuvis.r/00new/cuvis.r/libs/x64
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (cuvis.r)
