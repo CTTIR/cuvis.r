@@ -14,3 +14,4 @@
 ^\.cuvis$
 ^\.data$
 ^configure\.log$
+^_pkgdown\.yml$
