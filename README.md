@@ -1,7 +1,7 @@
 # cuvis.r <img src="man/figures/logo.svg" align="right" height="180" alt="cuvis.r logo" />
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/r-heller/cuvis.r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-heller/cuvis.r/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/cttir/cuvis.r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cttir/cuvis.r/actions/workflows/R-CMD-check.yaml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
@@ -21,7 +21,7 @@ This is the R equivalent of [cuvis.python](https://github.com/cubert-hyperspectr
 
 ```r
 # install.packages("remotes")
-remotes::install_github("r-heller/cuvis.r")
+remotes::install_github("cttir/cuvis.r")
 ```
 
 ## Quick Start
@@ -104,6 +104,19 @@ library(hyperspectR)
 # hyperspectR uses cuvis.r internally for .cu3s files
 cube <- hs_read_cubert("measurement.cu3s")
 ```
+
+## Use of LLM tools
+
+Portions of this package were prepared with assistance from large language model tooling for
+narrowly defined, non-authorial tasks: copyediting, prose smoothing, Markdown/LaTeX formatting,
+scaffolding of boilerplate files (CI configs, build scripts), code refactoring. The tools used were [Chat AI](https://kisski.gwdg.de/leistungen/2-02-llm-service/),
+the LLM service of KISSKI (GWDG), and a self-hosted **Mistral Small (24B, Apache-2.0)** run locally via
+[Ollama](https://ollama.com/) and the `ollamar` R package — local inference only, with no data sent to
+third parties for the self-hosted model.
+
+All scientific claims, methodological choices, analyses, interpretations, and conclusions are the
+author's own. No LLM-generated text was incorporated without review and revision, and every reference
+was verified against its DOI, arXiv ID, or ISBN.
 
 ## License
 
