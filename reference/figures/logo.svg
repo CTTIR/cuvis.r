@@ -1,0 +1,288 @@
+<svg width="500" height="580" viewBox="0 0 500 580" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgcuvis" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#06040e"/>
+      <stop offset="100%" stop-color="#02010a"/>
+    </linearGradient>
+    <!-- Raw cube face — noisy/dark -->
+    <linearGradient id="rawTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a0a3a"/>
+      <stop offset="100%" stop-color="#0d0520"/>
+    </linearGradient>
+    <linearGradient id="rawFront" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0e0420"/>
+      <stop offset="100%" stop-color="#080215"/>
+    </linearGradient>
+    <linearGradient id="rawSide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0a0318"/>
+      <stop offset="100%" stop-color="#140828"/>
+    </linearGradient>
+    <!-- Calibrated cube face — clean/bright -->
+    <linearGradient id="calTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a2a1a"/>
+      <stop offset="100%" stop-color="#051810"/>
+    </linearGradient>
+    <linearGradient id="calFront" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#082018"/>
+      <stop offset="100%" stop-color="#041008"/>
+    </linearGradient>
+    <linearGradient id="calSide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#061410"/>
+      <stop offset="100%" stop-color="#0d2820"/>
+    </linearGradient>
+    <!-- Spectral rainbow for calibrated top -->
+    <linearGradient id="specTop" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#6600cc" stop-opacity="0.45"/>
+      <stop offset="25%"  stop-color="#0099ff" stop-opacity="0.45"/>
+      <stop offset="50%"  stop-color="#00cc88" stop-opacity="0.45"/>
+      <stop offset="75%"  stop-color="#ff8800" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#cc0022" stop-opacity="0.45"/>
+    </linearGradient>
+    <clipPath id="hexcuvis">
+      <polygon points="250,30 455,145 455,375 250,490 45,375 45,145"/>
+    </clipPath>
+  </defs>
+
+  <polygon points="250,30 455,145 455,375 250,490 45,375 45,145" fill="url(#bgcuvis)"/>
+
+  <g clip-path="url(#hexcuvis)">
+
+    <!-- Faint grid -->
+    <line x1="45"  y1="190" x2="455" y2="190" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+    <line x1="45"  y1="240" x2="455" y2="240" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+    <line x1="45"  y1="290" x2="455" y2="290" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+    <line x1="45"  y1="340" x2="455" y2="340" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+    <line x1="45"  y1="390" x2="455" y2="390" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+    <line x1="150" y1="145" x2="150" y2="490" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+    <line x1="250" y1="145" x2="250" y2="490" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+    <line x1="350" y1="145" x2="350" y2="490" stroke="#1a0a3a" stroke-width="0.4" opacity="0.35"/>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- LEFT CUBE — raw .cu3s session (dark, noisy)           -->
+    <!-- Isometric, smaller                                    -->
+    <!-- ══════════════════════════════════════════════════════ -->
+
+    <!-- Top face -->
+    <polygon points="88,188 158,158 208,188 138,218"
+      fill="url(#rawTop)" stroke="#534AB7" stroke-width="1.2" opacity="0.92"/>
+    <!-- Noise texture on raw top -->
+    <circle cx="108" cy="185" r="1.5" fill="#7C3AED" opacity="0.4"/>
+    <circle cx="120" cy="178" r="1"   fill="#7C3AED" opacity="0.35"/>
+    <circle cx="135" cy="182" r="1.5" fill="#534AB7" opacity="0.4"/>
+    <circle cx="148" cy="176" r="1"   fill="#7C3AED" opacity="0.35"/>
+    <circle cx="162" cy="183" r="1.5" fill="#534AB7" opacity="0.38"/>
+    <circle cx="178" cy="178" r="1"   fill="#7C3AED" opacity="0.32"/>
+    <circle cx="190" cy="185" r="1.5" fill="#534AB7" opacity="0.38"/>
+    <!-- Grid lines on top -->
+    <line x1="98"  y1="193" x2="148" y2="168" stroke="#534AB7" stroke-width="0.5" opacity="0.25"/>
+    <line x1="118" y1="203" x2="168" y2="178" stroke="#534AB7" stroke-width="0.5" opacity="0.25"/>
+    <line x1="108" y1="188" x2="158" y2="213" stroke="#534AB7" stroke-width="0.5" opacity="0.2"/>
+    <line x1="128" y1="178" x2="178" y2="203" stroke="#534AB7" stroke-width="0.5" opacity="0.2"/>
+    <line x1="148" y1="168" x2="198" y2="193" stroke="#534AB7" stroke-width="0.5" opacity="0.2"/>
+
+    <!-- Front face -->
+    <polygon points="88,218 138,218 138,308 88,308"
+      fill="url(#rawFront)" stroke="#534AB7" stroke-width="1.2" opacity="0.92"/>
+    <!-- Noise on front — static-like horizontal bands -->
+    <line x1="90"  y1="228" x2="136" y2="228" stroke="#7C3AED" stroke-width="0.8" opacity="0.22"/>
+    <line x1="90"  y1="238" x2="136" y2="238" stroke="#534AB7" stroke-width="0.6" opacity="0.18"/>
+    <line x1="90"  y1="248" x2="136" y2="248" stroke="#7C3AED" stroke-width="0.8" opacity="0.22"/>
+    <line x1="90"  y1="258" x2="136" y2="258" stroke="#534AB7" stroke-width="0.6" opacity="0.18"/>
+    <line x1="90"  y1="268" x2="136" y2="268" stroke="#7C3AED" stroke-width="0.8" opacity="0.2"/>
+    <line x1="90"  y1="278" x2="136" y2="278" stroke="#534AB7" stroke-width="0.6" opacity="0.15"/>
+    <line x1="90"  y1="288" x2="136" y2="288" stroke="#7C3AED" stroke-width="0.8" opacity="0.18"/>
+    <line x1="90"  y1="298" x2="136" y2="298" stroke="#534AB7" stroke-width="0.6" opacity="0.15"/>
+    <!-- Noise dots on front -->
+    <circle cx="100" cy="243" r="1.5" fill="#7C3AED" opacity="0.35"/>
+    <circle cx="115" cy="262" r="1.2" fill="#534AB7" opacity="0.3"/>
+    <circle cx="125" cy="248" r="1.5" fill="#7C3AED" opacity="0.32"/>
+    <circle cx="108" cy="278" r="1.2" fill="#534AB7" opacity="0.28"/>
+    <circle cx="130" cy="290" r="1"   fill="#7C3AED" opacity="0.25"/>
+
+    <!-- Right side face — spectral bands (dark) -->
+    <polygon points="138,218 208,188 208,278 138,308"
+      fill="url(#rawSide)" stroke="#534AB7" stroke-width="1.2" opacity="0.92"/>
+    <!-- Dark band stripes -->
+    <polygon points="138,225 208,195 208,205 138,235" fill="#3C3489" opacity="0.35"/>
+    <polygon points="138,240 208,210 208,220 138,250" fill="#3C3489" opacity="0.3"/>
+    <polygon points="138,255 208,225 208,235 138,265" fill="#3C3489" opacity="0.28"/>
+    <polygon points="138,270 208,240 208,250 138,280" fill="#3C3489" opacity="0.25"/>
+    <polygon points="138,285 208,255 208,265 138,295" fill="#3C3489" opacity="0.22"/>
+
+    <!-- Cube label -->
+    <text font-family="monospace" font-size="7.5" font-weight="700"
+      fill="#7C3AED" opacity="0.7" text-anchor="middle" x="148" y="325">.cu3s</text>
+    <text font-family="monospace" font-size="6.5"
+      fill="#534AB7" opacity="0.55" text-anchor="middle" x="148" y="335">raw session</text>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- CENTRE — SDK / CUVIS binding engine                   -->
+    <!-- Gear + R binding label                                -->
+    <!-- ══════════════════════════════════════════════════════ -->
+
+    <!-- Outer gear ring -->
+    <circle cx="250" cy="268" r="36" fill="none" stroke="#1D9E75" stroke-width="1.5" opacity="0.5"/>
+    <circle cx="250" cy="268" r="28" fill="#060c10" stroke="#00897B" stroke-width="1.2" opacity="0.8"/>
+    <circle cx="250" cy="268" r="20" fill="#081814" stroke="#1D9E75" stroke-width="1" opacity="0.75"/>
+
+    <!-- Gear teeth — 8 teeth -->
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(0   250 268)"/>
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(45  250 268)"/>
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(90  250 268)"/>
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(135 250 268)"/>
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(180 250 268)"/>
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(225 250 268)"/>
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(270 250 268)"/>
+    <rect x="246" y="228" width="8" height="12" rx="2" fill="#1D9E75" opacity="0.75" transform="rotate(315 250 268)"/>
+
+    <!-- Inner gear hub -->
+    <circle cx="250" cy="268" r="10" fill="#0a2a22" stroke="#1D9E75" stroke-width="1" opacity="0.9"/>
+
+    <!-- CUVIS SDK label in centre -->
+    <text font-family="monospace" font-size="7" font-weight="700"
+      fill="#1D9E75" text-anchor="middle" x="250" y="265" opacity="0.9">CUVIS</text>
+    <text font-family="monospace" font-size="6"
+      fill="#80CBC4" text-anchor="middle" x="250" y="273" opacity="0.8">SDK</text>
+
+    <!-- R binding label above gear -->
+    <rect x="224" y="218" width="52" height="16" rx="4"
+      fill="#060c10" stroke="#00897B" stroke-width="1" opacity="0.9"/>
+    <text font-family="monospace" font-size="7.5" font-weight="700"
+      fill="#80CBC4" text-anchor="middle" x="250" y="230" opacity="0.92">cuvis.r</text>
+
+    <!-- Calibrate label below gear -->
+    <text font-family="monospace" font-size="6.5"
+      fill="#00897B" opacity="0.6" text-anchor="middle" x="250" y="316">calibrate()</text>
+
+    <!-- Arrow: left cube → gear -->
+    <line x1="210" y1="250" x2="222" y2="258"
+      stroke="#7C3AED" stroke-width="1.8" opacity="0.65" stroke-linecap="round"/>
+    <polygon points="218,254 226,262 222,252" fill="#7C3AED" opacity="0.65"/>
+
+    <!-- Arrow: gear → right cube -->
+    <line x1="278" y1="258" x2="290" y2="250"
+      stroke="#1D9E75" stroke-width="1.8" opacity="0.65" stroke-linecap="round"/>
+    <polygon points="286,246 294,254 284,256" fill="#1D9E75" opacity="0.65"/>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- RIGHT CUBE — calibrated reflectance (clean, spectral) -->
+    <!-- ══════════════════════════════════════════════════════ -->
+
+    <!-- Top face — with spectral colours -->
+    <polygon points="292,188 362,158 412,188 342,218"
+      fill="url(#calTop)" stroke="#1D9E75" stroke-width="1.2" opacity="0.92"/>
+    <polygon points="292,188 362,158 412,188 342,218"
+      fill="url(#specTop)" opacity="0.8"/>
+    <!-- Grid lines on calibrated top -->
+    <line x1="302" y1="193" x2="352" y2="168" stroke="#1D9E75" stroke-width="0.5" opacity="0.3"/>
+    <line x1="322" y1="203" x2="372" y2="178" stroke="#1D9E75" stroke-width="0.5" opacity="0.3"/>
+    <line x1="342" y1="178" x2="392" y2="203" stroke="#1D9E75" stroke-width="0.5" opacity="0.25"/>
+    <line x1="322" y1="168" x2="372" y2="193" stroke="#1D9E75" stroke-width="0.5" opacity="0.25"/>
+    <line x1="302" y1="178" x2="352" y2="203" stroke="#1D9E75" stroke-width="0.5" opacity="0.25"/>
+
+    <!-- Front face -->
+    <polygon points="292,218 342,218 342,308 292,308"
+      fill="url(#calFront)" stroke="#1D9E75" stroke-width="1.2" opacity="0.92"/>
+    <!-- Clean horizontal lines — normalised spectrum lines -->
+    <line x1="294" y1="230" x2="340" y2="230" stroke="#1D9E75" stroke-width="1"   opacity="0.35"/>
+    <line x1="294" y1="242" x2="340" y2="242" stroke="#1D9E75" stroke-width="0.7" opacity="0.28"/>
+    <line x1="294" y1="254" x2="340" y2="254" stroke="#1D9E75" stroke-width="1"   opacity="0.35"/>
+    <line x1="294" y1="266" x2="340" y2="266" stroke="#1D9E75" stroke-width="0.7" opacity="0.28"/>
+    <line x1="294" y1="278" x2="340" y2="278" stroke="#1D9E75" stroke-width="1"   opacity="0.32"/>
+    <line x1="294" y1="290" x2="340" y2="290" stroke="#1D9E75" stroke-width="0.7" opacity="0.25"/>
+    <line x1="294" y1="302" x2="340" y2="302" stroke="#1D9E75" stroke-width="1"   opacity="0.28"/>
+    <!-- Reflectance curve on front face -->
+    <path d="M 294,280 Q 305,265 317,268 Q 328,271 340,258"
+      fill="none" stroke="#80CBC4" stroke-width="1.5" opacity="0.7" stroke-linecap="round"/>
+
+    <!-- Right side face — clean spectral bands -->
+    <polygon points="342,218 412,188 412,278 342,308"
+      fill="url(#calSide)" stroke="#1D9E75" stroke-width="1.2" opacity="0.92"/>
+    <!-- Spectral band colours — clean and saturated -->
+    <polygon points="342,220 412,190 412,200 342,230" fill="#6600cc" opacity="0.45"/>
+    <polygon points="342,232 412,202 412,212 342,242" fill="#0099ff" opacity="0.45"/>
+    <polygon points="342,244 412,214 412,224 342,254" fill="#00cc88" opacity="0.45"/>
+    <polygon points="342,256 412,226 412,236 342,266" fill="#aaee00" opacity="0.42"/>
+    <polygon points="342,268 412,238 412,248 342,278" fill="#ff8800" opacity="0.42"/>
+    <polygon points="342,280 412,250 412,260 342,290" fill="#ff3300" opacity="0.4"/>
+    <polygon points="342,292 412,262 412,272 342,302" fill="#990011" opacity="0.38"/>
+    <!-- Band separator lines -->
+    <line x1="342" y1="232" x2="412" y2="202" stroke="#000" stroke-width="0.4" opacity="0.3"/>
+    <line x1="342" y1="244" x2="412" y2="214" stroke="#000" stroke-width="0.4" opacity="0.3"/>
+    <line x1="342" y1="256" x2="412" y2="226" stroke="#000" stroke-width="0.4" opacity="0.3"/>
+    <line x1="342" y1="268" x2="412" y2="238" stroke="#000" stroke-width="0.4" opacity="0.3"/>
+    <line x1="342" y1="280" x2="412" y2="250" stroke="#000" stroke-width="0.4" opacity="0.3"/>
+    <line x1="342" y1="292" x2="412" y2="262" stroke="#000" stroke-width="0.4" opacity="0.3"/>
+
+    <!-- Cube label -->
+    <text font-family="monospace" font-size="7.5" font-weight="700"
+      fill="#1D9E75" opacity="0.75" text-anchor="middle" x="352" y="325">reflectance</text>
+    <text font-family="monospace" font-size="6.5"
+      fill="#80CBC4" opacity="0.55" text-anchor="middle" x="352" y="335">ENVI / TIFF</text>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- EXPORT FORMAT BADGES — bottom                         -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <rect x="88"  y="355" width="50" height="18" rx="4"
+      fill="#0a0a18" stroke="#534AB7" stroke-width="1" opacity="0.88"/>
+    <text font-family="monospace" font-size="7.5" font-weight="700"
+      fill="#7C3AED" text-anchor="middle" x="113" y="367" opacity="0.9">.cu3s</text>
+
+    <text font-family="monospace" font-size="10" fill="#80CBC4" text-anchor="middle" x="152" y="368" opacity="0.55">→</text>
+
+    <rect x="163" y="355" width="46" height="18" rx="4"
+      fill="#08382C" stroke="#00897B" stroke-width="1" opacity="0.88"/>
+    <text font-family="monospace" font-size="7.5" font-weight="700"
+      fill="#1D9E75" text-anchor="middle" x="186" y="367" opacity="0.9">ENVI</text>
+
+    <text font-family="monospace" font-size="10" fill="#80CBC4" text-anchor="middle" x="222" y="368" opacity="0.55">→</text>
+
+    <rect x="233" y="355" width="46" height="18" rx="4"
+      fill="#08382C" stroke="#00897B" stroke-width="1" opacity="0.88"/>
+    <text font-family="monospace" font-size="7.5" font-weight="700"
+      fill="#1D9E75" text-anchor="middle" x="256" y="367" opacity="0.9">TIFF</text>
+
+    <text font-family="monospace" font-size="10" fill="#80CBC4" text-anchor="middle" x="292" y="368" opacity="0.55">→</text>
+
+    <rect x="303" y="355" width="46" height="18" rx="4"
+      fill="#08382C" stroke="#1D9E75" stroke-width="1.2" opacity="0.92"/>
+    <text font-family="monospace" font-size="7.5" font-weight="700"
+      fill="#80CBC4" text-anchor="middle" x="326" y="367" opacity="0.95">hsi_cube</text>
+
+    <!-- Python equivalence note -->
+    <text font-family="monospace" font-size="7" fill="#3a3a5c" opacity="0.55"
+      text-anchor="middle" x="250" y="390">≡ cuvis.python for R</text>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- CUBERT CAMERA HINT — top centre                       -->
+    <!-- Simple camera body silhouette                         -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <rect x="218" y="148" width="64" height="38" rx="5"
+      fill="#0d0520" stroke="#534AB7" stroke-width="1.2" opacity="0.9"/>
+    <!-- Lens -->
+    <circle cx="250" cy="167" r="12" fill="#080215" stroke="#7C3AED" stroke-width="1.2" opacity="0.9"/>
+    <circle cx="250" cy="167" r="8"  fill="#0e0428" stroke="#534AB7" stroke-width="0.8" opacity="0.85"/>
+    <circle cx="250" cy="167" r="4"  fill="#1a0a3a" opacity="0.9"/>
+    <circle cx="247" cy="164" r="1.5" fill="#a78bfa" opacity="0.4"/>
+    <!-- Camera body details -->
+    <rect x="222" y="150" width="10" height="5" rx="1.5" fill="#1a0a3a" stroke="#534AB7" stroke-width="0.8" opacity="0.7"/>
+    <circle cx="272" cy="153" r="3" fill="#1a0a3a" stroke="#534AB7" stroke-width="0.8" opacity="0.7"/>
+    <!-- Cubert label -->
+    <text font-family="monospace" font-size="6" fill="#534AB7" opacity="0.6"
+      text-anchor="middle" x="250" y="145">Cubert</text>
+
+    <!-- Beam from camera down to raw cube -->
+    <line x1="230" y1="186" x2="175" y2="195"
+      stroke="#7C3AED" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.35"/>
+    <line x1="270" y1="186" x2="325" y2="195"
+      stroke="#534AB7" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.3"/>
+
+  </g>
+
+  <!-- Hex border — teal -->
+  <polygon points="250,30 455,145 455,375 250,490 45,375 45,145"
+    fill="none" stroke="#0F6E56" stroke-width="11" stroke-linejoin="round"/>
+  <polygon points="250,44 441,153 441,367 250,476 59,367 59,153"
+    fill="none" stroke="#1D9E75" stroke-width="1.5" stroke-linejoin="round" opacity="0.55"/>
+  
+</svg>

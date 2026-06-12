@@ -1,0 +1,145 @@
+# Getting Started with cuvis.r
+
+### Overview
+
+**cuvis.r** provides R bindings to the Cubert CUVIS C SDK for reading,
+processing, and exporting hyperspectral imaging data from Cubert
+snapshot cameras. It mirrors the API of
+[cuvis.python](https://github.com/cubert-hyperspectral/cuvis.python).
+
+### Prerequisites
+
+1.  Install the **Cubert CUVIS SDK** (\>= 3.4.0) from
+    <https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m>
+2.  Set the `CUVIS_SDK` environment variable to the SDK install
+    directory
+3.  Install cuvis.r from GitHub:
+
+``` r
+
+remotes::install_github("cttir/cuvis.r")
+```
+
+### Quick Start
+
+#### Initialize the SDK
+
+Every cuvis.r session begins with
+[`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)
+and ends with
+[`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md):
+
+``` r
+
+library(cuvis.r)
+
+cuvis_init()
+```
+
+#### Load a Session File
+
+Cubert cameras store measurements in `.cu3s` session files. Load one
+with
+[`cuvis_session()`](https://cttir.github.io/cuvis.r/reference/cuvis_session.md):
+
+``` r
+
+session <- cuvis_session("path/to/measurement.cu3s")
+print(session)
+```
+
+#### Extract a Measurement
+
+Session files contain one or more measurements. Access them by index
+(1-based):
+
+``` r
+
+mesu <- cuvis_get_measurement(session, 1)
+print(mesu)
+```
+
+#### Inspect Metadata
+
+``` r
+
+md <- cuvis_get_metadata(mesu)
+md$name
+md$integration_time
+md$serial_number
+md$product_name
+```
+
+#### Get the Data Cube
+
+The hyperspectral data cube is returned as a 3D R array
+`[rows, cols, bands]` with wavelength metadata attached:
+
+``` r
+
+# First, process to generate the cube
+ctx <- cuvis_processing_context(session)
+cuvis_reprocess(ctx, mesu, mode = "raw")
+
+cube <- cuvis_get_cube(mesu)
+dim(cube)                        # e.g., c(100, 100, 61)
+attr(cube, "wavelengths")        # wavelengths in nm
+```
+
+You can subset bands, compute means, or use standard R array operations:
+
+``` r
+
+# Mean reflectance per band
+band_means <- apply(cube, 3, mean, na.rm = TRUE)
+
+# Extract a single band (e.g., band 30)
+single_band <- cube[, , 30]
+image(single_band, main = "Band 30")
+```
+
+#### Export to Standard Formats
+
+``` r
+
+# ENVI format (widely supported by remote sensing tools)
+cuvis_export_envi(mesu, "output/envi/")
+
+# Multi-channel TIFF
+cuvis_export_tiff(mesu, "output/tiff/")
+```
+
+#### Shutdown
+
+``` r
+
+cuvis_shutdown()
+```
+
+### Next Steps
+
+- See
+  [`vignette("cuvis-r-calibration")`](https://cttir.github.io/cuvis.r/articles/cuvis-r-calibration.md)
+  for the full calibration workflow (dark/white references, reflectance
+  conversion)
+- See the [cuvis.python
+  examples](https://github.com/cubert-hyperspectral/cuvis.python.examples)
+  for workflow patterns that translate directly to cuvis.r
+
+## Use of LLM tools
+
+Portions of this package were prepared with assistance from large
+language model tooling for narrowly defined, non-authorial tasks:
+copyediting, prose smoothing, Markdown/LaTeX formatting, scaffolding of
+boilerplate files (CI configs, build scripts), code refactoring. The
+tools used were [Chat
+AI](https://kisski.gwdg.de/leistungen/2-02-llm-service/), the LLM
+service of KISSKI (GWDG), and a self-hosted **Mistral Small (24B,
+Apache-2.0)** run locally via [Ollama](https://ollama.com/) and the
+`ollamar` R package — local inference only, with no data sent to third
+parties for the self-hosted model.
+
+All scientific claims, methodological choices, analyses,
+interpretations, and conclusions are the author’s own. No LLM-generated
+text was incorporated without review and revision, and every reference
+was verified against its DOI, arXiv ID, or ISBN.
