@@ -14,3 +14,9 @@ src/*.so
 src/*.dll
 src/Makevars
 configure.log
+*.tmp
+*.log
+*~
+*.bak
+*.orig
+*.Rcheck/
