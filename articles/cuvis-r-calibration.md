@@ -137,7 +137,7 @@ cuvis_shutdown()
 
 ## Integration with hyperspectR
 
-If you have the [hyperspectR](https://github.com/r-heller/hyperspectR)
+If you have the [hyperspectR](https://github.com/CTTIR/hyperspectR)
 package installed, it uses cuvis.r as a backend:
 
 ``` r
