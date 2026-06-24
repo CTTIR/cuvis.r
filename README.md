@@ -101,7 +101,7 @@ cuvis_shutdown()
 
 ## Integration with hyperspectR
 
-cuvis.r is designed as the I/O backend for [hyperspectR](https://github.com/r-heller/hyperspectR):
+cuvis.r is designed as the I/O backend for [hyperspectR](https://github.com/CTTIR/hyperspectR):
 
 ```r
 library(hyperspectR)
