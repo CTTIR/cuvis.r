@@ -1,5 +1,11 @@
 # Changelog
 
+## cuvis.r (development version)
+
+- [`cuvis_get_measurement()`](https://cttir.github.io/cuvis.r/reference/cuvis_get_measurement.md)
+  now raises an informative error for an unknown `item_type` instead of
+  a cryptic “subscript out of bounds” error.
+
 ## cuvis.r 0.1.0
 
 - Initial release.

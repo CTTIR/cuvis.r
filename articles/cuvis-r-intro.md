@@ -1,5 +1,20 @@
 # Getting Started with cuvis.r
 
+[![R-CMD-check](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/CTTIR/cuvis.r/actions/workflows/pkgdown.yaml/badge.svg)](https://cttir.github.io/cuvis.r/)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/cuvis.r)](https://CRAN.R-project.org/package=cuvis.r)
+[![Codecov test
+coverage](https://codecov.io/gh/CTTIR/cuvis.r/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CTTIR/cuvis.r?branch=main)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/cuvis.r)](https://cran.r-project.org/package=cuvis.r)
+[![CRAN downloads
+total](https://cranlogs.r-pkg.org/badges/grand-total/cuvis.r)](https://cran.r-project.org/package=cuvis.r)
+[![License: Apache
+2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
 ### Overview
 
 **cuvis.r** provides R bindings to the Cubert CUVIS C SDK for reading,
