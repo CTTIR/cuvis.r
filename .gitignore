@@ -20,3 +20,4 @@ configure.log
 *.bak
 *.orig
 *.Rcheck/
+_coverage/

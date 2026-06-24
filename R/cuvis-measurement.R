@@ -17,10 +17,10 @@ cuvis_get_measurement <- function(session, index = 1L,
   if (index < 1L || index > session$count) {
     cli_abort("Index {index} out of range [1, {session$count}].")
   }
-  itype <- cuvis_session_item_types[[item_type]]
-  if (is.null(itype)) {
+  if (!item_type %in% names(cuvis_session_item_types)) {
     cli_abort("Unknown item_type: {.val {item_type}}. Use 'no_gaps', 'all_frames', or 'references'.")
   }
+  itype <- cuvis_session_item_types[[item_type]]
   # Convert to 0-based for C
   handle <- .Call("rcuvis_session_get_mesu", session$handle,
                   index - 1L, itype)

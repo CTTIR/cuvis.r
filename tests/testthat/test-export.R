@@ -5,8 +5,11 @@ test_that("ENVI export produces output files", {
   ctx <- cuvis_processing_context(session)
   cuvis_reprocess(ctx, mesu, mode = "raw")
 
-  dir <- withr::local_tempdir()
+  # Use a not-yet-existing subdirectory so the exporter has to create it.
+  dir <- file.path(withr::local_tempdir(), "envi_out")
+  expect_false(dir.exists(dir))
   cuvis_export_envi(mesu, dir)
+  expect_true(dir.exists(dir))
 
   # ENVI export should produce at least one .hdr file
   hdr_files <- list.files(dir, pattern = "\\.hdr$", recursive = TRUE)
