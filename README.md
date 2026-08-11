@@ -1,5 +1,7 @@
 # cuvis.r <img src="man/figures/logo.svg" align="right" height="180" alt="cuvis.r logo" />
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889930.svg)](https://doi.org/10.5281/zenodo.21889930)
+
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/CTTIR/cuvis.r/actions/workflows/pkgdown.yaml/badge.svg)](https://cttir.github.io/cuvis.r/)
@@ -122,3 +124,11 @@ third parties for the self-hosted model.
 ## License
 
 Apache License 2.0
+
+## Citation
+
+If you use this software, please cite it as:
+
+> Heller, R. (2026). *cuvis.r: R bindings for the Cubert CUVIS hyperspectral SDK* (Version 0.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21889930
+
+DOI: [10.5281/zenodo.21889930](https://doi.org/10.5281/zenodo.21889930)
