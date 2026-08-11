@@ -1,5 +1,7 @@
 # cuvis.r
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889930.svg)](https://doi.org/10.5281/zenodo.21889930)
+
 **cuvis.r** provides R bindings to the [Cubert CUVIS
 SDK](https://cubert-hyperspectral.com/en/cuvis-sdk/) for reading,
 calibrating, and exporting hyperspectral data from Cubert cameras.
@@ -124,3 +126,13 @@ parties for the self-hosted model.
 ## License
 
 Apache License 2.0
+
+## Citation
+
+If you use this software, please cite it as:
+
+> Heller, R. (2026). *cuvis.r: R bindings for the Cubert CUVIS
+> hyperspectral SDK* (Version 0.1.0) \[Computer software\]. Zenodo.
+> <https://doi.org/10.5281/zenodo.21889930>
+
+DOI: [10.5281/zenodo.21889930](https://doi.org/10.5281/zenodo.21889930)

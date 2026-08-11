@@ -10,10 +10,6 @@ values. Used internally by
 cuvis_processing_modes
 ```
 
-## Format
-
-An object of class `integer` of length 5.
-
 ## Details
 
 - `Raw` (0): Raw sensor data, no processing

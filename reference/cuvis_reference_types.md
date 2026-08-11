@@ -10,10 +10,6 @@ values. Used by
 cuvis_reference_types
 ```
 
-## Format
-
-An object of class `integer` of length 5.
-
 ## Details
 
 - `Dark` (0): Dark reference frame

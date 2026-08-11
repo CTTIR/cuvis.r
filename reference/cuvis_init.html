@@ -60,14 +60,25 @@ SDK and configures the user settings directory.</p>
 
 
 <dl><dt id="arg-settings-dir">settings_dir<a class="anchor" aria-label="anchor" href="#arg-settings-dir"></a></dt>
-<dd><p>Character. Path to CUVIS user settings directory.
-If <code>NULL</code> (default), uses the <code>CUVIS_SETTINGS</code> environment variable,
-or a temporary directory.</p></dd>
+<dd><p>Character. Path to the CUVIS settings directory — the
+one holding <code>factory/</code> and <code>user/</code>. If <code>NULL</code> (default), the directory is
+discovered in this order: the <code>CUVIS_SETTINGS</code> environment variable, then
+the standard install locations for the platform, and only as a last resort
+a temporary directory.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Invisible <code>NULL</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The settings directory is not optional in practice. The SDK loads its
+factory calibration from it, and pointing it at an empty directory makes
+every subsequent <code>cuvis_proc_cont_apply()</code> fail with "Could not process
+measurement" — which looks like a corrupt recording rather than a
+configuration problem. Hence the search over real install locations before
+falling back to a temporary directory, and the warning when it does.</p>
     </div>
 
     <div class="section level2">

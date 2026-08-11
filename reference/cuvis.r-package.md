@@ -13,13 +13,18 @@ This package mirrors the API of 'cuvis.python'
 
 Useful links:
 
-- <https://github.com/r-heller/cuvis.r>
+- <https://github.com/cttir/cuvis.r>
 
-- <https://r-heller.github.io/cuvis.r/>
+- <https://cttir.github.io/cuvis.r/>
 
-- Report bugs at <https://github.com/r-heller/cuvis.r/issues>
+- Report bugs at <https://github.com/cttir/cuvis.r/issues>
 
 ## Author
 
-**Maintainer**: Raban Heller <raban.heller@charite.de>
+**Maintainer**: R. Heller <raban.heller@charite.de>
 ([ORCID](https://orcid.org/0000-0001-8006-9742))
+
+Authors:
+
+- R. Heller <raban.heller@charite.de>
+  ([ORCID](https://orcid.org/0000-0001-8006-9742))

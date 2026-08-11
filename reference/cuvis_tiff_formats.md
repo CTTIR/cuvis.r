@@ -7,7 +7,3 @@ CUVIS TIFF Formats
 ``` r
 cuvis_tiff_formats
 ```
-
-## Format
-
-An object of class `integer` of length 3.
