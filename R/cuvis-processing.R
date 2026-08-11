@@ -87,6 +87,31 @@ cuvis_reprocess <- function(ctx, measurement,
   stopifnot(inherits(measurement, "cuvis_measurement"))
   mode <- match.arg(mode)
   mode_int <- .proc_mode_lookup[[mode]]
+
+  # Check the references the requested mode needs before asking the SDK. Its
+  # own failure is an opaque "Could not process measurement", which is
+  # indistinguishable from a corrupt recording -- yet the usual cause is
+  # mundane: reference captures (dark/white/blank frames) cannot themselves be
+  # turned into reflectance, because they are what reflectance is computed
+  # against.
+  needed <- switch(mode,
+    reflectance    = c("dark", "white"),
+    dark_subtract  = "dark",
+    character(0)
+  )
+  missing <- needed[!vapply(needed, function(t) isTRUE(cuvis_has_reference(ctx, t)),
+                            logical(1))]
+  if (length(missing)) {
+    cli_abort(c(
+      "Cannot process this measurement as {.val {mode}}.",
+      "x" = "The processing context has no {.val {missing}} reference{?s}.",
+      "i" = "Reference captures (dark, white, blank) have no reflectance of
+             their own -- read them with {.code mode = \"raw\"}.",
+      "i" = "For an ordinary measurement, check that the session file carries
+             its references, or set them with {.fn cuvis_set_reference}."
+    ))
+  }
+
   .Call("rcuvis_proc_set_args", ctx$handle, mode_int,
         as.logical(allow_recalib))
   .Call("rcuvis_proc_apply", ctx$handle, measurement$handle)
