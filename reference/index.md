@@ -22,6 +22,8 @@
   : Check if a Reference is Set
 - [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)
   : Initialize the CUVIS SDK
+- [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md)
+  : Is the CUVIS SDK Currently Initialised?
 - [`cuvis_processing_context()`](https://cttir.github.io/cuvis.r/reference/cuvis_processing_context.md)
   : Create a Processing Context for Calibration
 - [`cuvis_processing_modes`](https://cttir.github.io/cuvis.r/reference/cuvis_processing_modes.md)
