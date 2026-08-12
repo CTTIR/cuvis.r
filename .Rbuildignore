@@ -16,3 +16,5 @@
 ^\.data$
 ^configure\.log$
 ^_pkgdown\.yml$
+^CITATION\.cff$
+^\.zenodo\.json$
