@@ -14,3 +14,28 @@ test_that("cuvis_available returns FALSE when the SDK call errors", {
   # without the SDK is that the contract (logical scalar) always holds.
   expect_false(is.na(cuvis_available()))
 })
+
+test_that("initialisation is idempotent and shutdown is re-entrant", {
+  skip_if_not(cuvis_available(), "CUVIS SDK not available")
+
+  # Re-initialising a shut-down SDK does not restore a usable state: the next
+  # session load dereferences a null handle and takes the R process down.
+  # Reading two measurements in one session used to segfault on the second,
+  # because the reader shut the SDK down after each read. Initialisation is
+  # therefore a no-op while already initialised, and shutdown does nothing
+  # when there is nothing to release.
+  cuvis_init()
+  expect_true(cuvis_is_initialized())
+
+  expect_silent(cuvis_init())          # second call is a no-op
+  expect_true(cuvis_is_initialized())
+
+  cuvis_shutdown()
+  expect_false(cuvis_is_initialized())
+
+  expect_silent(cuvis_shutdown())      # safe to call again
+  expect_false(cuvis_is_initialized())
+
+  cuvis_init()                          # leave the session usable
+  expect_true(cuvis_is_initialized())
+})
