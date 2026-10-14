@@ -15,14 +15,14 @@ total](https://cranlogs.r-pkg.org/badges/grand-total/cuvis.r)](https://cran.r-pr
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
-### Overview
+## Overview
 
 **cuvis.r** provides R bindings to the Cubert CUVIS C SDK for reading,
 processing, and exporting hyperspectral imaging data from Cubert
 snapshot cameras. It mirrors the API of
 [cuvis.python](https://github.com/cubert-hyperspectral/cuvis.python).
 
-### Prerequisites
+## Prerequisites
 
 1.  Install the **Cubert CUVIS SDK** (\>= 3.4.0) from
     <https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m>
@@ -35,9 +35,9 @@ snapshot cameras. It mirrors the API of
 remotes::install_github("cttir/cuvis.r")
 ```
 
-### Quick Start
+## Quick Start
 
-#### Initialize the SDK
+### Initialize the SDK
 
 Every cuvis.r session begins with
 [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)
@@ -51,7 +51,7 @@ library(cuvis.r)
 cuvis_init()
 ```
 
-#### Load a Session File
+### Load a Session File
 
 Cubert cameras store measurements in `.cu3s` session files. Load one
 with
@@ -63,7 +63,7 @@ session <- cuvis_session("path/to/measurement.cu3s")
 print(session)
 ```
 
-#### Extract a Measurement
+### Extract a Measurement
 
 Session files contain one or more measurements. Access them by index
 (1-based):
@@ -74,7 +74,7 @@ mesu <- cuvis_get_measurement(session, 1)
 print(mesu)
 ```
 
-#### Inspect Metadata
+### Inspect Metadata
 
 ``` r
 
@@ -85,7 +85,7 @@ md$serial_number
 md$product_name
 ```
 
-#### Get the Data Cube
+### Get the Data Cube
 
 The hyperspectral data cube is returned as a 3D R array
 `[rows, cols, bands]` with wavelength metadata attached:
@@ -113,7 +113,7 @@ single_band <- cube[, , 30]
 image(single_band, main = "Band 30")
 ```
 
-#### Export to Standard Formats
+### Export to Standard Formats
 
 ``` r
 
@@ -124,14 +124,14 @@ cuvis_export_envi(mesu, "output/envi/")
 cuvis_export_tiff(mesu, "output/tiff/")
 ```
 
-#### Shutdown
+### Shutdown
 
 ``` r
 
 cuvis_shutdown()
 ```
 
-### Next Steps
+## Next Steps
 
 - See
   [`vignette("cuvis-r-calibration")`](https://cttir.github.io/cuvis.r/articles/cuvis-r-calibration.md)
@@ -140,21 +140,3 @@ cuvis_shutdown()
 - See the [cuvis.python
   examples](https://github.com/cubert-hyperspectral/cuvis.python.examples)
   for workflow patterns that translate directly to cuvis.r
-
-## Use of LLM tools
-
-Portions of this package were prepared with assistance from large
-language model tooling for narrowly defined, non-authorial tasks:
-copyediting, prose smoothing, Markdown/LaTeX formatting, scaffolding of
-boilerplate files (CI configs, build scripts), code refactoring. The
-tools used were [Chat
-AI](https://kisski.gwdg.de/leistungen/2-02-llm-service/), the LLM
-service of KISSKI (GWDG), and a self-hosted **Mistral Small (24B,
-Apache-2.0)** run locally via [Ollama](https://ollama.com/) and the
-`ollamar` R package — local inference only, with no data sent to third
-parties for the self-hosted model.
-
-All scientific claims, methodological choices, analyses,
-interpretations, and conclusions are the author’s own. No LLM-generated
-text was incorporated without review and revision, and every reference
-was verified against its DOI, arXiv ID, or ISBN.
