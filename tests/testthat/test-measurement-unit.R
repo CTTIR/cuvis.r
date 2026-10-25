@@ -18,6 +18,7 @@ test_that("cuvis_get_measurement rejects non-session input", {
 
 test_that("cuvis_get_measurement enforces the index range", {
   s <- fake_session(count = 3L)
+  local_mocked_bindings(cuvis_session_count = function(session, item_type) 3L)
   expect_error(cuvis_get_measurement(s, 0), "out of range")
   expect_error(cuvis_get_measurement(s, 4), "out of range")
   expect_error(cuvis_get_measurement(s, -1), "out of range")

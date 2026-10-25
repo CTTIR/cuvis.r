@@ -13,10 +13,15 @@
 cuvis_get_measurement <- function(session, index = 1L,
                                   item_type = "no_gaps") {
   stopifnot(inherits(session, "cuvis_session"))
-  index <- as.integer(index)
-  if (index < 1L || index > session$count) {
-    cli_abort("Index {index} out of range [1, {session$count}].")
+  if (!is.numeric(index) || length(index) != 1L || !is.finite(index) ||
+        index != floor(index)) {
+    cli_abort("index must be one finite integer.")
   }
+  count <- cuvis_session_count(session, item_type)
+  if (index < 1L || index > count) {
+    cli_abort("Index {index} out of range [1, {count}] for {item_type}.")
+  }
+  index <- as.integer(index)
   if (!item_type %in% names(cuvis_session_item_types)) {
     cli_abort("Unknown item_type: {.val {item_type}}. Use 'no_gaps', 'all_frames', or 'references'.")
   }

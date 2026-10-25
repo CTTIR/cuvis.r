@@ -59,3 +59,32 @@ summary.cuvis_session <- function(object, ...) {
   }
   invisible(object)
 }
+
+#' Count session items by SDK enumeration type
+#' @param session A cuvis_session.
+#' @param item_type One of no_gaps, all_frames, references.
+#' @return Exact SDK count for the requested enumeration.
+#' @export
+cuvis_session_count <- function(session, item_type = "no_gaps") {
+  stopifnot(inherits(session, "cuvis_session"))
+  if (length(item_type) != 1L || is.na(item_type) ||
+        !item_type %in% names(cuvis_session_item_types)) {
+    cli::cli_abort("Unknown item_type.")
+  }
+  .Call("rcuvis_session_get_size", session$handle,
+        cuvis_session_item_types[[item_type]])
+}
+
+#' Read source nominal session frame rate
+#' @param session A cuvis_session.
+#' @return Positive SDK FPS or NA when unavailable. Never derived from
+#' timestamps.
+#' @export
+cuvis_session_fps <- function(session) {
+  stopifnot(inherits(session, "cuvis_session"))
+  fps <- .Call("rcuvis_session_get_fps", session$handle)
+  if (length(fps) != 1L || !is.finite(fps) || fps <= 0) {
+    return(NA_real_)
+  }
+  fps
+}
