@@ -38,6 +38,10 @@
   : Load the Default Sample Session
 - [`cuvis_session()`](https://cttir.github.io/cuvis.r/reference/cuvis_session.md)
   : Load a Cubert Session File
+- [`cuvis_session_count()`](https://cttir.github.io/cuvis.r/reference/cuvis_session_count.md)
+  : Count session items by SDK enumeration type
+- [`cuvis_session_fps()`](https://cttir.github.io/cuvis.r/reference/cuvis_session_fps.md)
+  : Read source nominal session frame rate
 - [`cuvis_set_reference()`](https://cttir.github.io/cuvis.r/reference/cuvis_set_reference.md)
   : Set a Calibration Reference
 - [`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md)
