@@ -1,5 +1,9 @@
 # cuvis.r (development version)
 
+* Standardize the named v5 package logo across README, documentation pages
+  and available application headers, with matching light and dark artwork.
+
+
 * `cuvis_get_measurement()` now raises an informative error for an unknown
   `item_type` instead of a cryptic "subscript out of bounds" error.
 
