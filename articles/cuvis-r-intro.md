@@ -1,5 +1,7 @@
 # Getting Started with cuvis.r
 
+![cuvis.r logo](figures/logo.svg)![cuvis.r logo](figures/logo-dark.svg)
+
 [![R-CMD-check](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/CTTIR/cuvis.r/actions/workflows/pkgdown.yaml/badge.svg)](https://cttir.github.io/cuvis.r/)
 [![CRAN
