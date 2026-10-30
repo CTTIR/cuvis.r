@@ -19,3 +19,5 @@
 ^CITATION\.cff$
 ^\.zenodo\.json$
 ^tools/branding$
+^\.git$
+^MAINTENANCE\.md$

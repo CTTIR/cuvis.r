@@ -59,8 +59,8 @@ cameras. It mirrors the API of
 
 ## Prerequisites
 
-1. Install the **Cubert CUVIS SDK** (>= 3.4.0) from
-   <https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m>
+1. Install the **Cubert CUVIS SDK** for a supported Linux or Windows platform from
+   <https://github.com/cubert-hyperspectral/cuvis.sdk/releases>
 2. Set the `CUVIS_SDK` environment variable to the SDK install directory
 3. Install cuvis.r from GitHub:
 
@@ -69,6 +69,11 @@ remotes::install_github("cttir/cuvis.r")
 ```
 
 ## Quick Start
+
+The SDK may be initialized only once per R process. Keep it active for the
+whole batch, then shut down once. Restart R before another batch after shutdown.
+macOS supports stub installation, not the vendor runtime. Exports require a new
+or empty directory unless `overwrite = TRUE` is explicitly requested.
 
 ### Initialize the SDK
 

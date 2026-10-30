@@ -18,6 +18,7 @@
 #' }
 #' @export
 cuvis_session <- function(path) {
+  path <- .cuvis_path(path, "path")
   path <- normalizePath(path, mustWork = TRUE)
   if (!grepl("\\.cu3s$", path, ignore.case = TRUE)) {
     cli_warn("File does not have .cu3s extension: {.path {path}}")
@@ -67,7 +68,7 @@ summary.cuvis_session <- function(object, ...) {
 #' @export
 cuvis_session_count <- function(session, item_type = "no_gaps") {
   stopifnot(inherits(session, "cuvis_session"))
-  if (length(item_type) != 1L || is.na(item_type) ||
+  if (!is.character(item_type) || length(item_type) != 1L || is.na(item_type) ||
         !item_type %in% names(cuvis_session_item_types)) {
     cli::cli_abort("Unknown item_type.")
   }

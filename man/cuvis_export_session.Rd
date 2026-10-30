@@ -4,7 +4,7 @@
 \alias{cuvis_export_session}
 \title{Export a Measurement to a New Session File}
 \usage{
-cuvis_export_session(measurement, dir, permissive = TRUE)
+cuvis_export_session(measurement, dir, permissive = TRUE, overwrite = FALSE)
 }
 \arguments{
 \item{measurement}{A cuvis_measurement object.}
@@ -12,6 +12,10 @@ cuvis_export_session(measurement, dir, permissive = TRUE)
 \item{dir}{Character. Output directory for the \code{.cu3s} file.}
 
 \item{permissive}{Logical. Default \code{TRUE}.}
+
+\item{overwrite}{Logical. Default \code{FALSE} requires a new or empty output
+directory and disables SDK file replacement. Set \code{TRUE} only when
+replacement of existing output is intended.}
 }
 \value{
 Invisible \code{dir}.

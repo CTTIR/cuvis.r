@@ -8,10 +8,43 @@ SEXP cuvis_exporter_tag;
 
 /* SDK state: 1 if initialized, 0 if shut down. Finalizers check this. */
 int rcuvis_sdk_alive = 0;
+#ifndef CUVIS_STUB
+static int rcuvis_sdk_started = 0;
+#endif
 
 /* ---- Utility functions ---- */
 
+void rcuvis_require_alive(void) {
+    if (!rcuvis_sdk_alive) {
+        Rf_error("CUVIS SDK is not initialized or has been shut down. "
+                 "Initialize it once; after shutdown restart R.");
+    }
+}
+
+const char *rcuvis_string(SEXP value, const char *name) {
+    if (TYPEOF(value) != STRSXP || XLENGTH(value) != 1 ||
+        STRING_ELT(value, 0) == NA_STRING || LENGTH(STRING_ELT(value, 0)) == 0) {
+        Rf_error("%s must be one nonempty string", name);
+    }
+    return Rf_translateCharUTF8(STRING_ELT(value, 0));
+}
+
+int rcuvis_integer(SEXP value, const char *name) {
+    if (TYPEOF(value) != INTSXP || XLENGTH(value) != 1 || INTEGER(value)[0] == NA_INTEGER) {
+        Rf_error("%s must be one non-missing integer", name);
+    }
+    return INTEGER(value)[0];
+}
+
+int rcuvis_logical(SEXP value, const char *name) {
+    if (TYPEOF(value) != LGLSXP || XLENGTH(value) != 1 || LOGICAL(value)[0] == NA_LOGICAL) {
+        Rf_error("%s must be TRUE or FALSE", name);
+    }
+    return LOGICAL(value)[0];
+}
+
 SEXP rcuvis_make_handle(void *ptr, SEXP tag, R_CFinalizer_t finalizer) {
+    if (!ptr) Rf_error("CUVIS SDK returned an empty handle");
     SEXP xp = PROTECT(R_MakeExternalPtr(ptr, tag, R_NilValue));
     if (finalizer) {
         R_RegisterCFinalizerEx(xp, finalizer, TRUE);
@@ -27,6 +60,7 @@ void *rcuvis_get_handle(SEXP xp, SEXP expected_tag, const char *type_name) {
     if (R_ExternalPtrTag(xp) != expected_tag) {
         Rf_error("Expected a %s handle", type_name);
     }
+    rcuvis_require_alive();
     void *ptr = R_ExternalPtrAddr(xp);
     if (!ptr) {
         Rf_error("%s handle has been freed or is invalid", type_name);
@@ -54,10 +88,14 @@ void rcuvis_check_status(int status, const char *context) {
 
 SEXP rcuvis_init(SEXP settings_dir) {
 #ifndef CUVIS_STUB
-    const char *dir = CHAR(STRING_ELT(settings_dir, 0));
+    if (rcuvis_sdk_started) {
+        Rf_error("CUVIS initialization is allowed only once per R process. Restart R.");
+    }
+    const char *dir = rcuvis_string(settings_dir, "settings_dir");
     int status = cuvis_init(dir, loglevel_info, NULL);
     rcuvis_check_status(status, "cuvis_init");
     rcuvis_sdk_alive = 1;
+    rcuvis_sdk_started = 1;
 #else
     Rf_error("cuvis.r was installed without the CUVIS SDK. "
              "Reinstall with CUVIS_SDK set to the SDK path.");
@@ -69,7 +107,8 @@ SEXP rcuvis_shutdown(void) {
 #ifndef CUVIS_STUB
     if (rcuvis_sdk_alive) {
         rcuvis_sdk_alive = 0;
-        cuvis_shutdown();
+        int status = cuvis_shutdown();
+        rcuvis_check_status(status, "cuvis_shutdown");
     }
 #endif
     return R_NilValue;
@@ -77,6 +116,7 @@ SEXP rcuvis_shutdown(void) {
 
 SEXP rcuvis_version(void) {
 #ifndef CUVIS_STUB
+    rcuvis_require_alive();
     char ver[CUVIS_MAXBUF];
     memset(ver, 0, sizeof(ver));
     int status = cuvis_version(ver);
@@ -125,8 +165,9 @@ static const R_CallMethodDef CallEntries[] = {
     /* exporters */
     {"rcuvis_exporter_create_envi",    (DL_FUNC) &rcuvis_exporter_create_envi,    2},
     {"rcuvis_exporter_create_tiff",    (DL_FUNC) &rcuvis_exporter_create_tiff,    4},
-    {"rcuvis_exporter_create_cube",    (DL_FUNC) &rcuvis_exporter_create_cube,    2},
+    {"rcuvis_exporter_create_cube",    (DL_FUNC) &rcuvis_exporter_create_cube,    3},
     {"rcuvis_exporter_apply",          (DL_FUNC) &rcuvis_exporter_apply,          2},
+    {"rcuvis_exporter_close", (DL_FUNC) &rcuvis_exporter_close, 1},
     {NULL, NULL, 0}
 };
 

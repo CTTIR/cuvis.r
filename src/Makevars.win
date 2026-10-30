@@ -1,2 +1,3 @@
-PKG_CPPFLAGS = -I"C:/Program Files/Cuvis/sdk/cuvis_c"
-PKG_LIBS = "C:/Program Files/Cuvis/bin/cuvis.lib"
+# Safe default when installation explicitly skips configure.
+PKG_CPPFLAGS = -DCUVIS_STUB
+PKG_LIBS =

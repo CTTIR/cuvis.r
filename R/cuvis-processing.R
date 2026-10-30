@@ -11,6 +11,7 @@
 #' @return A `cuvis_processing_context` S3 object.
 #' @export
 cuvis_processing_context <- function(base, load_references = TRUE) {
+  .cuvis_flag(load_references, "load_references")
   if (inherits(base, "cuvis_session")) {
     handle <- .Call("rcuvis_proc_create_from_session", base$handle,
                     as.logical(load_references))
@@ -83,6 +84,7 @@ cuvis_reprocess <- function(ctx, measurement,
                             mode = c("reflectance", "spectral_radiance",
                                      "dark_subtract", "raw", "preview"),
                             allow_recalib = FALSE) {
+  .cuvis_flag(allow_recalib, "allow_recalib")
   stopifnot(inherits(ctx, "cuvis_processing_context"))
   stopifnot(inherits(measurement, "cuvis_measurement"))
   mode <- match.arg(mode)

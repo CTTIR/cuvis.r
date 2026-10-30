@@ -5,6 +5,8 @@
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
 #include <string.h>
+#include <stdint.h>
+#include <limits.h>
 
 #ifndef CUVIS_STUB
 #include "cuvis.h"
@@ -23,6 +25,10 @@ extern SEXP cuvis_exporter_tag;
 SEXP rcuvis_make_handle(void *ptr, SEXP tag, R_CFinalizer_t finalizer);
 void *rcuvis_get_handle(SEXP xp, SEXP expected_tag, const char *type_name);
 void rcuvis_check_status(int status, const char *context);
+void rcuvis_require_alive(void);
+const char *rcuvis_string(SEXP value, const char *name);
+int rcuvis_integer(SEXP value, const char *name);
+int rcuvis_logical(SEXP value, const char *name);
 
 /* Init functions */
 SEXP rcuvis_init(SEXP settings_dir);
@@ -56,7 +62,8 @@ SEXP rcuvis_proc_apply(SEXP ctx_xp, SEXP mesu_xp);
 SEXP rcuvis_exporter_create_envi(SEXP export_dir, SEXP permissive);
 SEXP rcuvis_exporter_create_tiff(SEXP export_dir, SEXP format_int,
                                   SEXP compression_int, SEXP permissive);
-SEXP rcuvis_exporter_create_cube(SEXP export_dir, SEXP permissive);
+SEXP rcuvis_exporter_create_cube(SEXP export_dir, SEXP permissive, SEXP overwrite);
+SEXP rcuvis_exporter_close(SEXP exporter_xp);
 SEXP rcuvis_exporter_apply(SEXP exporter_xp, SEXP mesu_xp);
 
 #endif /* RCUVIS_H */

@@ -4,7 +4,7 @@
 \alias{cuvis_export_envi}
 \title{Export a Measurement to ENVI Format}
 \usage{
-cuvis_export_envi(measurement, dir, permissive = TRUE)
+cuvis_export_envi(measurement, dir, permissive = TRUE, overwrite = FALSE)
 }
 \arguments{
 \item{measurement}{A cuvis_measurement object.}
@@ -13,6 +13,9 @@ cuvis_export_envi(measurement, dir, permissive = TRUE)
 
 \item{permissive}{Logical. Allow export even if some data is missing.
 Default \code{TRUE}.}
+
+\item{overwrite}{Logical. Default \code{FALSE} requires a new or empty output
+directory. Set \code{TRUE} only when replacement of existing output is intended.}
 }
 \value{
 Invisible \code{dir}.

@@ -66,3 +66,19 @@ test_that(".onAttach emits a startup note when the SDK is absent", {
   # Either way the hook must not raise.
   expect_true(is.character(msgs))
 })
+
+
+test_that("Windows runtime lookup accepts roots, legacy bin and header locations", {
+  sdk <- withr::local_tempdir()
+  bin <- file.path(sdk, "bin")
+  headers <- file.path(sdk, "sdk", "cuvis_c")
+  dir.create(bin)
+  dir.create(headers, recursive = TRUE)
+  for (root in c(sdk, bin, headers)) {
+    expect_identical(cuvis.r:::.cuvis_windows_bin(root, ""),
+                     normalizePath(bin, winslash = "/"))
+  }
+  expect_identical(cuvis.r:::.cuvis_windows_bin("", sdk),
+                   normalizePath(bin, winslash = "/"))
+  expect_null(cuvis.r:::.cuvis_windows_bin(tempfile(), sdk))
+})

@@ -1,7 +1,4 @@
-# Unit tests for cuvis-init.R that do not require the SDK.
-# cuvis_init/shutdown/version wrap raw .Call into the SDK and cannot be mocked,
-# so they are covered by the SDK-backed tests in test-init.R. Here we cover the
-# behaviour that is observable without hardware.
+# SDK-independent lifecycle tests use isolated function environments.
 
 test_that("cuvis_available always returns a single logical", {
   res <- cuvis_available()
@@ -15,27 +12,54 @@ test_that("cuvis_available returns FALSE when the SDK call errors", {
   expect_false(is.na(cuvis_available()))
 })
 
-test_that("initialisation is idempotent and shutdown is re-entrant", {
-  skip_if_not(cuvis_available(), "CUVIS SDK not available")
+# Exercise lifecycle without shutting down the shared SDK test session.
+init_fixture <- function(available = TRUE) {
+  env <- new.env(parent = asNamespace("cuvis.r"))
+  env$.cuvis_state <- list2env(list(initialized = FALSE, settings_dir = NULL,
+                                  retired = FALSE))
+  env$cuvis_available <- function() available
+  env$calls <- list()
+  env$.Call <- function(...) { env$calls <- c(env$calls, list(list(...))); NULL }
+  for (name in c("cuvis_init", "cuvis_shutdown", "cuvis_is_initialized")) {
+    fun <- get(name, asNamespace("cuvis.r"))
+    environment(fun) <- env
+    env[[name]] <- fun
+  }
+  env
+}
 
-  # Re-initialising a shut-down SDK does not restore a usable state: the next
-  # session load dereferences a null handle and takes the R process down.
-  # Reading two measurements in one session used to segfault on the second,
-  # because the reader shut the SDK down after each read. Initialisation is
-  # therefore a no-op while already initialised, and shutdown does nothing
-  # when there is nothing to release.
-  cuvis_init()
-  expect_true(cuvis_is_initialized())
+test_that("initialization preserves settings and shutdown permanently retires SDK", {
+  fixture <- init_fixture()
+  settings <- withr::local_tempdir()
+  fixture$cuvis_init(settings)
+  fixture$cuvis_init(file.path(settings, "."))
+  expect_length(fixture$calls, 1L)
+  expect_true(fixture$cuvis_is_initialized())
+  expect_error(fixture$cuvis_init(tempfile()), "different settings")
+  fixture$cuvis_shutdown()
+  expect_false(fixture$cuvis_is_initialized())
+  expect_silent(fixture$cuvis_shutdown())
+  expect_length(fixture$calls, 2L)
+  expect_error(fixture$cuvis_init(settings), "Restart R")
+})
 
-  expect_silent(cuvis_init())          # second call is a no-op
-  expect_true(cuvis_is_initialized())
+test_that("unavailable SDK and invalid settings do not create directories", {
+  fixture <- init_fixture(FALSE)
+  path <- tempfile()
+  expect_error(fixture$cuvis_init(path), "without the CUVIS SDK")
+  expect_false(file.exists(path))
+  fixture <- init_fixture()
+  for (value in list(NA_character_, character(), c("a", "b"), 1, "")) {
+    expect_error(fixture$cuvis_init(value), "one nonempty path")
+  }
+  expect_length(fixture$calls, 0L)
+})
 
-  cuvis_shutdown()
-  expect_false(cuvis_is_initialized())
-
-  expect_silent(cuvis_shutdown())      # safe to call again
-  expect_false(cuvis_is_initialized())
-
-  cuvis_init()                          # leave the session usable
-  expect_true(cuvis_is_initialized())
+test_that("native shutdown failure cannot leave usable handles or permit restart", {
+  fixture <- init_fixture()
+  fixture$cuvis_init(withr::local_tempdir())
+  fixture$.Call <- function(...) cli::cli_abort("shutdown failed")
+  expect_error(fixture$cuvis_shutdown(), "shutdown failed")
+  expect_false(fixture$cuvis_is_initialized())
+  expect_error(fixture$cuvis_init(), "Restart R")
 })

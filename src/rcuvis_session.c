@@ -18,7 +18,8 @@ static void session_finalizer(SEXP xp) {
 
 SEXP rcuvis_session_load(SEXP path) {
 #ifndef CUVIS_STUB
-    const char *filepath = CHAR(STRING_ELT(path, 0));
+    rcuvis_require_alive();
+    const char *filepath = rcuvis_string(path, "path");
     CUVIS_SESSION_FILE handle = 0;
     int status = cuvis_session_file_load(filepath, &handle);
     rcuvis_check_status(status, "cuvis_session_file_load");
@@ -34,7 +35,7 @@ SEXP rcuvis_session_get_size(SEXP session_xp, SEXP item_type) {
 #ifndef CUVIS_STUB
     CUVIS_SESSION_FILE handle = (CUVIS_SESSION_FILE)(intptr_t)rcuvis_get_handle(
         session_xp, cuvis_session_tag, "session");
-    CUVIS_INT itype = INTEGER(item_type)[0];
+    CUVIS_INT itype = rcuvis_integer(item_type, "item_type");
     CUVIS_INT size = 0;
     int status = cuvis_session_file_get_size(handle, itype, &size);
     rcuvis_check_status(status, "cuvis_session_file_get_size");
@@ -49,8 +50,9 @@ SEXP rcuvis_session_get_mesu(SEXP session_xp, SEXP index, SEXP item_type) {
 #ifndef CUVIS_STUB
     CUVIS_SESSION_FILE session_handle = (CUVIS_SESSION_FILE)(intptr_t)rcuvis_get_handle(
         session_xp, cuvis_session_tag, "session");
-    CUVIS_INT idx = INTEGER(index)[0];  /* Already 0-based from R side */
-    CUVIS_INT itype = INTEGER(item_type)[0];
+    CUVIS_INT idx = rcuvis_integer(index, "index");  /* Already 0-based from R side */
+    CUVIS_INT itype = rcuvis_integer(item_type, "item_type");
+    if (idx < 0) Rf_error("index must be nonnegative");
     CUVIS_MESU mesu_handle = 0;
     int status = cuvis_session_file_get_mesu(session_handle, idx, itype,
                                              &mesu_handle);

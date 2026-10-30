@@ -27,9 +27,17 @@
 #' }
 #' @export
 cuvis_init <- function(settings_dir = NULL) {
+  if (isTRUE(.cuvis_state$retired)) {
+    cli::cli_abort("The CUVIS SDK was shut down. Restart R before initializing it again.")
+  }
+  if (!cuvis_available()) {
+    cli::cli_abort("cuvis.r was installed without the CUVIS SDK. Reinstall with CUVIS_SDK set to the SDK path.")
+  }
   if (is.null(settings_dir)) {
     settings_dir <- .cuvis_default_settings()
   }
+  settings_dir <- normalizePath(.cuvis_path(settings_dir, "settings_dir"),
+                                mustWork = FALSE)
 
   # Initialising an already-initialised SDK is a no-op, and re-initialising a
   # shut-down one does not restore a usable state: the next
@@ -40,9 +48,12 @@ cuvis_init <- function(settings_dir = NULL) {
       identical(.cuvis_state$settings_dir, settings_dir)) {
     return(invisible(NULL))
   }
-  settings_dir <- normalizePath(settings_dir, mustWork = FALSE)
-  if (!dir.exists(settings_dir)) {
-    dir.create(settings_dir, recursive = TRUE)
+  if (isTRUE(.cuvis_state$initialized)) {
+    cli::cli_abort("The SDK is already initialized with different settings. Restart R to change them.")
+  }
+  if (!dir.exists(settings_dir) &&
+      !dir.create(settings_dir, recursive = TRUE)) {
+    cli::cli_abort("Could not create the CUVIS settings directory.")
   }
   .Call("rcuvis_init", settings_dir)
   .cuvis_state$initialized <- TRUE
@@ -56,6 +67,7 @@ cuvis_init <- function(settings_dir = NULL) {
 .cuvis_state <- new.env(parent = emptyenv())
 .cuvis_state$initialized <- FALSE
 .cuvis_state$settings_dir <- NULL
+.cuvis_state$retired <- FALSE
 
 
 #' Is the CUVIS SDK Currently Initialised?
@@ -77,7 +89,7 @@ cuvis_is_initialized <- function() isTRUE(.cuvis_state$initialized)
   candidates <- c(
     "/etc/cuvis",
     "/usr/local/etc/cuvis",
-    file.path(Sys.getenv("CUVIS", unset = ""), "settings"),
+    if (nzchar(Sys.getenv("CUVIS"))) file.path(Sys.getenv("CUVIS"), "settings"),
     "C:/ProgramData/cuvis",
     "C:/Program Files/Cubert GmbH/Cuvis/settings"
   )
@@ -106,6 +118,9 @@ cuvis_is_initialized <- function() isTRUE(.cuvis_state$initialized)
 #' Shut Down the CUVIS SDK
 #'
 #' Releases all SDK resources. Call when done using cuvis.r functions.
+#' The vendor permits initialization only once per process. After shutdown,
+#' existing handles cannot be used and R must be restarted before another
+#' [cuvis_init()] call. Keep one initialized SDK for a batch of measurements.
 #'
 #' @return Invisible `NULL`.
 #' @export
@@ -113,9 +128,10 @@ cuvis_shutdown <- function() {
   if (!isTRUE(.cuvis_state$initialized)) {
     return(invisible(NULL))
   }
-  .Call("rcuvis_shutdown")
   .cuvis_state$initialized <- FALSE
   .cuvis_state$settings_dir <- NULL
+  .cuvis_state$retired <- TRUE
+  .Call("rcuvis_shutdown")
   invisible(NULL)
 }
 
@@ -132,7 +148,9 @@ cuvis_version <- function() {
 
 #' Check if CUVIS SDK is Available
 #'
-#' Tests whether the Cubert CUVIS SDK library is linked and usable.
+#' Tests whether the Cubert CUVIS SDK library was linked at installation.
+#' This does not initialize the SDK or verify calibration, sample data or
+#' runtime usability. See [cuvis_is_initialized()].
 #'
 #' @return Logical. `TRUE` if the SDK is available, `FALSE` otherwise.
 #' @export

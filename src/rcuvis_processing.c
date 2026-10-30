@@ -17,7 +17,7 @@ SEXP rcuvis_proc_create_from_session(SEXP session_xp, SEXP load_refs) {
 #ifndef CUVIS_STUB
     CUVIS_SESSION_FILE session_handle = (CUVIS_SESSION_FILE)(intptr_t)rcuvis_get_handle(
         session_xp, cuvis_session_tag, "session");
-    int lrefs = LOGICAL(load_refs)[0];
+    int lrefs = rcuvis_logical(load_refs, "load_references");
     CUVIS_PROC_CONT ctx_handle = 0;
     int status = cuvis_proc_cont_create_from_session_file(
         session_handle, lrefs ? 1 : 0, &ctx_handle);
@@ -34,7 +34,7 @@ SEXP rcuvis_proc_create_from_mesu(SEXP mesu_xp, SEXP load_refs) {
 #ifndef CUVIS_STUB
     CUVIS_MESU mesu_handle = (CUVIS_MESU)(intptr_t)rcuvis_get_handle(
         mesu_xp, cuvis_mesu_tag, "measurement");
-    int lrefs = LOGICAL(load_refs)[0];
+    int lrefs = rcuvis_logical(load_refs, "load_references");
     CUVIS_PROC_CONT ctx_handle = 0;
     int status = cuvis_proc_cont_create_from_mesu(
         mesu_handle, lrefs ? 1 : 0, &ctx_handle);
@@ -53,7 +53,7 @@ SEXP rcuvis_proc_set_reference(SEXP ctx_xp, SEXP mesu_xp, SEXP type_int) {
         ctx_xp, cuvis_proc_tag, "processing_context");
     CUVIS_MESU mesu_handle = (CUVIS_MESU)(intptr_t)rcuvis_get_handle(
         mesu_xp, cuvis_mesu_tag, "measurement");
-    CUVIS_REFERENCE_TYPE ref_type = (CUVIS_REFERENCE_TYPE)INTEGER(type_int)[0];
+    CUVIS_REFERENCE_TYPE ref_type = (CUVIS_REFERENCE_TYPE)rcuvis_integer(type_int, "type");
     int status = cuvis_proc_cont_set_reference(ctx_handle, mesu_handle, ref_type);
     rcuvis_check_status(status, "cuvis_proc_cont_set_reference");
 #else
@@ -66,7 +66,7 @@ SEXP rcuvis_proc_clear_reference(SEXP ctx_xp, SEXP type_int) {
 #ifndef CUVIS_STUB
     CUVIS_PROC_CONT ctx_handle = (CUVIS_PROC_CONT)(intptr_t)rcuvis_get_handle(
         ctx_xp, cuvis_proc_tag, "processing_context");
-    CUVIS_REFERENCE_TYPE ref_type = (CUVIS_REFERENCE_TYPE)INTEGER(type_int)[0];
+    CUVIS_REFERENCE_TYPE ref_type = (CUVIS_REFERENCE_TYPE)rcuvis_integer(type_int, "type");
     int status = cuvis_proc_cont_clear_reference(ctx_handle, ref_type);
     rcuvis_check_status(status, "cuvis_proc_cont_clear_reference");
 #else
@@ -79,7 +79,7 @@ SEXP rcuvis_proc_has_reference(SEXP ctx_xp, SEXP type_int) {
 #ifndef CUVIS_STUB
     CUVIS_PROC_CONT ctx_handle = (CUVIS_PROC_CONT)(intptr_t)rcuvis_get_handle(
         ctx_xp, cuvis_proc_tag, "processing_context");
-    CUVIS_REFERENCE_TYPE ref_type = (CUVIS_REFERENCE_TYPE)INTEGER(type_int)[0];
+    CUVIS_REFERENCE_TYPE ref_type = (CUVIS_REFERENCE_TYPE)rcuvis_integer(type_int, "type");
     CUVIS_INT has_ref = 0;
     int status = cuvis_proc_cont_has_reference(ctx_handle, ref_type, &has_ref);
     rcuvis_check_status(status, "cuvis_proc_cont_has_reference");
@@ -96,8 +96,8 @@ SEXP rcuvis_proc_set_args(SEXP ctx_xp, SEXP mode_int, SEXP allow_recalib) {
         ctx_xp, cuvis_proc_tag, "processing_context");
     struct cuvis_proc_args_t args;
     memset(&args, 0, sizeof(args));
-    args.processing_mode = (CUVIS_PROCESSING_MODE)INTEGER(mode_int)[0];
-    args.allow_recalib = LOGICAL(allow_recalib)[0] ? 1 : 0;
+    args.processing_mode = (CUVIS_PROCESSING_MODE)rcuvis_integer(mode_int, "mode");
+    args.allow_recalib = rcuvis_logical(allow_recalib, "allow_recalib");
     int status = cuvis_proc_cont_set_args(ctx_handle, args);
     rcuvis_check_status(status, "cuvis_proc_cont_set_args");
 #else

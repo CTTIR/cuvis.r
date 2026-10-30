@@ -9,7 +9,8 @@ cuvis_export_tiff(
   dir,
   format = c("MultiChannel", "Single", "MultiPage"),
   compression = c("None", "LZW"),
-  permissive = TRUE
+  permissive = TRUE,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ cuvis_export_tiff(
 or \code{"LZW"}.}
 
 \item{permissive}{Logical. Default \code{TRUE}.}
+
+\item{overwrite}{Logical. Default \code{FALSE} requires a new or empty output
+directory. Set \code{TRUE} only when replacement of existing output is intended.}
 }
 \value{
 Invisible \code{dir}.

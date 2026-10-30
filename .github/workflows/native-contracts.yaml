@@ -1,0 +1,25 @@
+name: SDK wrapper contracts
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+      - name: Test configure selection
+        run: python3 tools/test-configure.py
+      - name: Obtain checksum-pinned public SDK header
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/cuvis.deb" \
+            https://github.com/cubert-hyperspectral/cuvis.sdk/releases/download/v3.6.1/libcuvis_3.6.1-0_Ubuntu24.04_amd64_nocuda.deb
+          echo "64de880e06b90a97b92fd0eca9c9d3a0dc320deab72f92307c6a89a9b3a39f60  $RUNNER_TEMP/cuvis.deb" | sha256sum --check
+          ar p "$RUNNER_TEMP/cuvis.deb" data.tar.zst | tar --zstd -xOf - ./usr/include/cuvis.h > "$RUNNER_TEMP/cuvis.h"
+      - name: Test native wrappers with synthetic responses
+        run: python3 tools/test-native.py "$RUNNER_TEMP/cuvis.h"

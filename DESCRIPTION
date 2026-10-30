@@ -1,6 +1,6 @@
 Package: cuvis.r
 Title: R Bindings for the Cubert CUVIS Hyperspectral SDK
-Version: 0.1.0
+Version: 0.1.1.9000
 Authors@R: person("R.", "Heller", email = "raban.heller@charite.de",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0001-8006-9742"))
 Description: Provides R bindings to the Cubert CUVIS C SDK for reading,
@@ -16,8 +16,8 @@ URL: https://github.com/cttir/cuvis.r, https://cttir.github.io/cuvis.r/
 BugReports: https://github.com/cttir/cuvis.r/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-SystemRequirements: Cubert CUVIS SDK (>= 3.4.0) -
-    download from <https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m>
+SystemRequirements: Cubert CUVIS SDK (Linux or Windows; optional for stub mode),
+    <https://github.com/cubert-hyperspectral/cuvis.sdk/releases>
 Depends:
     R (>= 4.1.0)
 Imports:

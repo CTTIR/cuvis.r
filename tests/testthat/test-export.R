@@ -39,16 +39,9 @@ test_that("session export produces .cu3s file", {
   cuvis_reprocess(ctx, mesu, mode = "raw")
 
   dir <- withr::local_tempdir()
-  # Some sample measurements (e.g. preview-only frames) lack the buffer
-  # layers that the SDK requires to save a full session. Skip in that case.
-  result <- tryCatch(
-    cuvis_export_session(mesu, dir),
-    error = function(e) e
-  )
-  if (inherits(result, "error")) {
-    skip(paste("session export not supported for this sample:",
-               conditionMessage(result)))
-  }
+  # The SDK qualification fixture must contain a complete exportable cube.
+  # An unexpected export failure is a failure, not an unavailable-data skip.
+  cuvis_export_session(mesu, dir)
 
   cu3s_files <- list.files(dir, pattern = "\\.cu3s$",
                            recursive = TRUE, ignore.case = TRUE)

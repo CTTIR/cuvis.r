@@ -1,4 +1,17 @@
-# cuvis.r (development version)
+# cuvis.r 0.1.1.9000
+
+* Prevent SDK calls through handles after shutdown and reject reinitialization
+  or settings changes that violate the vendor's one-initialization contract.
+* Validate cube buffer sizes and use wide offsets before reading native memory.
+* Require explicit export overwrite permission, reject oversized paths, and
+  validate scalar paths and logical arguments before native calls.
+* Flush SDK output before returning and release exporters immediately; propagate
+  flush failures and preserve primary errors during cleanup.
+* Match sample filenames literally. Improve SDK discovery for Unix and Windows,
+  require a matching library, and support explicit stub installation.
+* Add native synthetic-response and configure regression checks; keep real SDK,
+  calibration and file-format qualification as separate release requirements.
+* Remove an unresolved draft DOI and document supported platforms and first use.
 
 * Standardize the named v5 package logo across README, documentation pages
   and available application headers, with matching light and dark artwork.

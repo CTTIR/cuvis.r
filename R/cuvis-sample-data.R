@@ -11,6 +11,12 @@
 #' @return Character path, or `NULL` if not found.
 #' @export
 cuvis_sample_data <- function(file = NULL) {
+  if (!is.null(file)) {
+    .cuvis_path(file, "file")
+    if (grepl("[/\\\\]", file) || file %in% c(".", "..")) {
+      cli::cli_abort("file must be a literal basename without path separators.")
+    }
+  }
   dot_cuvis <- character(0)
   d <- getwd()
   for (i in seq_len(6L)) {
@@ -26,7 +32,7 @@ cuvis_sample_data <- function(file = NULL) {
   candidates <- c(
     dot_cuvis,
     Sys.getenv("CUVIS_DATA", unset = NA_character_),
-    file.path(Sys.getenv("CUVIS_SDK", unset = ""), "sample_data"),
+    if (nzchar(Sys.getenv("CUVIS_SDK"))) file.path(Sys.getenv("CUVIS_SDK"), "sample_data"),
     "/opt/cuvis/sample_data"
   )
   candidates <- candidates[!is.na(candidates) & nzchar(candidates)]
@@ -35,8 +41,8 @@ cuvis_sample_data <- function(file = NULL) {
     if (is.null(file)) {
       if (dir.exists(base)) return(normalizePath(base))
     } else {
-      found <- list.files(base, pattern = paste0("^", file, "$"),
-                          recursive = TRUE, full.names = TRUE)
+      found <- list.files(base, recursive = TRUE, full.names = TRUE)
+      found <- found[basename(found) == file]
       if (length(found) > 0) return(normalizePath(found[1]))
     }
   }

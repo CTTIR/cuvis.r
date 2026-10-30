@@ -106,13 +106,29 @@ SEXP rcuvis_mesu_get_cube(SEXP mesu_xp) {
     int status = cuvis_measurement_get_data_image(handle, CUVIS_MESU_CUBE_KEY, &buf);
     rcuvis_check_status(status, "cuvis_measurement_get_data_image(cube)");
 
+    if (!buf.height || !buf.width || !buf.channels ||
+        buf.height > INT_MAX || buf.width > INT_MAX) {
+        Rf_error("Invalid cube dimensions");
+    }
+    size_t element_size;
+    switch (buf.format) {
+        case imbuffer_format_float: element_size = sizeof(float); break;
+        case imbuffer_format_uint16: element_size = sizeof(uint16_t); break;
+        case imbuffer_format_uint32: element_size = sizeof(uint32_t); break;
+        case imbuffer_format_uint8: element_size = sizeof(uint8_t); break;
+        default: Rf_error("Unsupported image buffer format: %d", buf.format);
+    }
+    /* Check the SDK's byte count before allocating or reading. The plane
+       product fits uint64_t after validating each dimension against INT_MAX;
+       divide the bounded byte count before multiplying by channel count. */
+    uint64_t pixels = (uint64_t)buf.height * buf.width;
+    if (!buf.raw || buf.bytes != element_size ||
+        pixels > (uint64_t)buf.length / element_size / buf.channels) {
+        Rf_error("Cube buffer is missing or shorter than its declared dimensions/format");
+    }
     int nrow = (int)buf.height;
     int ncol = (int)buf.width;
     int nbands = (int)buf.channels;
-
-    if (nrow <= 0 || ncol <= 0 || nbands <= 0) {
-        Rf_error("Invalid cube dimensions: %d x %d x %d", nrow, ncol, nbands);
-    }
 
     /* Create 3D R array [rows, cols, bands] */
     SEXP dims = PROTECT(Rf_allocVector(INTSXP, 3));
@@ -132,7 +148,7 @@ SEXP rcuvis_mesu_get_cube(SEXP mesu_xp) {
             for (c = 0; c < ncol; c++) {
                 for (r = 0; r < nrow; r++) {
                     arr_data[r + (R_xlen_t)nrow * c + plane_size * b] =
-                        (double)src[(r * ncol + c) * nbands + b];
+                        (double)src[((R_xlen_t)r * ncol + c) * nbands + b];
                 }
             }
         }
@@ -142,7 +158,7 @@ SEXP rcuvis_mesu_get_cube(SEXP mesu_xp) {
             for (c = 0; c < ncol; c++) {
                 for (r = 0; r < nrow; r++) {
                     arr_data[r + (R_xlen_t)nrow * c + plane_size * b] =
-                        (double)src[(r * ncol + c) * nbands + b];
+                        (double)src[((R_xlen_t)r * ncol + c) * nbands + b];
                 }
             }
         }
@@ -152,7 +168,7 @@ SEXP rcuvis_mesu_get_cube(SEXP mesu_xp) {
             for (c = 0; c < ncol; c++) {
                 for (r = 0; r < nrow; r++) {
                     arr_data[r + (R_xlen_t)nrow * c + plane_size * b] =
-                        (double)src[(r * ncol + c) * nbands + b];
+                        (double)src[((R_xlen_t)r * ncol + c) * nbands + b];
                 }
             }
         }
@@ -162,7 +178,7 @@ SEXP rcuvis_mesu_get_cube(SEXP mesu_xp) {
             for (c = 0; c < ncol; c++) {
                 for (r = 0; r < nrow; r++) {
                     arr_data[r + (R_xlen_t)nrow * c + plane_size * b] =
-                        (double)src[(r * ncol + c) * nbands + b];
+                        (double)src[((R_xlen_t)r * ncol + c) * nbands + b];
                 }
             }
         }

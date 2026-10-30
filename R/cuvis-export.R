@@ -6,16 +6,19 @@
 #' @param dir Character. Output directory.
 #' @param permissive Logical. Allow export even if some data is missing.
 #'   Default `TRUE`.
+#' @param overwrite Logical. Default `FALSE` requires a new or empty output
+#'   directory. Set `TRUE` only when replacement of existing output is intended.
 #'
 #' @return Invisible `dir`.
 #' @export
-cuvis_export_envi <- function(measurement, dir, permissive = TRUE) {
+cuvis_export_envi <- function(measurement, dir, permissive = TRUE,
+                              overwrite = FALSE) {
   stopifnot(inherits(measurement, "cuvis_measurement"))
-  dir <- normalizePath(dir, mustWork = FALSE)
-  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  .cuvis_flag(permissive, "permissive")
+  dir <- .cuvis_export_dir(dir, overwrite)
   exp_handle <- .Call("rcuvis_exporter_create_envi", dir,
                       as.logical(permissive))
-  .Call("rcuvis_exporter_apply", exp_handle, measurement$handle)
+  .cuvis_export_apply(exp_handle, measurement$handle)
   invisible(dir)
 }
 
@@ -28,23 +31,25 @@ cuvis_export_envi <- function(measurement, dir, permissive = TRUE) {
 #' @param compression Character. Compression mode: `"None"` (default)
 #'   or `"LZW"`.
 #' @param permissive Logical. Default `TRUE`.
+#' @param overwrite Logical. Default `FALSE` requires a new or empty output
+#'   directory. Set `TRUE` only when replacement of existing output is intended.
 #'
 #' @return Invisible `dir`.
 #' @export
 cuvis_export_tiff <- function(measurement, dir,
                               format = c("MultiChannel", "Single", "MultiPage"),
                               compression = c("None", "LZW"),
-                              permissive = TRUE) {
+                              permissive = TRUE, overwrite = FALSE) {
   stopifnot(inherits(measurement, "cuvis_measurement"))
   format <- match.arg(format)
   compression <- match.arg(compression)
-  dir <- normalizePath(dir, mustWork = FALSE)
-  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  .cuvis_flag(permissive, "permissive")
+  dir <- .cuvis_export_dir(dir, overwrite)
   fmt_int <- cuvis_tiff_formats[[format]]
   comp_int <- cuvis_tiff_compression[[compression]]
   exp_handle <- .Call("rcuvis_exporter_create_tiff", dir, fmt_int, comp_int,
                       as.logical(permissive))
-  .Call("rcuvis_exporter_apply", exp_handle, measurement$handle)
+  .cuvis_export_apply(exp_handle, measurement$handle)
   invisible(dir)
 }
 
@@ -55,15 +60,36 @@ cuvis_export_tiff <- function(measurement, dir,
 #' @param measurement A cuvis_measurement object.
 #' @param dir Character. Output directory for the `.cu3s` file.
 #' @param permissive Logical. Default `TRUE`.
+#' @param overwrite Logical. Default `FALSE` requires a new or empty output
+#'   directory and disables SDK file replacement. Set `TRUE` only when
+#'   replacement of existing output is intended.
 #'
 #' @return Invisible `dir`.
 #' @export
-cuvis_export_session <- function(measurement, dir, permissive = TRUE) {
+cuvis_export_session <- function(measurement, dir, permissive = TRUE,
+                                 overwrite = FALSE) {
   stopifnot(inherits(measurement, "cuvis_measurement"))
-  dir <- normalizePath(dir, mustWork = FALSE)
-  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  .cuvis_flag(permissive, "permissive")
+  dir <- .cuvis_export_dir(dir, overwrite)
   exp_handle <- .Call("rcuvis_exporter_create_cube", dir,
-                      as.logical(permissive))
-  .Call("rcuvis_exporter_apply", exp_handle, measurement$handle)
+                      as.logical(permissive), overwrite)
+  .cuvis_export_apply(exp_handle, measurement$handle)
   invisible(dir)
+}
+
+# Always release promptly. Preserve a primary apply/flush error if cleanup also
+# fails, while reporting the cleanup failure separately.
+.cuvis_export_apply <- function(exporter, measurement) {
+  closed <- FALSE
+  on.exit({
+    if (!closed) {
+      tryCatch(.Call("rcuvis_exporter_close", exporter), error = function(e) {
+        cli::cli_warn("Exporter cleanup failed: {conditionMessage(e)}")
+      })
+    }
+  }, add = TRUE)
+  .Call("rcuvis_exporter_apply", exporter, measurement)
+  .Call("rcuvis_exporter_close", exporter)
+  closed <- TRUE
+  invisible(NULL)
 }

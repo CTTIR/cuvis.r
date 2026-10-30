@@ -11,4 +11,7 @@ Invisible \code{NULL}.
 }
 \description{
 Releases all SDK resources. Call when done using cuvis.r functions.
+The vendor permits initialization only once per process. After shutdown,
+existing handles cannot be used and R must be restarted before another
+\code{\link[=cuvis_init]{cuvis_init()}} call. Keep one initialized SDK for a batch of measurements.
 }

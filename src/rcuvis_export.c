@@ -1,5 +1,16 @@
 #include "rcuvis.h"
 
+#ifndef CUVIS_STUB
+static const char *export_directory(SEXP value) {
+    rcuvis_require_alive();
+    const char *dir = rcuvis_string(value, "export_dir");
+    if (strlen(dir) >= CUVIS_MAXBUF) {
+        Rf_error("Export directory exceeds the SDK path limit; it will not be truncated");
+    }
+    return dir;
+}
+#endif
+
 static void exporter_finalizer(SEXP xp) {
 #ifndef CUVIS_STUB
     void *ptr = R_ExternalPtrAddr(xp);
@@ -15,8 +26,8 @@ static void exporter_finalizer(SEXP xp) {
 
 SEXP rcuvis_exporter_create_envi(SEXP export_dir, SEXP permissive) {
 #ifndef CUVIS_STUB
-    const char *dir = CHAR(STRING_ELT(export_dir, 0));
-    int perm = LOGICAL(permissive)[0];
+    const char *dir = export_directory(export_dir);
+    int perm = rcuvis_logical(permissive, "permissive");
 
     struct cuvis_export_general_settings_t ge;
     memset(&ge, 0, sizeof(ge));
@@ -37,10 +48,10 @@ SEXP rcuvis_exporter_create_envi(SEXP export_dir, SEXP permissive) {
 SEXP rcuvis_exporter_create_tiff(SEXP export_dir, SEXP format_int,
                                   SEXP compression_int, SEXP permissive) {
 #ifndef CUVIS_STUB
-    const char *dir = CHAR(STRING_ELT(export_dir, 0));
-    int fmt = INTEGER(format_int)[0];
-    int comp = INTEGER(compression_int)[0];
-    int perm = LOGICAL(permissive)[0];
+    const char *dir = export_directory(export_dir);
+    int fmt = rcuvis_integer(format_int, "format");
+    int comp = rcuvis_integer(compression_int, "compression");
+    int perm = rcuvis_logical(permissive, "permissive");
 
     struct cuvis_export_general_settings_t ge;
     memset(&ge, 0, sizeof(ge));
@@ -63,10 +74,11 @@ SEXP rcuvis_exporter_create_tiff(SEXP export_dir, SEXP format_int,
 #endif
 }
 
-SEXP rcuvis_exporter_create_cube(SEXP export_dir, SEXP permissive) {
+SEXP rcuvis_exporter_create_cube(SEXP export_dir, SEXP permissive, SEXP overwrite) {
 #ifndef CUVIS_STUB
-    const char *dir = CHAR(STRING_ELT(export_dir, 0));
-    int perm = LOGICAL(permissive)[0];
+    const char *dir = export_directory(export_dir);
+    int perm = rcuvis_logical(permissive, "permissive");
+    int replace = rcuvis_logical(overwrite, "overwrite");
 
     struct cuvis_export_general_settings_t ge;
     memset(&ge, 0, sizeof(ge));
@@ -75,8 +87,13 @@ SEXP rcuvis_exporter_create_cube(SEXP export_dir, SEXP permissive) {
 
     struct cuvis_save_args_t sa;
     memset(&sa, 0, sizeof(sa));
+    /* Each public export submits one measurement. A zero-capacity SDK queue
+       can block with dropping disabled; reserve one slot and flush it. */
+    sa.hard_limit = 1;
+    sa.soft_limit = 1;
+    sa.allow_drop = 0;
     sa.allow_session_file = 1;
-    sa.allow_overwrite = 1;
+    sa.allow_overwrite = replace;
 
     CUVIS_EXPORTER handle = 0;
     int status = cuvis_exporter_create_cube(&handle, ge, sa);
@@ -97,6 +114,26 @@ SEXP rcuvis_exporter_apply(SEXP exporter_xp, SEXP mesu_xp) {
         mesu_xp, cuvis_mesu_tag, "measurement");
     int status = cuvis_exporter_apply(exp_handle, mesu_handle);
     rcuvis_check_status(status, "cuvis_exporter_apply");
+    status = cuvis_exporter_flush(exp_handle);
+    rcuvis_check_status(status, "cuvis_exporter_flush");
+#else
+    Rf_error("cuvis.r was installed without the CUVIS SDK.");
+#endif
+    return R_NilValue;
+}
+
+SEXP rcuvis_exporter_close(SEXP exporter_xp) {
+#ifndef CUVIS_STUB
+    if (TYPEOF(exporter_xp) != EXTPTRSXP ||
+        R_ExternalPtrTag(exporter_xp) != cuvis_exporter_tag) {
+        Rf_error("Expected an exporter handle");
+    }
+    if (!R_ExternalPtrAddr(exporter_xp)) return R_NilValue;
+    CUVIS_EXPORTER handle = (CUVIS_EXPORTER)(intptr_t)rcuvis_get_handle(
+        exporter_xp, cuvis_exporter_tag, "exporter");
+    int status = cuvis_exporter_free(&handle);
+    if (status == status_ok) R_ClearExternalPtr(exporter_xp);
+    rcuvis_check_status(status, "cuvis_exporter_free");
 #else
     Rf_error("cuvis.r was installed without the CUVIS SDK.");
 #endif
