@@ -1,4 +1,26 @@
-# cuvis.r 0.1.1.9000
+# cuvis.r 0.2.0
+
+## CRAN preparation
+
+* Every exported function and object now has an example. Examples that need
+  the proprietary Cubert CUVIS SDK and its sample data run only when
+  `cuvis_available()` is `TRUE` and the data are found; `cuvis_shutdown()`
+  stays in `\dontrun{}` because the SDK cannot be re-initialized in the same
+  R process.
+* Documented return values for the enumeration vectors,
+  `cuvis_session_count()`, `cuvis_session_fps()` and `cuvis_has_reference()`.
+* Tests against the real SDK are skipped on CRAN.
+* Stub builds no longer compile unused SDK finalizers, which removes
+  `-Wunused-function` compiler warnings when the SDK is absent.
+* Reworded the Title and Description, declared `Language: en-US`, and use the
+  standard `Apache License (>= 2)` field without a restating LICENSE file in
+  the source package.
+* Removed CRAN badges until the package is on CRAN, excluded development
+  tools and stale tarballs from the source package, and added an
+  `inst/WORDLIST`.
+* Updated the maintainer e-mail address to raban.heller@uni-ulm.de.
+
+## Earlier development changes
 
 * Prevent SDK calls through handles after shutdown and reject reinitialization
   or settings changes that violate the vendor's one-initialization contract.

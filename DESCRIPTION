@@ -1,20 +1,24 @@
 Package: cuvis.r
-Title: R Bindings for the Cubert CUVIS Hyperspectral SDK
-Version: 0.1.1.9000
-Authors@R: person("R.", "Heller", email = "raban.heller@charite.de",
+Title: Interface to the Cubert 'CUVIS' Hyperspectral Imaging SDK
+Version: 0.2.0
+Authors@R: person("R.", "Heller", email = "raban.heller@uni-ulm.de",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0001-8006-9742"))
-Description: Provides R bindings to the Cubert CUVIS C SDK for reading,
-    processing, and exporting hyperspectral imaging data from Cubert snapshot
-    cameras. Supports loading proprietary '.cu3s' session files, applying the
-    full calibration pipeline (dark subtraction, white reference normalization,
-    spectral radiance, reflectance), and exporting to standard formats (ENVI,
-    TIFF). Requires the Cubert CUVIS SDK to be installed separately. This
-    package mirrors the API of 'cuvis.python'
-    (<https://github.com/cubert-hyperspectral/cuvis.python>) for R users.
-License: Apache License (>= 2) | file LICENSE
+Description: Provides an interface to the Cubert 'CUVIS' C software
+    development kit (SDK) for reading, processing and exporting hyperspectral
+    imaging data recorded with Cubert snapshot cameras. It supports loading
+    proprietary '.cu3s' session files, applying the full calibration pipeline
+    (dark subtraction, white reference normalization, spectral radiance,
+    reflectance) and exporting to standard formats ('ENVI', 'TIFF'). The
+    interface mirrors the API of 'cuvis.python'
+    <https://github.com/cubert-hyperspectral/cuvis.python>. The 'CUVIS' SDK
+    is not distributed with this package and must be installed separately;
+    without it the package installs in a stub mode in which
+    cuvis_available() returns FALSE and SDK operations are unavailable.
+License: Apache License (>= 2)
 URL: https://github.com/cttir/cuvis.r, https://cttir.github.io/cuvis.r/
 BugReports: https://github.com/cttir/cuvis.r/issues
 Encoding: UTF-8
+Language: en-US
 Roxygen: list(markdown = TRUE)
 SystemRequirements: Cubert CUVIS SDK (Linux or Windows; optional for stub mode),
     <https://github.com/cubert-hyperspectral/cuvis.sdk/releases>
@@ -33,4 +37,4 @@ Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: yes
 Config/Needs/website: CTTIR/themakR
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.1

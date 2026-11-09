@@ -1,7 +1,7 @@
 {
   "upload_type": "software",
   "title": "cuvis.r: R bindings for the Cubert CUVIS hyperspectral SDK",
-  "version": "0.1.1.9000",
+  "version": "0.2.0",
   "description": "<p>cuvis.r connects R to the Cubert CUVIS C software development kit, allowing hyperspectral recordings from Cubert snapshot cameras to be read, processed and exported without leaving R. It loads the vendor's proprietary session files and applies the full calibration pipeline, including dark subtraction, white reference normalisation, and conversion to spectral radiance and reflectance. Processed cubes can be written out to standard formats such as ENVI and TIFF for use in other software. The interface deliberately mirrors the equivalent Python bindings so that workflows can be moved between the two languages. The Cubert SDK itself must be installed separately and is not distributed with this package.</p>",
   "creators": [
     {
