@@ -1,17 +1,17 @@
 #include "rcuvis.h"
 
-static void proc_finalizer(SEXP xp) {
+/* Only referenced by SDK builds; omitted from stub builds to avoid an
+   unused-function warning. */
 #ifndef CUVIS_STUB
+static void proc_finalizer(SEXP xp) {
     void *ptr = R_ExternalPtrAddr(xp);
     if (ptr && rcuvis_sdk_alive) {
         CUVIS_PROC_CONT handle = (CUVIS_PROC_CONT)(intptr_t)ptr;
         cuvis_proc_cont_free(&handle);
     }
     R_ClearExternalPtr(xp);
-#else
-    R_ClearExternalPtr(xp);
-#endif
 }
+#endif
 
 SEXP rcuvis_proc_create_from_session(SEXP session_xp, SEXP load_refs) {
 #ifndef CUVIS_STUB

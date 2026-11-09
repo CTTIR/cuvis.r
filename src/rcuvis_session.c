@@ -3,18 +3,18 @@
 /* Store handle as intptr_t in external pointer.
    CUVIS_HANDLE is int32_t, so we cast through intptr_t for pointer storage. */
 
-static void session_finalizer(SEXP xp) {
+/* Only referenced by SDK builds; omitted from stub builds to avoid an
+   unused-function warning. */
 #ifndef CUVIS_STUB
+static void session_finalizer(SEXP xp) {
     void *ptr = R_ExternalPtrAddr(xp);
     if (ptr && rcuvis_sdk_alive) {
         CUVIS_SESSION_FILE handle = (CUVIS_SESSION_FILE)(intptr_t)ptr;
         cuvis_session_file_free(&handle);
     }
     R_ClearExternalPtr(xp);
-#else
-    R_ClearExternalPtr(xp);
-#endif
 }
+#endif
 
 SEXP rcuvis_session_load(SEXP path) {
 #ifndef CUVIS_STUB

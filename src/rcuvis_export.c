@@ -11,18 +11,18 @@ static const char *export_directory(SEXP value) {
 }
 #endif
 
-static void exporter_finalizer(SEXP xp) {
+/* Only referenced by SDK builds; omitted from stub builds to avoid an
+   unused-function warning. */
 #ifndef CUVIS_STUB
+static void exporter_finalizer(SEXP xp) {
     void *ptr = R_ExternalPtrAddr(xp);
     if (ptr && rcuvis_sdk_alive) {
         CUVIS_EXPORTER handle = (CUVIS_EXPORTER)(intptr_t)ptr;
         cuvis_exporter_free(&handle);
     }
     R_ClearExternalPtr(xp);
-#else
-    R_ClearExternalPtr(xp);
-#endif
 }
+#endif
 
 SEXP rcuvis_exporter_create_envi(SEXP export_dir, SEXP permissive) {
 #ifndef CUVIS_STUB
