@@ -38,7 +38,8 @@ the runners.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 1 note (plus the local-only checkbashisms
+WARNING explained below)
 
 * checking CRAN incoming feasibility ... NOTE
   Maintainer: 'R. Heller <raban.heller@uni-ulm.de>'
@@ -47,10 +48,12 @@ the runners.
   This is the first submission of this package.
 
 The local macOS check additionally reports "A complete check needs the
-'checkbashisms' script" because that Debian script is not installed on the
-local machine. The `configure`, `configure.win`, `cleanup` and
-`tools/configure-sdk.sh` scripts are POSIX `sh`, and the "checking top-level
-files" step passes on the GitHub Actions Linux runners.
+'checkbashisms' script" (a WARNING) because that Debian script is not
+installed on the local machine; the GitHub Actions runs do not exercise it
+either. The `configure`, `configure.win`, `cleanup` and
+`tools/configure-sdk.sh` scripts were written for and reviewed against POSIX
+`sh` (no arrays, `local`, `[[`, `source` or `$'...'` quoting); a run with
+`checkbashisms` available (e.g. R-hub Linux) is still outstanding.
 
 ## Downstream dependencies
 
