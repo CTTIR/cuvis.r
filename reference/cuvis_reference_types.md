@@ -10,6 +10,14 @@ values. Used by
 cuvis_reference_types
 ```
 
+## Format
+
+A named integer vector of length 5.
+
+## Value
+
+A named integer vector mapping reference names to SDK enum values.
+
 ## Details
 
 - `Dark` (0): Dark reference frame
@@ -21,3 +29,11 @@ cuvis_reference_types
 - `SpRad` (3): Spectral radiance calibration
 
 - `Distance` (4): Distance calibration
+
+## Examples
+
+``` r
+cuvis_reference_types
+#>      Dark     White WhiteDark     SpRad  Distance 
+#>         0         1         2         3         4 
+```

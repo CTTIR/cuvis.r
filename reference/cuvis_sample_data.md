@@ -25,3 +25,11 @@ cuvis_sample_data(file = NULL)
 ## Value
 
 Character path, or `NULL` if not found.
+
+## Examples
+
+``` r
+# NULL unless Cubert sample data has been downloaded
+cuvis_sample_data()
+#> NULL
+```

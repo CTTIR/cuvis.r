@@ -23,7 +23,7 @@
 - [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)
   : Initialize the CUVIS SDK
 - [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md)
-  : Is the CUVIS SDK Currently Initialised?
+  : Is the CUVIS SDK Currently Initialized?
 - [`cuvis_processing_context()`](https://cttir.github.io/cuvis.r/reference/cuvis_processing_context.md)
   : Create a Processing Context for Calibration
 - [`cuvis_processing_modes`](https://cttir.github.io/cuvis.r/reference/cuvis_processing_modes.md)
@@ -39,9 +39,9 @@
 - [`cuvis_session()`](https://cttir.github.io/cuvis.r/reference/cuvis_session.md)
   : Load a Cubert Session File
 - [`cuvis_session_count()`](https://cttir.github.io/cuvis.r/reference/cuvis_session_count.md)
-  : Count session items by SDK enumeration type
+  : Count Session Items by SDK Enumeration Type
 - [`cuvis_session_fps()`](https://cttir.github.io/cuvis.r/reference/cuvis_session_fps.md)
-  : Read source nominal session frame rate
+  : Read the Nominal Frame Rate of a Session
 - [`cuvis_set_reference()`](https://cttir.github.io/cuvis.r/reference/cuvis_set_reference.md)
   : Set a Calibration Reference
 - [`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md)

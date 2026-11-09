@@ -1,6 +1,9 @@
-# Is the CUVIS SDK Currently Initialised?
+# Is the CUVIS SDK Currently Initialized?
 
-Is the CUVIS SDK Currently Initialised?
+Reports whether
+[`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)
+has been called successfully in this R process and the SDK has not been
+shut down since.
 
 ## Usage
 
@@ -10,7 +13,7 @@ cuvis_is_initialized()
 
 ## Value
 
-Logical.
+A single logical value.
 
 ## Examples
 

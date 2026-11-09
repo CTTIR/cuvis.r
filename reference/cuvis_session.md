@@ -25,10 +25,12 @@ to extract individual measurements.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-cuvis_init()
-session <- cuvis_session("path/to/measurement.cu3s")
-print(session)
-cuvis_shutdown()
-} # }
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+  cuvis_init()
+  session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+  print(session)
+  length(session)
+}
 ```

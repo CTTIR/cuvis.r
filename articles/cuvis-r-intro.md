@@ -4,14 +4,8 @@
 
 [![R-CMD-check](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CTTIR/cuvis.r/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/CTTIR/cuvis.r/actions/workflows/pkgdown.yaml/badge.svg)](https://cttir.github.io/cuvis.r/)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/cuvis.r)](https://CRAN.R-project.org/package=cuvis.r)
 [![Codecov test
 coverage](https://codecov.io/gh/CTTIR/cuvis.r/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CTTIR/cuvis.r?branch=main)
-[![CRAN
-downloads](https://cranlogs.r-pkg.org/badges/cuvis.r)](https://cran.r-project.org/package=cuvis.r)
-[![CRAN downloads
-total](https://cranlogs.r-pkg.org/badges/grand-total/cuvis.r)](https://cran.r-project.org/package=cuvis.r)
 [![License: Apache
 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lifecycle:
@@ -26,8 +20,9 @@ snapshot cameras. It mirrors the API of
 
 ## Prerequisites
 
-1.  Install the **Cubert CUVIS SDK** (\>= 3.4.0) from
-    <https://cloud.cubert-gmbh.de/s/qpxkyWkycrmBK9m>
+1.  Install the **Cubert CUVIS SDK** for a supported Linux or Windows
+    platform from
+    <https://github.com/cubert-hyperspectral/cuvis.sdk/releases>
 2.  Set the `CUVIS_SDK` environment variable to the SDK install
     directory
 3.  Install cuvis.r from GitHub:
@@ -38,6 +33,12 @@ remotes::install_github("cttir/cuvis.r")
 ```
 
 ## Quick Start
+
+The SDK may be initialized only once per R process. Keep it active for
+the whole batch, then shut down once. Restart R before another batch
+after shutdown. macOS supports stub installation, not the vendor
+runtime. Exports require a new or empty directory unless
+`overwrite = TRUE` is explicitly requested.
 
 ### Initialize the SDK
 

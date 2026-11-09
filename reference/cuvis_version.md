@@ -13,3 +13,13 @@ cuvis_version()
 ## Value
 
 Character string with the SDK version.
+
+## Examples
+
+``` r
+# Requires the proprietary Cubert CUVIS SDK.
+if (cuvis_available()) {
+  cuvis_init()
+  cuvis_version()
+}
+```

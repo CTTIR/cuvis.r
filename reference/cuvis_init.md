@@ -36,9 +36,11 @@ does.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-cuvis_init()
-# ... use SDK ...
-cuvis_shutdown()
-} # }
+# Requires the proprietary Cubert CUVIS SDK. The SDK can be initialized
+# only once per R process, so cuvis_shutdown() is called only at the very
+# end of a session.
+if (cuvis_available()) {
+  cuvis_init()
+  cuvis_is_initialized()
+}
 ```
