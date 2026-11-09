@@ -29,9 +29,11 @@ export(cuvis_session_fps)
 export(cuvis_set_reference)
 export(cuvis_shutdown)
 export(cuvis_version)
-importFrom(cli,cli_abort)
-importFrom(cli,cli_h3)
-importFrom(cli,cli_text)
-importFrom(cli,cli_warn)
+importFrom(cli,
+  cli_abort,
+  cli_h3,
+  cli_text,
+  cli_warn
+)
 importFrom(rlang,check_installed)
 useDynLib(cuvis.r, .registration = TRUE)

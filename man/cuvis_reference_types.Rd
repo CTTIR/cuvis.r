@@ -3,8 +3,14 @@
 \name{cuvis_reference_types}
 \alias{cuvis_reference_types}
 \title{CUVIS Reference Types}
+\format{
+A named integer vector of length 5.
+}
 \usage{
 cuvis_reference_types
+}
+\value{
+A named integer vector mapping reference names to SDK enum values.
 }
 \description{
 Named integer vector of reference types matching the CUVIS SDK C enum values.
@@ -18,4 +24,7 @@ Used by \code{\link[=cuvis_set_reference]{cuvis_set_reference()}}.
 \item \code{SpRad} (3): Spectral radiance calibration
 \item \code{Distance} (4): Distance calibration
 }
+}
+\examples{
+cuvis_reference_types
 }

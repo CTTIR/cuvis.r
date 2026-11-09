@@ -15,3 +15,12 @@ The vendor permits initialization only once per process. After shutdown,
 existing handles cannot be used and R must be restarted before another
 \code{\link[=cuvis_init]{cuvis_init()}} call. Keep one initialized SDK for a batch of measurements.
 }
+\examples{
+# Not run: requires the proprietary Cubert CUVIS SDK, and after shutdown
+# the SDK cannot be initialized again in the same R process.
+\dontrun{
+cuvis_init()
+# ... read, process and export measurements ...
+cuvis_shutdown()
+}
+}

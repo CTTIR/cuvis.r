@@ -10,6 +10,19 @@
 #'   directory. Set `TRUE` only when replacement of existing output is intended.
 #'
 #' @return Invisible `dir`.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   mesu <- cuvis_get_measurement(session, 1)
+#'   ctx <- cuvis_processing_context(session)
+#'   cuvis_reprocess(ctx, mesu, mode = "raw")
+#'   out <- cuvis_export_envi(mesu, file.path(tempdir(), "cuvis-envi"))
+#'   list.files(out)
+#'   unlink(out, recursive = TRUE)
+#' }
 #' @export
 cuvis_export_envi <- function(measurement, dir, permissive = TRUE,
                               overwrite = FALSE) {
@@ -35,6 +48,19 @@ cuvis_export_envi <- function(measurement, dir, permissive = TRUE,
 #'   directory. Set `TRUE` only when replacement of existing output is intended.
 #'
 #' @return Invisible `dir`.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   mesu <- cuvis_get_measurement(session, 1)
+#'   ctx <- cuvis_processing_context(session)
+#'   cuvis_reprocess(ctx, mesu, mode = "raw")
+#'   out <- cuvis_export_tiff(mesu, file.path(tempdir(), "cuvis-tiff"))
+#'   list.files(out)
+#'   unlink(out, recursive = TRUE)
+#' }
 #' @export
 cuvis_export_tiff <- function(measurement, dir,
                               format = c("MultiChannel", "Single", "MultiPage"),
@@ -65,6 +91,19 @@ cuvis_export_tiff <- function(measurement, dir,
 #'   replacement of existing output is intended.
 #'
 #' @return Invisible `dir`.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   mesu <- cuvis_get_measurement(session, 1)
+#'   ctx <- cuvis_processing_context(session)
+#'   cuvis_reprocess(ctx, mesu, mode = "raw")
+#'   out <- cuvis_export_session(mesu, file.path(tempdir(), "cuvis-cu3s"))
+#'   list.files(out)
+#'   unlink(out, recursive = TRUE)
+#' }
 #' @export
 cuvis_export_session <- function(measurement, dir, permissive = TRUE,
                                  overwrite = FALSE) {

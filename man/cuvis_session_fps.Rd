@@ -2,17 +2,26 @@
 % Please edit documentation in R/cuvis-session.R
 \name{cuvis_session_fps}
 \alias{cuvis_session_fps}
-\title{Read source nominal session frame rate}
+\title{Read the Nominal Frame Rate of a Session}
 \usage{
 cuvis_session_fps(session)
 }
 \arguments{
-\item{session}{A cuvis_session.}
+\item{session}{A \code{cuvis_session} object from \code{\link[=cuvis_session]{cuvis_session()}}.}
 }
 \value{
-Positive SDK FPS or NA when unavailable. Never derived from
-timestamps.
+A single positive number (frames per second) as reported by the
+SDK, or \code{NA} when unavailable. It is never derived from timestamps.
 }
 \description{
-Read source nominal session frame rate
+Returns the frame rate the SDK reports for a session file.
+}
+\examples{
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+  cuvis_init()
+  session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+  cuvis_session_fps(session)
+}
 }

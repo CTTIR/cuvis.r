@@ -9,6 +9,15 @@
 #'   references embedded in the session file.
 #'
 #' @return A `cuvis_processing_context` S3 object.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   ctx <- cuvis_processing_context(session)
+#'   ctx
+#' }
 #' @export
 cuvis_processing_context <- function(base, load_references = TRUE) {
   .cuvis_flag(load_references, "load_references")
@@ -37,6 +46,19 @@ cuvis_processing_context <- function(base, load_references = TRUE) {
 #'   `"sprad"`, or `"distance"`.
 #'
 #' @return Invisible `ctx` (modified in place via external pointer).
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   ctx <- cuvis_processing_context(session)
+#'   refs <- cuvis_session_count(session, "references")
+#'   if (refs > 0) {
+#'     dark <- cuvis_get_measurement(session, 1, item_type = "references")
+#'     cuvis_set_reference(ctx, dark, type = "dark")
+#'   }
+#' }
 #' @export
 cuvis_set_reference <- function(ctx, measurement,
                                 type = c("dark", "white", "white_dark",
@@ -54,8 +76,20 @@ cuvis_set_reference <- function(ctx, measurement,
 #' Check if a Reference is Set
 #'
 #' @param ctx A cuvis_processing_context object.
-#' @param type Character. Reference type to check.
-#' @return Logical.
+#' @param type Character. Reference type to check: `"dark"`, `"white"`,
+#'   `"white_dark"`, `"sprad"` or `"distance"`.
+#' @return A single logical value: `TRUE` if the context holds a reference
+#'   of that type.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   ctx <- cuvis_processing_context(session)
+#'   cuvis_has_reference(ctx, "dark")
+#'   cuvis_has_reference(ctx, "white")
+#' }
 #' @export
 cuvis_has_reference <- function(ctx,
                                 type = c("dark", "white", "white_dark",
@@ -79,6 +113,19 @@ cuvis_has_reference <- function(ctx,
 #'
 #' @return The same cuvis_measurement object, reprocessed in place.
 #'   Extract the cube with [cuvis_get_cube()].
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   mesu <- cuvis_get_measurement(session, 1)
+#'   ctx <- cuvis_processing_context(session)
+#'   cuvis_reprocess(ctx, mesu, mode = "raw")
+#'   if (cuvis_has_reference(ctx, "dark") && cuvis_has_reference(ctx, "white")) {
+#'     cuvis_reprocess(ctx, mesu, mode = "reflectance")
+#'   }
+#' }
 #' @export
 cuvis_reprocess <- function(ctx, measurement,
                             mode = c("reflectance", "spectral_radiance",

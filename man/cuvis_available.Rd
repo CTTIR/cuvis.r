@@ -14,3 +14,6 @@ Tests whether the Cubert CUVIS SDK library was linked at installation.
 This does not initialize the SDK or verify calibration, sample data or
 runtime usability. See \code{\link[=cuvis_is_initialized]{cuvis_is_initialized()}}.
 }
+\examples{
+cuvis_available()
+}

@@ -13,3 +13,10 @@ Character string with the SDK version.
 Note: The SDK must be initialized with \code{\link[=cuvis_init]{cuvis_init()}} before calling
 this function.
 }
+\examples{
+# Requires the proprietary Cubert CUVIS SDK.
+if (cuvis_available()) {
+  cuvis_init()
+  cuvis_version()
+}
+}

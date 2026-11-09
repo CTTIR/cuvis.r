@@ -2,15 +2,16 @@
 % Please edit documentation in R/cuvis-init.R
 \name{cuvis_is_initialized}
 \alias{cuvis_is_initialized}
-\title{Is the CUVIS SDK Currently Initialised?}
+\title{Is the CUVIS SDK Currently Initialized?}
 \usage{
 cuvis_is_initialized()
 }
 \value{
-Logical.
+A single logical value.
 }
 \description{
-Is the CUVIS SDK Currently Initialised?
+Reports whether \code{\link[=cuvis_init]{cuvis_init()}} has been called successfully in this R
+process and the SDK has not been shut down since.
 }
 \examples{
 cuvis_is_initialized()

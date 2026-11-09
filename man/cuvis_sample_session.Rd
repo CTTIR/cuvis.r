@@ -14,3 +14,12 @@ data is not found.
 Convenience function that locates and loads the first \code{.cu3s} file
 found in the sample data directories.
 }
+\examples{
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data())) {
+  cuvis_init()
+  session <- cuvis_sample_session()
+  session
+}
+}

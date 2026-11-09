@@ -10,11 +10,13 @@
 #'   measurements.
 #'
 #' @examples
-#' \dontrun{
-#' cuvis_init()
-#' session <- cuvis_session("path/to/measurement.cu3s")
-#' print(session)
-#' cuvis_shutdown()
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   print(session)
+#'   length(session)
 #' }
 #' @export
 cuvis_session <- function(path) {
@@ -61,10 +63,24 @@ summary.cuvis_session <- function(object, ...) {
   invisible(object)
 }
 
-#' Count session items by SDK enumeration type
-#' @param session A cuvis_session.
-#' @param item_type One of no_gaps, all_frames, references.
-#' @return Exact SDK count for the requested enumeration.
+#' Count Session Items by SDK Enumeration Type
+#'
+#' Asks the SDK how many items of a given type a session file holds.
+#'
+#' @param session A `cuvis_session` object from [cuvis_session()].
+#' @param item_type Character. One of `"no_gaps"` (default), `"all_frames"`
+#'   or `"references"`.
+#' @return A single integer: the exact SDK count for the requested
+#'   enumeration.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   cuvis_session_count(session)
+#'   cuvis_session_count(session, "references")
+#' }
 #' @export
 cuvis_session_count <- function(session, item_type = "no_gaps") {
   stopifnot(inherits(session, "cuvis_session"))
@@ -76,10 +92,21 @@ cuvis_session_count <- function(session, item_type = "no_gaps") {
         cuvis_session_item_types[[item_type]])
 }
 
-#' Read source nominal session frame rate
-#' @param session A cuvis_session.
-#' @return Positive SDK FPS or NA when unavailable. Never derived from
-#' timestamps.
+#' Read the Nominal Frame Rate of a Session
+#'
+#' Returns the frame rate the SDK reports for a session file.
+#'
+#' @param session A `cuvis_session` object from [cuvis_session()].
+#' @return A single positive number (frames per second) as reported by the
+#'   SDK, or `NA` when unavailable. It is never derived from timestamps.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   cuvis_session_fps(session)
+#' }
 #' @export
 cuvis_session_fps <- function(session) {
   stopifnot(inherits(session, "cuvis_session"))

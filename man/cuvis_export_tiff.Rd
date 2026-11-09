@@ -35,3 +35,17 @@ Invisible \code{dir}.
 \description{
 Export a Measurement to TIFF Format
 }
+\examples{
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+  cuvis_init()
+  session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+  mesu <- cuvis_get_measurement(session, 1)
+  ctx <- cuvis_processing_context(session)
+  cuvis_reprocess(ctx, mesu, mode = "raw")
+  out <- cuvis_export_tiff(mesu, file.path(tempdir(), "cuvis-tiff"))
+  list.files(out)
+  unlink(out, recursive = TRUE)
+}
+}

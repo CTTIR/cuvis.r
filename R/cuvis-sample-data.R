@@ -9,6 +9,9 @@
 #'   If `NULL`, returns the sample data root directory.
 #'
 #' @return Character path, or `NULL` if not found.
+#' @examples
+#' # NULL unless Cubert sample data has been downloaded
+#' cuvis_sample_data()
 #' @export
 cuvis_sample_data <- function(file = NULL) {
   if (!is.null(file)) {
@@ -56,6 +59,14 @@ cuvis_sample_data <- function(file = NULL) {
 #'
 #' @return A cuvis_session object, or `NULL` with a warning if sample
 #'   data is not found.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data())) {
+#'   cuvis_init()
+#'   session <- cuvis_sample_session()
+#'   session
+#' }
 #' @export
 cuvis_sample_session <- function() {
   path <- cuvis_sample_data("test_mesu.cu3s")

@@ -1,6 +1,8 @@
 # Helper functions to skip tests when SDK or sample data are not available
 
 skip_if_no_sdk <- function() {
+  # Tests against the proprietary SDK never run on CRAN.
+  testthat::skip_on_cran()
   testthat::skip_if_not(
     cuvis.r::cuvis_available(),
     "CUVIS SDK not installed -- skipping cuvis.r tests"

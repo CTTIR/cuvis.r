@@ -21,3 +21,7 @@ Returns the path to Cubert sample data. Searches in order:
 \item SDK default install location
 }
 }
+\examples{
+# NULL unless Cubert sample data has been downloaded
+cuvis_sample_data()
+}

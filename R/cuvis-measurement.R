@@ -9,6 +9,15 @@
 #'
 #' @return A `cuvis_measurement` S3 object, or `NULL` if no measurement
 #'   exists at that index.
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   mesu <- cuvis_get_measurement(session, 1)
+#'   mesu
+#' }
 #' @export
 cuvis_get_measurement <- function(session, index = 1L,
                                   item_type = "no_gaps") {
@@ -48,6 +57,15 @@ cuvis_get_measurement <- function(session, index = 1L,
 #'   `integration_time` (ms), `averages`, `distance`, `serial_number`,
 #'   `product_name`, `assembly`, `processing_mode` (integer),
 #'   `capture_time` (ms since epoch), `measurement_flags` (integer).
+#' @examples
+#' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
+#' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+#' if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+#'   cuvis_init()
+#'   session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+#'   mesu <- cuvis_get_measurement(session, 1)
+#'   str(cuvis_get_metadata(mesu))
+#' }
 #' @export
 cuvis_get_metadata <- function(measurement) {
   stopifnot(inherits(measurement, "cuvis_measurement"))

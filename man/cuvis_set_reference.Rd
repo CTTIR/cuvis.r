@@ -24,3 +24,17 @@ Invisible \code{ctx} (modified in place via external pointer).
 \description{
 Assigns a reference measurement (dark, white, etc.) to a processing context.
 }
+\examples{
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+  cuvis_init()
+  session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+  ctx <- cuvis_processing_context(session)
+  refs <- cuvis_session_count(session, "references")
+  if (refs > 0) {
+    dark <- cuvis_get_measurement(session, 1, item_type = "references")
+    cuvis_set_reference(ctx, dark, type = "dark")
+  }
+}
+}

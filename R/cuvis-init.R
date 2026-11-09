@@ -20,10 +20,12 @@
 #' @return Invisible `NULL`.
 #'
 #' @examples
-#' \dontrun{
-#' cuvis_init()
-#' # ... use SDK ...
-#' cuvis_shutdown()
+#' # Requires the proprietary Cubert CUVIS SDK. The SDK can be initialized
+#' # only once per R process, so cuvis_shutdown() is called only at the very
+#' # end of a session.
+#' if (cuvis_available()) {
+#'   cuvis_init()
+#'   cuvis_is_initialized()
 #' }
 #' @export
 cuvis_init <- function(settings_dir = NULL) {
@@ -70,9 +72,12 @@ cuvis_init <- function(settings_dir = NULL) {
 .cuvis_state$retired <- FALSE
 
 
-#' Is the CUVIS SDK Currently Initialised?
+#' Is the CUVIS SDK Currently Initialized?
 #'
-#' @return Logical.
+#' Reports whether [cuvis_init()] has been called successfully in this R
+#' process and the SDK has not been shut down since.
+#'
+#' @return A single logical value.
 #' @examples
 #' cuvis_is_initialized()
 #' @export
@@ -123,6 +128,14 @@ cuvis_is_initialized <- function() isTRUE(.cuvis_state$initialized)
 #' [cuvis_init()] call. Keep one initialized SDK for a batch of measurements.
 #'
 #' @return Invisible `NULL`.
+#' @examples
+#' # Not run: requires the proprietary Cubert CUVIS SDK, and after shutdown
+#' # the SDK cannot be initialized again in the same R process.
+#' \dontrun{
+#' cuvis_init()
+#' # ... read, process and export measurements ...
+#' cuvis_shutdown()
+#' }
 #' @export
 cuvis_shutdown <- function() {
   if (!isTRUE(.cuvis_state$initialized)) {
@@ -141,6 +154,12 @@ cuvis_shutdown <- function() {
 #' this function.
 #'
 #' @return Character string with the SDK version.
+#' @examples
+#' # Requires the proprietary Cubert CUVIS SDK.
+#' if (cuvis_available()) {
+#'   cuvis_init()
+#'   cuvis_version()
+#' }
 #' @export
 cuvis_version <- function() {
   .Call("rcuvis_version")
@@ -153,6 +172,8 @@ cuvis_version <- function() {
 #' runtime usability. See [cuvis_is_initialized()].
 #'
 #' @return Logical. `TRUE` if the SDK is available, `FALSE` otherwise.
+#' @examples
+#' cuvis_available()
 #' @export
 cuvis_available <- function() {
   tryCatch(

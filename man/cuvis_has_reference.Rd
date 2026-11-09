@@ -12,11 +12,24 @@ cuvis_has_reference(
 \arguments{
 \item{ctx}{A cuvis_processing_context object.}
 
-\item{type}{Character. Reference type to check.}
+\item{type}{Character. Reference type to check: \code{"dark"}, \code{"white"},
+\code{"white_dark"}, \code{"sprad"} or \code{"distance"}.}
 }
 \value{
-Logical.
+A single logical value: \code{TRUE} if the context holds a reference
+of that type.
 }
 \description{
 Check if a Reference is Set
+}
+\examples{
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+  cuvis_init()
+  session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+  ctx <- cuvis_processing_context(session)
+  cuvis_has_reference(ctx, "dark")
+  cuvis_has_reference(ctx, "white")
+}
 }

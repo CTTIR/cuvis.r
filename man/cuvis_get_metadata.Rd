@@ -19,3 +19,13 @@ A named list with fields: \code{name}, \code{path}, \code{comment},
 Returns metadata fields for a measurement including name, integration time,
 serial number, processing mode, and more.
 }
+\examples{
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+  cuvis_init()
+  session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+  mesu <- cuvis_get_measurement(session, 1)
+  str(cuvis_get_metadata(mesu))
+}
+}

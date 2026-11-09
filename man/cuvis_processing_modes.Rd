@@ -3,8 +3,14 @@
 \name{cuvis_processing_modes}
 \alias{cuvis_processing_modes}
 \title{CUVIS Processing Modes}
+\format{
+A named integer vector of length 5.
+}
 \usage{
 cuvis_processing_modes
+}
+\value{
+A named integer vector mapping mode names to SDK enum values.
 }
 \description{
 Named integer vector of processing modes matching the CUVIS SDK C enum values.
@@ -18,4 +24,8 @@ Used internally by \code{\link[=cuvis_reprocess]{cuvis_reprocess()}}.
 \item \code{SpectralRadiance} (3): Calibrated to physical radiance (W/m^2/sr/nm)
 \item \code{Preview} (5): Low-resolution preview only
 }
+}
+\examples{
+cuvis_processing_modes
+names(cuvis_processing_modes)
 }

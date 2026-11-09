@@ -2,18 +2,30 @@
 % Please edit documentation in R/cuvis-session.R
 \name{cuvis_session_count}
 \alias{cuvis_session_count}
-\title{Count session items by SDK enumeration type}
+\title{Count Session Items by SDK Enumeration Type}
 \usage{
 cuvis_session_count(session, item_type = "no_gaps")
 }
 \arguments{
-\item{session}{A cuvis_session.}
+\item{session}{A \code{cuvis_session} object from \code{\link[=cuvis_session]{cuvis_session()}}.}
 
-\item{item_type}{One of no_gaps, all_frames, references.}
+\item{item_type}{Character. One of \code{"no_gaps"} (default), \code{"all_frames"}
+or \code{"references"}.}
 }
 \value{
-Exact SDK count for the requested enumeration.
+A single integer: the exact SDK count for the requested
+enumeration.
 }
 \description{
-Count session items by SDK enumeration type
+Asks the SDK how many items of a given type a session file holds.
+}
+\examples{
+# Runs only where the proprietary Cubert CUVIS SDK and its sample data
+# are installed; elsewhere cuvis_available() is FALSE and nothing happens.
+if (cuvis_available() && !is.null(cuvis_sample_data("test_mesu.cu3s"))) {
+  cuvis_init()
+  session <- cuvis_session(cuvis_sample_data("test_mesu.cu3s"))
+  cuvis_session_count(session)
+  cuvis_session_count(session, "references")
+}
 }

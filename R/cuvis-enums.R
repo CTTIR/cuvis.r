@@ -10,6 +10,11 @@
 #' - `SpectralRadiance` (3): Calibrated to physical radiance (W/m^2/sr/nm)
 #' - `Preview` (5): Low-resolution preview only
 #'
+#' @format A named integer vector of length 5.
+#' @return A named integer vector mapping mode names to SDK enum values.
+#' @examples
+#' cuvis_processing_modes
+#' names(cuvis_processing_modes)
 #' @export
 cuvis_processing_modes <- c(
   Raw = 0L,
@@ -32,6 +37,10 @@ cuvis_processing_modes <- c(
 #' - `SpRad` (3): Spectral radiance calibration
 #' - `Distance` (4): Distance calibration
 #'
+#' @format A named integer vector of length 5.
+#' @return A named integer vector mapping reference names to SDK enum values.
+#' @examples
+#' cuvis_reference_types
 #' @export
 cuvis_reference_types <- c(
   Dark = 0L,
