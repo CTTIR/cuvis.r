@@ -25,9 +25,9 @@ cuvis_session <- function(path) {
   if (!grepl("\\.cu3s$", path, ignore.case = TRUE)) {
     cli_warn("File does not have .cu3s extension: {.path {path}}")
   }
-  handle <- .Call("rcuvis_session_load", path)
-  count <- .Call("rcuvis_session_get_size", handle,
-                 cuvis_session_item_types[["no_gaps"]])
+  handle <- .cuvis_sdk_call(.Call("rcuvis_session_load", path))
+  count <- .cuvis_sdk_call(.Call("rcuvis_session_get_size", handle,
+                                 cuvis_session_item_types[["no_gaps"]]))
 
   structure(
     list(handle = handle, path = path, count = count),
@@ -88,8 +88,8 @@ cuvis_session_count <- function(session, item_type = "no_gaps") {
         !item_type %in% names(cuvis_session_item_types)) {
     cli::cli_abort("Unknown item_type.")
   }
-  .Call("rcuvis_session_get_size", session$handle,
-        cuvis_session_item_types[[item_type]])
+  .cuvis_sdk_call(.Call("rcuvis_session_get_size", session$handle,
+                        cuvis_session_item_types[[item_type]]))
 }
 
 #' Read the Nominal Frame Rate of a Session
@@ -110,7 +110,7 @@ cuvis_session_count <- function(session, item_type = "no_gaps") {
 #' @export
 cuvis_session_fps <- function(session) {
   stopifnot(inherits(session, "cuvis_session"))
-  fps <- .Call("rcuvis_session_get_fps", session$handle)
+  fps <- .cuvis_sdk_call(.Call("rcuvis_session_get_fps", session$handle))
   if (length(fps) != 1L || !is.finite(fps) || fps <= 0) {
     return(NA_real_)
   }

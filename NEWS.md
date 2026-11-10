@@ -10,6 +10,9 @@
 * Documented return values for the enumeration vectors,
   `cuvis_session_count()`, `cuvis_session_fps()` and `cuvis_has_reference()`.
 * Tests against the real SDK are skipped on CRAN.
+* Loading the package no longer changes `PATH`. On Windows the SDK `bin`
+  directory is put on `PATH` only while an SDK call runs, and `PATH` is
+  restored afterwards.
 * Stub builds no longer compile unused SDK finalizers, which removes
   `-Wunused-function` compiler warnings when the SDK is absent.
 * Reworded the Title and Description, declared `Language: en-US`, and use the

@@ -24,7 +24,7 @@
 #' @export
 cuvis_get_cube <- function(measurement) {
   stopifnot(inherits(measurement, "cuvis_measurement"))
-  .Call("rcuvis_mesu_get_cube", measurement$handle)
+  .cuvis_sdk_call(.Call("rcuvis_mesu_get_cube", measurement$handle))
 }
 
 #' Get Wavelength Vector from a Measurement

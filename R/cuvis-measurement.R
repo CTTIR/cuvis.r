@@ -36,8 +36,8 @@ cuvis_get_measurement <- function(session, index = 1L,
   }
   itype <- cuvis_session_item_types[[item_type]]
   # Convert to 0-based for C
-  handle <- .Call("rcuvis_session_get_mesu", session$handle,
-                  index - 1L, itype)
+  handle <- .cuvis_sdk_call(.Call("rcuvis_session_get_mesu", session$handle,
+                                  index - 1L, itype))
   if (is.null(handle)) {
     return(NULL)
   }
@@ -69,7 +69,7 @@ cuvis_get_measurement <- function(session, index = 1L,
 #' @export
 cuvis_get_metadata <- function(measurement) {
   stopifnot(inherits(measurement, "cuvis_measurement"))
-  .Call("rcuvis_mesu_get_metadata", measurement$handle)
+  .cuvis_sdk_call(.Call("rcuvis_mesu_get_metadata", measurement$handle))
 }
 
 #' @export

@@ -1,55 +1,65 @@
-# Unit tests for the package lifecycle hooks in zzz.R.
-# These are pure R (environment variables + filesystem checks on Windows) and
-# are invoked directly so they run on every platform.
+# Unit tests for the package lifecycle hooks and helpers in zzz.R.
+# These are pure R (environment variables + filesystem checks) and are invoked
+# directly; the Windows PATH logic is exercised on every platform through the
+# helper's `os` argument.
 
-skip_if_not_windows <- function() {
-  testthat::skip_if_not(
-    .Platform$OS.type == "windows",
-    "Windows-only PATH logic"
-  )
-}
-
-test_that(".onLoad prepends the CUVIS_SDK bin directory to PATH on Windows", {
-  skip_if_not_windows()
-
+test_that("SDK calls see the CUVIS_SDK bin directory on PATH only while they run", {
   sdk <- withr::local_tempdir()
   bin <- file.path(sdk, "bin")
   dir.create(bin)
 
   withr::local_envvar(c(CUVIS_SDK = sdk, CUVIS = "", PATH = "EXISTING"))
-  cuvis.r:::.onLoad("lib", "cuvis.r")
+  inside <- cuvis.r:::.cuvis_sdk_call(Sys.getenv("PATH"), os = "windows")
 
-  expect_match(Sys.getenv("PATH"), basename(bin), fixed = TRUE)
-  expect_match(Sys.getenv("PATH"), "EXISTING", fixed = TRUE)
+  expect_identical(
+    inside,
+    paste(normalizePath(bin, winslash = "/"), "EXISTING", sep = ";")
+  )
+  expect_identical(Sys.getenv("PATH"), "EXISTING")
 })
 
-test_that(".onLoad uses the CUVIS env var when CUVIS_SDK is unset", {
-  skip_if_not_windows()
+test_that("SDK calls restore PATH when the call fails", {
+  sdk <- withr::local_tempdir()
+  dir.create(file.path(sdk, "bin"))
 
+  withr::local_envvar(c(CUVIS_SDK = sdk, CUVIS = "", PATH = "EXISTING"))
+  expect_error(
+    cuvis.r:::.cuvis_sdk_call(cli::cli_abort("SDK failure"), os = "windows"),
+    "SDK failure"
+  )
+  expect_identical(Sys.getenv("PATH"), "EXISTING")
+})
+
+test_that("SDK calls use the CUVIS env var when CUVIS_SDK is unset", {
   cuvis_dir <- withr::local_tempdir()  # acts as the bin directory itself
   withr::local_envvar(c(CUVIS_SDK = "", CUVIS = cuvis_dir, PATH = "P0"))
-  cuvis.r:::.onLoad("lib", "cuvis.r")
+  inside <- cuvis.r:::.cuvis_sdk_call(Sys.getenv("PATH"), os = "windows")
 
-  expect_match(Sys.getenv("PATH"), basename(cuvis_dir), fixed = TRUE)
+  expect_match(inside, basename(cuvis_dir), fixed = TRUE)
+  expect_true(grepl(";P0$", inside))
+  expect_identical(Sys.getenv("PATH"), "P0")
 })
 
-test_that(".onLoad falls back to default install locations when env unset", {
-  skip_if_not_windows()
-
-  withr::local_envvar(c(CUVIS_SDK = "", CUVIS = "", PATH = "ONLY_THIS"))
-  cuvis.r:::.onLoad("lib", "cuvis.r")
-
-  # With both env vars unset the function scans the default install dirs. The
-  # original PATH must always be preserved; a default bin dir is prepended only
-  # when it exists on this machine.
-  expect_match(Sys.getenv("PATH"), "ONLY_THIS", fixed = TRUE)
-  expect_true(grepl("ONLY_THIS$", Sys.getenv("PATH")))
+test_that("SDK calls leave PATH alone without an SDK bin directory", {
+  withr::local_envvar(c(CUVIS_SDK = tempfile(), CUVIS = "", PATH = "ONLY_THIS"))
+  expect_identical(
+    cuvis.r:::.cuvis_sdk_call(Sys.getenv("PATH"), os = "windows"),
+    "ONLY_THIS"
+  )
 })
 
-test_that(".onLoad is a no-op contract on non-Windows platforms", {
-  # On non-Windows the function returns without touching PATH; calling it here
-  # on Windows still must not error.
-  expect_no_error(cuvis.r:::.onLoad("lib", "cuvis.r"))
+test_that("SDK calls leave PATH alone on other platforms", {
+  sdk <- withr::local_tempdir()
+  dir.create(file.path(sdk, "bin"))
+  withr::local_envvar(c(CUVIS_SDK = sdk, CUVIS = "", PATH = "EXISTING"))
+  expect_identical(
+    cuvis.r:::.cuvis_sdk_call(Sys.getenv("PATH"), os = "unix"),
+    "EXISTING"
+  )
+})
+
+test_that("the package defines no load hook that could change the environment", {
+  expect_false(exists(".onLoad", envir = asNamespace("cuvis.r"), inherits = FALSE))
 })
 
 test_that(".onAttach emits a startup note when the SDK is absent", {

@@ -29,8 +29,8 @@ cuvis_export_envi <- function(measurement, dir, permissive = TRUE,
   stopifnot(inherits(measurement, "cuvis_measurement"))
   .cuvis_flag(permissive, "permissive")
   dir <- .cuvis_export_dir(dir, overwrite)
-  exp_handle <- .Call("rcuvis_exporter_create_envi", dir,
-                      as.logical(permissive))
+  exp_handle <- .cuvis_sdk_call(.Call("rcuvis_exporter_create_envi", dir,
+                                      as.logical(permissive)))
   .cuvis_export_apply(exp_handle, measurement$handle)
   invisible(dir)
 }
@@ -73,8 +73,9 @@ cuvis_export_tiff <- function(measurement, dir,
   dir <- .cuvis_export_dir(dir, overwrite)
   fmt_int <- cuvis_tiff_formats[[format]]
   comp_int <- cuvis_tiff_compression[[compression]]
-  exp_handle <- .Call("rcuvis_exporter_create_tiff", dir, fmt_int, comp_int,
-                      as.logical(permissive))
+  exp_handle <- .cuvis_sdk_call(.Call("rcuvis_exporter_create_tiff", dir,
+                                      fmt_int, comp_int,
+                                      as.logical(permissive)))
   .cuvis_export_apply(exp_handle, measurement$handle)
   invisible(dir)
 }
@@ -110,8 +111,8 @@ cuvis_export_session <- function(measurement, dir, permissive = TRUE,
   stopifnot(inherits(measurement, "cuvis_measurement"))
   .cuvis_flag(permissive, "permissive")
   dir <- .cuvis_export_dir(dir, overwrite)
-  exp_handle <- .Call("rcuvis_exporter_create_cube", dir,
-                      as.logical(permissive), overwrite)
+  exp_handle <- .cuvis_sdk_call(.Call("rcuvis_exporter_create_cube", dir,
+                                      as.logical(permissive), overwrite))
   .cuvis_export_apply(exp_handle, measurement$handle)
   invisible(dir)
 }
@@ -122,13 +123,16 @@ cuvis_export_session <- function(measurement, dir, permissive = TRUE,
   closed <- FALSE
   on.exit({
     if (!closed) {
-      tryCatch(.Call("rcuvis_exporter_close", exporter), error = function(e) {
-        cli::cli_warn("Exporter cleanup failed: {conditionMessage(e)}")
-      })
+      tryCatch(
+        .cuvis_sdk_call(.Call("rcuvis_exporter_close", exporter)),
+        error = function(e) {
+          cli::cli_warn("Exporter cleanup failed: {conditionMessage(e)}")
+        }
+      )
     }
   }, add = TRUE)
-  .Call("rcuvis_exporter_apply", exporter, measurement)
-  .Call("rcuvis_exporter_close", exporter)
+  .cuvis_sdk_call(.Call("rcuvis_exporter_apply", exporter, measurement))
+  .cuvis_sdk_call(.Call("rcuvis_exporter_close", exporter))
   closed <- TRUE
   invisible(NULL)
 }

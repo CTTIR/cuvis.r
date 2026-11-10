@@ -22,11 +22,11 @@
 cuvis_processing_context <- function(base, load_references = TRUE) {
   .cuvis_flag(load_references, "load_references")
   if (inherits(base, "cuvis_session")) {
-    handle <- .Call("rcuvis_proc_create_from_session", base$handle,
-                    as.logical(load_references))
+    handle <- .cuvis_sdk_call(.Call("rcuvis_proc_create_from_session",
+                                    base$handle, as.logical(load_references)))
   } else if (inherits(base, "cuvis_measurement")) {
-    handle <- .Call("rcuvis_proc_create_from_mesu", base$handle,
-                    as.logical(load_references))
+    handle <- .cuvis_sdk_call(.Call("rcuvis_proc_create_from_mesu",
+                                    base$handle, as.logical(load_references)))
   } else {
     cli_abort("Expected a {.cls cuvis_session} or {.cls cuvis_measurement} object.")
   }
@@ -67,8 +67,8 @@ cuvis_set_reference <- function(ctx, measurement,
   stopifnot(inherits(measurement, "cuvis_measurement"))
   type <- match.arg(type)
   type_int <- .ref_type_lookup[[type]]
-  .Call("rcuvis_proc_set_reference", ctx$handle, measurement$handle,
-        type_int)
+  .cuvis_sdk_call(.Call("rcuvis_proc_set_reference", ctx$handle,
+                        measurement$handle, type_int))
   ctx$references[[type]] <- TRUE
   invisible(ctx)
 }
@@ -97,7 +97,7 @@ cuvis_has_reference <- function(ctx,
   stopifnot(inherits(ctx, "cuvis_processing_context"))
   type <- match.arg(type)
   type_int <- .ref_type_lookup[[type]]
-  .Call("rcuvis_proc_has_reference", ctx$handle, type_int)
+  .cuvis_sdk_call(.Call("rcuvis_proc_has_reference", ctx$handle, type_int))
 }
 
 #' Reprocess a Measurement to a New Calibration Level
@@ -161,9 +161,9 @@ cuvis_reprocess <- function(ctx, measurement,
     ))
   }
 
-  .Call("rcuvis_proc_set_args", ctx$handle, mode_int,
-        as.logical(allow_recalib))
-  .Call("rcuvis_proc_apply", ctx$handle, measurement$handle)
+  .cuvis_sdk_call(.Call("rcuvis_proc_set_args", ctx$handle, mode_int,
+                        as.logical(allow_recalib)))
+  .cuvis_sdk_call(.Call("rcuvis_proc_apply", ctx$handle, measurement$handle))
   invisible(measurement)
 }
 

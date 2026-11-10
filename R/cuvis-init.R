@@ -57,7 +57,7 @@ cuvis_init <- function(settings_dir = NULL) {
       !dir.create(settings_dir, recursive = TRUE)) {
     cli::cli_abort("Could not create the CUVIS settings directory.")
   }
-  .Call("rcuvis_init", settings_dir)
+  .cuvis_sdk_call(.Call("rcuvis_init", settings_dir))
   .cuvis_state$initialized <- TRUE
   .cuvis_state$settings_dir <- settings_dir
   invisible(NULL)
@@ -144,7 +144,7 @@ cuvis_shutdown <- function() {
   .cuvis_state$initialized <- FALSE
   .cuvis_state$settings_dir <- NULL
   .cuvis_state$retired <- TRUE
-  .Call("rcuvis_shutdown")
+  .cuvis_sdk_call(.Call("rcuvis_shutdown"))
   invisible(NULL)
 }
 
@@ -162,7 +162,7 @@ cuvis_shutdown <- function() {
 #' }
 #' @export
 cuvis_version <- function() {
-  .Call("rcuvis_version")
+  .cuvis_sdk_call(.Call("rcuvis_version"))
 }
 
 #' Check if CUVIS SDK is Available
