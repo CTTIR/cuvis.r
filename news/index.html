@@ -57,6 +57,7 @@
 <ul><li>Every exported function and object now has an example. Examples that need the proprietary Cubert CUVIS SDK and its sample data run only when <code><a href="../reference/cuvis_available.html">cuvis_available()</a></code> is <code>TRUE</code> and the data are found; <code><a href="../reference/cuvis_shutdown.html">cuvis_shutdown()</a></code> stays in <code>\dontrun{}</code> because the SDK cannot be re-initialized in the same R process.</li>
 <li>Documented return values for the enumeration vectors, <code><a href="../reference/cuvis_session_count.html">cuvis_session_count()</a></code>, <code><a href="../reference/cuvis_session_fps.html">cuvis_session_fps()</a></code> and <code><a href="../reference/cuvis_has_reference.html">cuvis_has_reference()</a></code>.</li>
 <li>Tests against the real SDK are skipped on CRAN.</li>
+<li>Loading the package no longer changes <code>PATH</code>. On Windows the SDK <code>bin</code> directory is put on <code>PATH</code> only while an SDK call runs, and <code>PATH</code> is restored afterwards.</li>
 <li>Stub builds no longer compile unused SDK finalizers, which removes <code>-Wunused-function</code> compiler warnings when the SDK is absent.</li>
 <li>Reworded the Title and Description, declared <code>Language: en-US</code>, and use the standard <code>Apache License (&gt;= 2)</code> field without a restating LICENSE file in the source package.</li>
 <li>Removed CRAN badges until the package is on CRAN, excluded development tools and stale tarballs from the source package, and added an <code>inst/WORDLIST</code>.</li>
