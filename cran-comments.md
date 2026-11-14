@@ -25,9 +25,10 @@ required to install or check the package:
 
 ## Test environments
 
-* local: macOS (aarch64), R 4.6.1 — `R CMD check --as-cran --no-manual`
-  (the PDF manual was built locally with TinyTeX (TeX Live 2026) via
-  `R CMD Rd2pdf` without errors; the check run itself used `--no-manual`)
+* Local: macOS (aarch64-apple-darwin), R 4.6.1, 14 November 2026:
+  full `R CMD check --as-cran` on the built source tarball, including
+  PDF manual compilation with TinyTeX (TeX Live 2026) and HTML manual
+  validation. This supersedes the earlier local check environment.
 * GitHub Actions (r-lib/actions v2, `--as-cran`):
   * macOS-latest (release)
   * windows-latest (release)
@@ -38,8 +39,7 @@ the runners.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note (plus the local-only checkbashisms
-WARNING explained below)
+0 errors | 0 warnings | 1 note (latest local full check)
 
 * checking CRAN incoming feasibility ... NOTE
   Maintainer: 'R. Heller <raban.heller@uni-ulm.de>'
@@ -47,13 +47,12 @@ WARNING explained below)
 
   This is the first submission of this package.
 
-The local macOS check additionally reports "A complete check needs the
-'checkbashisms' script" (a WARNING) because that Debian script is not
-installed on the local machine; the GitHub Actions runs do not exercise it
-either. The `configure`, `configure.win`, `cleanup` and
-`tools/configure-sdk.sh` scripts were written for and reviewed against POSIX
-`sh` (no arrays, `local`, `[[`, `source` or `$'...'` quoting); a run with
-`checkbashisms` available (e.g. R-hub Linux) is still outstanding.
+The latest local full check did not report the earlier missing
+'checkbashisms' WARNING. A separate static check on 14 November 2026 ran
+Debian's `checkbashisms.pl` with `--posix --force` over `configure`,
+`configure.win`, `cleanup` and `tools/configure-sdk.sh`; it exited with
+status zero and no diagnostic output. This static check does not qualify
+proprietary SDK execution, hardware access or other operating systems.
 
 ## Downstream dependencies
 
