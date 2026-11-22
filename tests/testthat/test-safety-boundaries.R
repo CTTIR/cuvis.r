@@ -23,7 +23,10 @@ test_that("flags reject missing, coerced and nonscalar inputs", {
 test_that("session exporter forwards explicit replacement permission", {
   env <- new.env(parent = asNamespace("cuvis.r"))
   env$calls <- list()
-  env$.Call <- function(...) { env$calls <- c(env$calls, list(list(...))); NULL }
+  env$.Call <- mock_native(function(...) {
+    env$calls <- c(env$calls, list(list(...)))
+    NULL
+  })
   env$.cuvis_export_apply <- function(...) NULL
   export <- cuvis_export_session
   environment(export) <- env
@@ -63,12 +66,12 @@ test_that("export cleanup runs after success and preserves primary failures", {
   env$calls <- character()
   env$fail <- FALSE
   env$close_fail <- FALSE
-  env$.Call <- function(name, ...) {
+  env$.Call <- mock_native(function(name, ...) {
     env$calls <- c(env$calls, name)
     if (name == "rcuvis_exporter_apply" && env$fail) cli::cli_abort("flush failed")
     if (name == "rcuvis_exporter_close" && env$close_fail) cli::cli_abort("close failed")
     NULL
-  }
+  })
   apply <- cuvis.r:::.cuvis_export_apply
   environment(apply) <- env
   expect_silent(apply(NULL, NULL))

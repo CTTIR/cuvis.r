@@ -13,7 +13,7 @@ test_that("session counts and nominal FPS forward SDK calls", {
     class = "cuvis_session"
   )
   requests <- list()
-  sdk <- function(name, handle, ...) {
+  sdk <- mock_native(function(name, handle, ...) {
     requests[[length(requests) + 1L]] <<- list(
       name = name, handle = handle,
       args = list(...)
@@ -22,7 +22,7 @@ test_that("session counts and nominal FPS forward SDK calls", {
       return(25)
     }
     7L
-  }
+  })
   count <- cuvis_session_count
   environment(count) <- list2env(list(.Call = sdk), parent = environment(count))
   expect_identical(count(session, "all_frames"), 7L)
@@ -36,7 +36,7 @@ test_that("session counts and nominal FPS forward SDK calls", {
   expect_identical(fps(session), 25)
   expect_identical(requests[[2]]$name, "rcuvis_session_get_fps")
   for (missing in list(0, NA_real_, Inf, numeric())) {
-    environment(fps) <- list2env(list(.Call = function(...) missing),
+    environment(fps) <- list2env(list(.Call = mock_native(function(...) missing)),
       parent = environment(cuvis_session_fps)
     )
     expect_identical(fps(session), NA_real_)
@@ -53,7 +53,7 @@ test_that("measurement bounds use requested enumeration", {
     list(cuvis_session_count = function(session,
                                         item_type) {
       if (item_type == "all_frames") 5L else 1L
-    }, .Call = function(...) "fake-measurement"),
+    }, .Call = mock_native(function(...) "fake-measurement")),
     parent = environment(get)
   )
   expect_s3_class(get(session, 5L, "all_frames"), "cuvis_measurement")

@@ -19,7 +19,10 @@ init_fixture <- function(available = TRUE) {
                                   retired = FALSE))
   env$cuvis_available <- function() available
   env$calls <- list()
-  env$.Call <- function(...) { env$calls <- c(env$calls, list(list(...))); NULL }
+  env$.Call <- mock_native(function(...) {
+    env$calls <- c(env$calls, list(list(...)))
+    NULL
+  })
   for (name in c("cuvis_init", "cuvis_shutdown", "cuvis_is_initialized")) {
     fun <- get(name, asNamespace("cuvis.r"))
     environment(fun) <- env
@@ -58,7 +61,7 @@ test_that("unavailable SDK and invalid settings do not create directories", {
 test_that("native shutdown failure cannot leave usable handles or permit restart", {
   fixture <- init_fixture()
   fixture$cuvis_init(withr::local_tempdir())
-  fixture$.Call <- function(...) cli::cli_abort("shutdown failed")
+  fixture$.Call <- mock_native(function(...) cli::cli_abort("shutdown failed"))
   expect_error(fixture$cuvis_shutdown(), "shutdown failed")
   expect_false(fixture$cuvis_is_initialized())
   expect_error(fixture$cuvis_init(), "Restart R")
