@@ -45,7 +45,9 @@ cuvis_processing_context <- function(base, load_references = TRUE) {
 #' @param type Character. One of `"dark"`, `"white"`, `"white_dark"`,
 #'   `"sprad"`, or `"distance"`.
 #'
-#' @return Invisible `ctx` (modified in place via external pointer).
+#' @return Invisible `ctx`. The reference is stored in the SDK processing
+#'   context behind the external pointer, so it takes effect whether or not
+#'   the returned object is kept; check it with [cuvis_has_reference()].
 #' @examples
 #' # Runs only where the proprietary Cubert CUVIS SDK and its sample data
 #' # are installed; elsewhere cuvis_available() is FALSE and nothing happens.

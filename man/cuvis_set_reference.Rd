@@ -19,7 +19,9 @@ cuvis_set_reference(
 \code{"sprad"}, or \code{"distance"}.}
 }
 \value{
-Invisible \code{ctx} (modified in place via external pointer).
+Invisible \code{ctx}. The reference is stored in the SDK processing
+context behind the external pointer, so it takes effect whether or not
+the returned object is kept; check it with \code{\link[=cuvis_has_reference]{cuvis_has_reference()}}.
 }
 \description{
 Assigns a reference measurement (dark, white, etc.) to a processing context.
