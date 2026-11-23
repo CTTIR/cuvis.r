@@ -15,8 +15,8 @@ Description: Provides an interface to the Cubert 'CUVIS' C software
     without it the package installs in a stub mode in which
     cuvis_available() returns FALSE and SDK operations are unavailable.
 License: Apache License (>= 2)
-URL: https://github.com/cttir/cuvis.r, https://cttir.github.io/cuvis.r/
-BugReports: https://github.com/cttir/cuvis.r/issues
+URL: https://github.com/CTTIR/cuvis.r, https://cttir.github.io/cuvis.r/
+BugReports: https://github.com/CTTIR/cuvis.r/issues
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)

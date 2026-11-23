@@ -9,3 +9,63 @@ template:
 
 development:
   mode: auto
+
+reference:
+  - title: SDK lifecycle
+    desc: Check for the SDK, initialize it once per R process and shut it down.
+    contents:
+      - cuvis_available
+      - cuvis_init
+      - cuvis_is_initialized
+      - cuvis_version
+      - cuvis_shutdown
+  - title: Sessions and measurements
+    desc: Open `.cu3s` session files and read measurements and their metadata.
+    contents:
+      - cuvis_session
+      - cuvis_session_count
+      - cuvis_session_fps
+      - cuvis_get_measurement
+      - cuvis_get_metadata
+  - title: Calibration and processing
+    desc: Set references and reprocess a measurement to a calibration level.
+    contents:
+      - cuvis_processing_context
+      - cuvis_set_reference
+      - cuvis_has_reference
+      - cuvis_reprocess
+  - title: Data cube
+    desc: Extract the hyperspectral cube and its wavelengths as R objects.
+    contents:
+      - cuvis_get_cube
+      - cuvis_get_wavelengths
+  - title: Export
+    desc: Write measurements to ENVI, TIFF or a new session file.
+    contents:
+      - cuvis_export_envi
+      - cuvis_export_tiff
+      - cuvis_export_session
+  - title: Enumerations
+    desc: SDK enumeration values used by the processing functions.
+    contents:
+      - cuvis_processing_modes
+      - cuvis_reference_types
+  - title: Sample data
+    desc: Locate and load the vendor sample recordings.
+    contents:
+      - cuvis_sample_data
+      - cuvis_sample_session
+  - title: Package
+    desc: Package overview.
+    contents:
+      - cuvis.r-package
+
+articles:
+  - title: Get started
+    navbar: ~
+    contents:
+      - cuvis-r-intro
+  - title: Workflows
+    navbar: Workflows
+    contents:
+      - cuvis-r-calibration

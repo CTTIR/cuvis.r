@@ -13,9 +13,9 @@ Provides an interface to the Cubert 'CUVIS' C software development kit (SDK) for
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/cttir/cuvis.r}
+  \item \url{https://github.com/CTTIR/cuvis.r}
   \item \url{https://cttir.github.io/cuvis.r/}
-  \item Report bugs at \url{https://github.com/cttir/cuvis.r/issues}
+  \item Report bugs at \url{https://github.com/CTTIR/cuvis.r/issues}
 }
 
 }

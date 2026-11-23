@@ -54,11 +54,19 @@
 
 * The vignettes show a single band with the image orientation (the earlier
   `image()` call drew it rotated) and plot raw signal and reflectance in
-  separate, labelled panels with colour-blind-safe colours instead of two
-  curves on an unlabelled second axis.
+  separate, labeled panels with color-blind-safe colors instead of two
+  curves on an unlabeled second axis.
 * `cuvis_get_cube()` documents the index order and orientation of the array.
   `cuvis_get_wavelengths()` and `cuvis_version()` document their return value
   when the SDK reports no wavelengths and in a stub installation.
+
+## Packaging
+
+* The pkgdown reference index is grouped by workflow step and the articles
+  are indexed, with the introduction first.
+* The README lists every exported function, installs with pak from
+  `CTTIR/cuvis.r` and keeps the developer notes above the closing sections.
+  `URL` and `BugReports` use the organization name as spelled on GitHub.
 
 ## Earlier development changes
 

@@ -17,11 +17,13 @@ Rtools
 SDK
 SDK's
 Zenodo
+cli
 copyediting
 cubert
 cuvis
 de
 enum
+finalizers
 gmbh
 hyperspectR
 hyperspectral
@@ -29,6 +31,7 @@ lifecycle
 nanometers
 nm
 oversized
+pak
 pkgdown
 recalibration
 reflectance
