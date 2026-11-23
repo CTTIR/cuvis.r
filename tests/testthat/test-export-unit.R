@@ -8,15 +8,15 @@ fake_mesu <- function() {
 }
 
 test_that("cuvis_export_envi rejects a non-measurement", {
-  expect_error(cuvis_export_envi(list(), tempdir()), "inherits")
+  expect_error(cuvis_export_envi(list(), tempdir()), class = "cuvis_error_bad_argument")
 })
 
 test_that("cuvis_export_tiff rejects a non-measurement", {
-  expect_error(cuvis_export_tiff(list(), tempdir()), "inherits")
+  expect_error(cuvis_export_tiff(list(), tempdir()), class = "cuvis_error_bad_argument")
 })
 
 test_that("cuvis_export_session rejects a non-measurement", {
-  expect_error(cuvis_export_session(list(), tempdir()), "inherits")
+  expect_error(cuvis_export_session(list(), tempdir()), class = "cuvis_error_bad_argument")
 })
 
 test_that("cuvis_export_tiff rejects an invalid format", {

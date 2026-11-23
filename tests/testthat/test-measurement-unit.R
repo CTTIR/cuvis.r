@@ -13,7 +13,7 @@ fake_mesu <- function() {
 # ---- cuvis_get_measurement validation ---------------------------------------
 
 test_that("cuvis_get_measurement rejects non-session input", {
-  expect_error(cuvis_get_measurement(list(), 1), "inherits")
+  expect_error(cuvis_get_measurement(list(), 1), class = "cuvis_error_bad_argument")
 })
 
 test_that("cuvis_get_measurement enforces the index range", {
@@ -36,7 +36,7 @@ test_that("cuvis_get_measurement rejects an unknown item_type", {
 # ---- cuvis_get_metadata validation ------------------------------------------
 
 test_that("cuvis_get_metadata rejects non-measurement input", {
-  expect_error(cuvis_get_metadata(list()), "inherits")
+  expect_error(cuvis_get_metadata(list()), class = "cuvis_error_bad_argument")
 })
 
 # ---- print / summary S3 methods ---------------------------------------------
@@ -86,4 +86,73 @@ test_that("measurement S3 methods resolve mode names via the helper", {
   m <- fake_mesu()
   out <- paste(cli::cli_fmt(print(m)), collapse = " ")
   expect_match(out, "Preview")
+})
+
+# ---- item type and SDK forwarding -------------------------------------------
+
+test_that("cuvis_get_measurement checks item_type before asking the SDK", {
+  s <- fake_session(count = 3L)
+  local_mocked_bindings(
+    cuvis_session_count = function(session, item_type) {
+      cli::cli_abort("the SDK must not be asked")
+    }
+  )
+  expect_error(cuvis_get_measurement(s, 1, item_type = "frames"),
+               "no_gaps", class = "cuvis_error_bad_argument")
+  expect_error(cuvis_get_measurement(s, 1, item_type = NA_character_),
+               "Unknown item_type")
+  expect_error(cuvis_get_measurement(s, 1, item_type = c("no_gaps", "references")),
+               "Unknown item_type")
+})
+
+test_that("cuvis_get_measurement passes a zero-based index and item type", {
+  s <- fake_session(count = 3L)
+  requests <- list()
+  fixture <- native_fixture(function(name, ...) {
+    requests[[length(requests) + 1L]] <<- list(name = name, args = list(...))
+    if (name == "rcuvis_session_get_size") 3L else "measurement-handle"
+  }, c("cuvis_get_measurement", "cuvis_session_count"))
+
+  mesu <- fixture$cuvis_get_measurement(s, 2, item_type = "references")
+  expect_s3_class(mesu, "cuvis_measurement")
+  expect_identical(mesu$index, 2L)
+  expect_identical(mesu$session_path, s$path)
+  expect_identical(requests[[2]]$name, "rcuvis_session_get_mesu")
+  expect_identical(requests[[2]]$args[[2]], 1L)
+  expect_identical(requests[[2]]$args[[3]],
+                   cuvis.r:::cuvis_session_item_types[["references"]])
+})
+
+test_that("cuvis_get_measurement returns NULL when the SDK has no measurement", {
+  fixture <- native_fixture(function(name, ...) {
+    if (name == "rcuvis_session_get_size") 3L else NULL
+  }, c("cuvis_get_measurement", "cuvis_session_count"))
+  expect_null(fixture$cuvis_get_measurement(fake_session(count = 3L), 1))
+})
+
+test_that("cuvis_get_metadata forwards the measurement handle", {
+  fixture <- native_fixture(function(name, handle) {
+    list(name = name, handle = handle)
+  }, "cuvis_get_metadata")
+  expect_identical(fixture$cuvis_get_metadata(fake_mesu()),
+                   list(name = "rcuvis_mesu_get_metadata", handle = "mh"))
+})
+
+# ---- printing when the SDK cannot answer ------------------------------------
+
+test_that("measurement print and summary do not fail without metadata", {
+  local_mocked_bindings(
+    cuvis_get_metadata = function(measurement) {
+      cli::cli_abort("CUVIS SDK is not initialized or has been shut down.")
+    }
+  )
+  m <- fake_mesu()
+  out <- paste(cli::cli_fmt(print(m)), collapse = " ")
+  expect_match(out, "<cuvis_measurement>", fixed = TRUE)
+  expect_match(out, "Metadata unavailable")
+  expect_match(out, "shut down")
+  expect_identical(suppressMessages(print(m)), m)
+  out <- paste(cli::cli_fmt(summary(m)), collapse = " ")
+  expect_match(out, "Metadata unavailable")
+  expect_identical(suppressMessages(summary(m)), m)
 })

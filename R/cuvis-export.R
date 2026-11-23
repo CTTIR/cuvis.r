@@ -26,7 +26,7 @@
 #' @export
 cuvis_export_envi <- function(measurement, dir, permissive = TRUE,
                               overwrite = FALSE) {
-  stopifnot(inherits(measurement, "cuvis_measurement"))
+  .cuvis_check_class(measurement, "cuvis_measurement", "measurement")
   .cuvis_flag(permissive, "permissive")
   dir <- .cuvis_export_dir(dir, overwrite)
   exp_handle <- .cuvis_sdk_call(.Call("rcuvis_exporter_create_envi", dir,
@@ -66,7 +66,7 @@ cuvis_export_tiff <- function(measurement, dir,
                               format = c("MultiChannel", "Single", "MultiPage"),
                               compression = c("None", "LZW"),
                               permissive = TRUE, overwrite = FALSE) {
-  stopifnot(inherits(measurement, "cuvis_measurement"))
+  .cuvis_check_class(measurement, "cuvis_measurement", "measurement")
   format <- match.arg(format)
   compression <- match.arg(compression)
   .cuvis_flag(permissive, "permissive")
@@ -108,7 +108,7 @@ cuvis_export_tiff <- function(measurement, dir,
 #' @export
 cuvis_export_session <- function(measurement, dir, permissive = TRUE,
                                  overwrite = FALSE) {
-  stopifnot(inherits(measurement, "cuvis_measurement"))
+  .cuvis_check_class(measurement, "cuvis_measurement", "measurement")
   .cuvis_flag(permissive, "permissive")
   dir <- .cuvis_export_dir(dir, overwrite)
   exp_handle <- .cuvis_sdk_call(.Call("rcuvis_exporter_create_cube", dir,

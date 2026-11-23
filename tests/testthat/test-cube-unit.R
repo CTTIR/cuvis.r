@@ -3,7 +3,7 @@
 # input validation here and mock it where it is a dependency of other code.
 
 test_that("cuvis_get_cube rejects non-measurement input", {
-  expect_error(cuvis_get_cube(list()), "inherits")
+  expect_error(cuvis_get_cube(list()), class = "cuvis_error_bad_argument")
   expect_error(cuvis_get_cube(42))
   expect_error(cuvis_get_cube("not a measurement"))
 })
@@ -25,4 +25,21 @@ test_that("cuvis_get_wavelengths returns NULL when attribute is absent", {
   )
   m <- structure(list(handle = "h"), class = "cuvis_measurement")
   expect_null(cuvis_get_wavelengths(m))
+})
+
+test_that("cuvis_get_cube names the offending argument", {
+  expect_error(cuvis_get_cube(42), "measurement",
+               class = "cuvis_error_bad_argument")
+  expect_error(cuvis_get_cube(NULL), "cuvis_measurement", class = "cuvis_error")
+})
+
+test_that("cuvis_get_cube forwards the measurement handle", {
+  cube <- array(1, dim = c(1, 2, 3))
+  fixture <- native_fixture(function(name, handle) {
+    expect_identical(name, "rcuvis_mesu_get_cube")
+    expect_identical(handle, "h")
+    cube
+  }, "cuvis_get_cube")
+  m <- structure(list(handle = "h"), class = "cuvis_measurement")
+  expect_identical(fixture$cuvis_get_cube(m), cube)
 })

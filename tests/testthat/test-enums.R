@@ -66,3 +66,10 @@ test_that(".get_proc_mode_name returns Unknown for gaps and out-of-range", {
 test_that(".get_proc_mode_name handles numeric (double) input", {
   expect_identical(cuvis.r:::.get_proc_mode_name(2), "Reflectance")
 })
+
+test_that(".get_proc_mode_name reports Unknown for unusable input", {
+  f <- cuvis.r:::.get_proc_mode_name
+  for (bad in list(NA_integer_, NA, NULL, integer(), c(0L, 1L), "2", 1.5)) {
+    expect_identical(f(bad), "Unknown")
+  }
+})

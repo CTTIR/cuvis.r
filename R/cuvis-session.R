@@ -21,6 +21,21 @@
 #' @export
 cuvis_session <- function(path) {
   path <- .cuvis_path(path, "path")
+  if (!file.exists(path)) {
+    cli::cli_abort(
+      c("Session file not found.", "x" = "{.path {path}} does not exist."),
+      class = c("cuvis_error_file_not_found", "cuvis_error")
+    )
+  }
+  if (dir.exists(path)) {
+    cli::cli_abort(
+      c(
+        "{.arg path} must be a {.file .cu3s} session file.",
+        "x" = "{.path {path}} is a directory."
+      ),
+      class = c("cuvis_error_bad_argument", "cuvis_error")
+    )
+  }
   path <- normalizePath(path, mustWork = TRUE)
   if (!grepl("\\.cu3s$", path, ignore.case = TRUE)) {
     cli_warn("File does not have .cu3s extension: {.path {path}}")
@@ -37,7 +52,7 @@ cuvis_session <- function(path) {
 
 #' @export
 print.cuvis_session <- function(x, ...) {
-  cli_h3("CUVIS Session")
+  cli_h3("CUVIS Session {.cls cuvis_session}")
   cli_text("Path: {.path {x$path}}")
   cli_text("Measurements: {x$count}")
   invisible(x)
@@ -53,6 +68,11 @@ summary.cuvis_session <- function(object, ...) {
   cli_text("Measurements: {object$count}")
   for (i in seq_len(min(object$count, 10L))) {
     mesu <- cuvis_get_measurement(object, i)
+    if (is.null(mesu)) {
+      # the SDK reports no measurement at this index (documented return)
+      cli_text("  [{i}] (no measurement)")
+      next
+    }
     md <- cuvis_get_metadata(mesu)
     mode_name <- .get_proc_mode_name(md$processing_mode)
     cli_text("  [{i}] {md$name} \u2014 {mode_name}, {md$integration_time} ms")
@@ -83,13 +103,9 @@ summary.cuvis_session <- function(object, ...) {
 #' }
 #' @export
 cuvis_session_count <- function(session, item_type = "no_gaps") {
-  stopifnot(inherits(session, "cuvis_session"))
-  if (!is.character(item_type) || length(item_type) != 1L || is.na(item_type) ||
-        !item_type %in% names(cuvis_session_item_types)) {
-    cli::cli_abort("Unknown item_type.")
-  }
-  .cuvis_sdk_call(.Call("rcuvis_session_get_size", session$handle,
-                        cuvis_session_item_types[[item_type]]))
+  .cuvis_check_class(session, "cuvis_session", "session")
+  itype <- .cuvis_item_type(item_type)
+  .cuvis_sdk_call(.Call("rcuvis_session_get_size", session$handle, itype))
 }
 
 #' Read the Nominal Frame Rate of a Session
@@ -109,7 +125,7 @@ cuvis_session_count <- function(session, item_type = "no_gaps") {
 #' }
 #' @export
 cuvis_session_fps <- function(session) {
-  stopifnot(inherits(session, "cuvis_session"))
+  .cuvis_check_class(session, "cuvis_session", "session")
   fps <- .cuvis_sdk_call(.Call("rcuvis_session_get_fps", session$handle))
   if (length(fps) != 1L || !is.finite(fps) || fps <= 0) {
     return(NA_real_)

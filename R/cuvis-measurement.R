@@ -21,20 +21,17 @@
 #' @export
 cuvis_get_measurement <- function(session, index = 1L,
                                   item_type = "no_gaps") {
-  stopifnot(inherits(session, "cuvis_session"))
+  .cuvis_check_class(session, "cuvis_session", "session")
   if (!is.numeric(index) || length(index) != 1L || !is.finite(index) ||
         index != floor(index)) {
     cli_abort("index must be one finite integer.")
   }
+  itype <- .cuvis_item_type(item_type)
   count <- cuvis_session_count(session, item_type)
   if (index < 1L || index > count) {
     cli_abort("Index {index} out of range [1, {count}] for {item_type}.")
   }
   index <- as.integer(index)
-  if (!item_type %in% names(cuvis_session_item_types)) {
-    cli_abort("Unknown item_type: {.val {item_type}}. Use 'no_gaps', 'all_frames', or 'references'.")
-  }
-  itype <- cuvis_session_item_types[[item_type]]
   # Convert to 0-based for C
   handle <- .cuvis_sdk_call(.Call("rcuvis_session_get_mesu", session$handle,
                                   index - 1L, itype))
@@ -68,15 +65,18 @@ cuvis_get_measurement <- function(session, index = 1L,
 #' }
 #' @export
 cuvis_get_metadata <- function(measurement) {
-  stopifnot(inherits(measurement, "cuvis_measurement"))
+  .cuvis_check_class(measurement, "cuvis_measurement", "measurement")
   .cuvis_sdk_call(.Call("rcuvis_mesu_get_metadata", measurement$handle))
 }
 
 #' @export
 print.cuvis_measurement <- function(x, ...) {
-  md <- cuvis_get_metadata(x)
+  cli_h3("CUVIS Measurement {.cls cuvis_measurement}")
+  md <- .cuvis_metadata_or_note(x)
+  if (is.null(md)) {
+    return(invisible(x))
+  }
   mode_name <- .get_proc_mode_name(md$processing_mode)
-  cli_h3("CUVIS Measurement")
   cli_text("Name: {md$name}")
   cli_text("Integration time: {md$integration_time} ms")
   cli_text("Processing mode: {mode_name}")
@@ -86,9 +86,12 @@ print.cuvis_measurement <- function(x, ...) {
 
 #' @export
 summary.cuvis_measurement <- function(object, ...) {
-  md <- cuvis_get_metadata(object)
-  mode_name <- .get_proc_mode_name(md$processing_mode)
   cli_h3("CUVIS Measurement Summary")
+  md <- .cuvis_metadata_or_note(object)
+  if (is.null(md)) {
+    return(invisible(object))
+  }
+  mode_name <- .get_proc_mode_name(md$processing_mode)
   cli_text("Name: {md$name}")
   cli_text("Path: {.path {md$path}}")
   cli_text("Comment: {md$comment}")
@@ -99,4 +102,18 @@ summary.cuvis_measurement <- function(object, ...) {
   cli_text("Serial: {md$serial_number}")
   cli_text("Assembly: {md$assembly}")
   invisible(object)
+}
+
+# Metadata for the print and summary methods. Printing must not fail when the
+# SDK can no longer answer (for example after cuvis_shutdown()), so the reason
+# is shown instead and NULL is returned.
+.cuvis_metadata_or_note <- function(measurement) {
+  tryCatch(
+    cuvis_get_metadata(measurement),
+    error = function(e) {
+      reason <- conditionMessage(e)
+      cli_text("Metadata unavailable: {reason}")
+      NULL
+    }
+  )
 }

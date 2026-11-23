@@ -63,8 +63,8 @@ cuvis_processing_context <- function(base, load_references = TRUE) {
 cuvis_set_reference <- function(ctx, measurement,
                                 type = c("dark", "white", "white_dark",
                                          "sprad", "distance")) {
-  stopifnot(inherits(ctx, "cuvis_processing_context"))
-  stopifnot(inherits(measurement, "cuvis_measurement"))
+  .cuvis_check_class(ctx, "cuvis_processing_context", "ctx")
+  .cuvis_check_class(measurement, "cuvis_measurement", "measurement")
   type <- match.arg(type)
   type_int <- .ref_type_lookup[[type]]
   .cuvis_sdk_call(.Call("rcuvis_proc_set_reference", ctx$handle,
@@ -94,7 +94,7 @@ cuvis_set_reference <- function(ctx, measurement,
 cuvis_has_reference <- function(ctx,
                                 type = c("dark", "white", "white_dark",
                                          "sprad", "distance")) {
-  stopifnot(inherits(ctx, "cuvis_processing_context"))
+  .cuvis_check_class(ctx, "cuvis_processing_context", "ctx")
   type <- match.arg(type)
   type_int <- .ref_type_lookup[[type]]
   .cuvis_sdk_call(.Call("rcuvis_proc_has_reference", ctx$handle, type_int))
@@ -132,8 +132,8 @@ cuvis_reprocess <- function(ctx, measurement,
                                      "dark_subtract", "raw", "preview"),
                             allow_recalib = FALSE) {
   .cuvis_flag(allow_recalib, "allow_recalib")
-  stopifnot(inherits(ctx, "cuvis_processing_context"))
-  stopifnot(inherits(measurement, "cuvis_measurement"))
+  .cuvis_check_class(ctx, "cuvis_processing_context", "ctx")
+  .cuvis_check_class(measurement, "cuvis_measurement", "measurement")
   mode <- match.arg(mode)
   mode_int <- .proc_mode_lookup[[mode]]
 
@@ -169,12 +169,38 @@ cuvis_reprocess <- function(ctx, measurement,
 
 #' @export
 print.cuvis_processing_context <- function(x, ...) {
-  cli_h3("CUVIS Processing Context")
-  refs <- names(x$references[vapply(x$references, isTRUE, logical(1))])
-  if (length(refs) > 0) {
-    cli_text("References set: {paste(refs, collapse = ', ')}")
+  cli_h3("CUVIS Processing Context {.cls cuvis_processing_context}")
+  refs <- .cuvis_context_references(x)
+  if (isTRUE(refs$from_sdk)) {
+    if (length(refs$set) > 0) {
+      cli_text("References set: {paste(refs$set, collapse = ', ')}")
+    } else {
+      cli_text("No references set")
+    }
+  } else if (length(refs$set) > 0) {
+    cli_text("References set: {paste(refs$set, collapse = ', ')}")
   } else {
     cli_text("No explicit references set (may have loaded from session)")
   }
   invisible(x)
+}
+
+# Which references does a processing context hold? The SDK is asked first: it
+# also knows references loaded from the session file, and references set with
+# cuvis_set_reference() when the caller did not keep the returned object. If
+# the SDK cannot answer (stub build, SDK shut down), fall back to what
+# cuvis_set_reference() recorded on the R object.
+.cuvis_context_references <- function(ctx) {
+  types <- names(.ref_type_lookup)
+  queried <- tryCatch(
+    vapply(types, function(type) isTRUE(cuvis_has_reference(ctx, type)),
+           logical(1)),
+    error = function(e) NULL
+  )
+  if (!is.null(queried)) {
+    return(list(set = types[queried], from_sdk = TRUE))
+  }
+  recorded <- vapply(types, function(type) isTRUE(ctx$references[[type]]),
+                     logical(1))
+  list(set = types[recorded], from_sdk = FALSE)
 }

@@ -23,7 +23,7 @@
 #' }
 #' @export
 cuvis_get_cube <- function(measurement) {
-  stopifnot(inherits(measurement, "cuvis_measurement"))
+  .cuvis_check_class(measurement, "cuvis_measurement", "measurement")
   .cuvis_sdk_call(.Call("rcuvis_mesu_get_cube", measurement$handle))
 }
 

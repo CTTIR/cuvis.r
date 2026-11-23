@@ -97,10 +97,17 @@ cuvis_tiff_compression <- c(
   "Preview"           # 5
 )
 
-# Helper to get mode name from C enum value (0-based)
+# Helper to get mode name from C enum value (0-based). Anything that is not
+# one known enum value (a gap, an out-of-range, missing or non-scalar value)
+# is reported as "Unknown" instead of raising an error in a print method.
 .get_proc_mode_name <- function(mode_int) {
+  if (!is.numeric(mode_int) || length(mode_int) != 1L || is.na(mode_int) ||
+        mode_int != floor(mode_int)) {
+    return("Unknown")
+  }
   idx <- mode_int + 1L  # C enum is 0-based, R vector is 1-based
-  if (idx >= 1L && idx <= length(.proc_mode_names) && !is.na(.proc_mode_names[idx])) {
+  if (idx >= 1L && idx <= length(.proc_mode_names) &&
+        !is.na(.proc_mode_names[idx])) {
     .proc_mode_names[idx]
   } else {
     "Unknown"

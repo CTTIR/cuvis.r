@@ -42,3 +42,43 @@
   }
   normalizePath(dir, mustWork = TRUE)
 }
+
+# Check that `x` is an object of class `class` created by this package. The
+# error names the argument and what was received, and carries the classes
+# `cuvis_error_bad_argument` and `cuvis_error` so callers can catch it.
+.cuvis_check_class <- function(x, class, arg, call = rlang::caller_env()) {
+  if (!inherits(x, class)) {
+    cli::cli_abort(
+      c(
+        "{.arg {arg}} must be a {.cls {class}} object.",
+        "x" = "It is {.obj_type_friendly {x}}."
+      ),
+      class = c("cuvis_error_bad_argument", "cuvis_error"),
+      call = call
+    )
+  }
+  invisible(x)
+}
+
+# Check a session item type and return its SDK enumeration value.
+.cuvis_item_type <- function(item_type, call = rlang::caller_env()) {
+  valid <- names(cuvis_session_item_types)
+  is_string <- is.character(item_type) && length(item_type) == 1L &&
+    !is.na(item_type)
+  if (!is_string || !item_type %in% valid) {
+    got <- if (is_string) {
+      cli::format_inline("{.val {item_type}}")
+    } else {
+      cli::format_inline("{.obj_type_friendly {item_type}}")
+    }
+    cli::cli_abort(
+      c(
+        "Unknown item_type.",
+        "x" = "{.arg item_type} must be one of {.or {.val {valid}}}, not {got}."
+      ),
+      class = c("cuvis_error_bad_argument", "cuvis_error"),
+      call = call
+    )
+  }
+  cuvis_session_item_types[[item_type]]
+}

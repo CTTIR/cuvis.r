@@ -30,6 +30,25 @@
   a path through a symbolic link such as the macOS temporary directory) was
   recorded unresolved, so a second `cuvis_init()` call with the same directory
   was refused as "already initialized with different settings".
+* `print()` for a processing context now asks the SDK which references the
+  context holds. References loaded from the session file, or set with
+  `cuvis_set_reference()` without keeping the returned object, were reported
+  as "No explicit references set".
+* `print()` and `summary()` for measurements and sessions no longer fail when
+  the SDK cannot return metadata (for example after `cuvis_shutdown()`), when
+  a session index has no measurement, or when the processing mode is missing.
+  Print methods now name the object class in their header.
+* Functions that take a session, a measurement or a processing context report
+  a wrong object with an error that names the argument and what was supplied,
+  instead of a bare `inherits()` assertion. These errors, and the error for an
+  unknown `item_type`, carry the condition classes `cuvis_error_bad_argument`
+  and `cuvis_error`.
+* `cuvis_session()` reports a missing file (class
+  `cuvis_error_file_not_found`) or a directory before the SDK is called.
+* `cuvis_get_measurement()` and `cuvis_session_count()` check `item_type`
+  before the SDK is asked and list the valid values in the error.
+* cli (>= 3.5.0) is now required, the first version with the formatting used
+  in these messages.
 
 ## Earlier development changes
 
