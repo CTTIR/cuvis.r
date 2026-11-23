@@ -11,7 +11,7 @@ Logical. \code{TRUE} if the SDK is available, \code{FALSE} otherwise.
 }
 \description{
 Tests whether the Cubert CUVIS SDK library was linked at installation.
-This does not initialize the SDK or verify calibration, sample data or
+This does not initialise the SDK or verify calibration, sample data or
 runtime usability. See \code{\link[=cuvis_is_initialized]{cuvis_is_initialized()}}.
 }
 \examples{

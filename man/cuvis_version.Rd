@@ -11,7 +11,7 @@ Character string with the SDK version. A stub installation (no SDK
 linked, \code{\link[=cuvis_available]{cuvis_available()}} is \code{FALSE}) returns \code{"stub-0.0.0"}.
 }
 \description{
-Note: The SDK must be initialized with \code{\link[=cuvis_init]{cuvis_init()}} before calling
+Note: The SDK must be initialised with \code{\link[=cuvis_init]{cuvis_init()}} before calling
 this function.
 }
 \examples{

@@ -46,7 +46,7 @@ whether the SDK was linked; it does not establish runtime or calibration readine
 For real measurements, also set `CUVIS_SETTINGS` to the directory containing the
 correct factory/user calibration and provide a valid `.cu3s` recording.
 
-Initialize once per R process. Repeated initialization with the same settings is
+Initialise once per R process. Repeated initialisation with the same settings is
 safe while the SDK remains active. After `cuvis_shutdown()`, restart R before
 using the SDK again; do not unload/reload the package to restart it. Run the
 following examples in separate R sessions, or postpone shutdown until the whole
@@ -54,7 +54,7 @@ batch is finished.
 
 Exports now require a new or empty directory by default. Use `overwrite = TRUE`
 only to permit replacement deliberately. This changes the previous overwrite
-behavior. Successful export waits for the SDK flush and releases the exporter;
+behaviour. Successful export waits for the SDK flush and releases the exporter;
 flush errors propagate to the caller. Directory paths longer than the SDK's 255-byte limit are rejected.
 Use plain paths: SDK 3.6.1 lists special characters in export paths as a known
 vendor limitation. Do not use the same output directory concurrently.
@@ -115,8 +115,8 @@ cuvis_shutdown()
 | Function | Description |
 |----------|-------------|
 | `cuvis_available()` | Check if the SDK is linked |
-| `cuvis_init()` | Initialize the CUVIS SDK (once per R process) |
-| `cuvis_is_initialized()` | Check if the SDK is initialized |
+| `cuvis_init()` | Initialise the CUVIS SDK (once per R process) |
+| `cuvis_is_initialized()` | Check if the SDK is initialised |
 | `cuvis_version()` | SDK version |
 | `cuvis_shutdown()` | Release SDK resources |
 | `cuvis_session(path)` | Load a `.cu3s` session file |
@@ -162,7 +162,7 @@ arguments with synthetic SDK responses. It does not validate vendor calibration,
 real files, runtime linking, or camera operation. See `MAINTENANCE.md` for the
 release gates and observed evidence.
 
-## License
+## Licence
 
 Apache License 2.0
 

@@ -11,8 +11,8 @@ cuvis_get_cube(measurement)
 }
 \value{
 A numeric 3D array with dimensions \verb{[rows, cols, bands]}.
-The \code{"wavelengths"} attribute contains a numeric vector of band center
-wavelengths in nanometers; it is absent when the SDK buffer carries no
+The \code{"wavelengths"} attribute contains a numeric vector of band centre
+wavelengths in nanometres; it is absent when the SDK buffer carries no
 wavelengths.
 }
 \description{

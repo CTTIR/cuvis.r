@@ -2,7 +2,7 @@
 % Please edit documentation in R/cuvis-init.R
 \name{cuvis_is_initialized}
 \alias{cuvis_is_initialized}
-\title{Is the CUVIS SDK Currently Initialized?}
+\title{Is the CUVIS SDK Currently Initialised?}
 \usage{
 cuvis_is_initialized()
 }

@@ -1,4 +1,4 @@
-#' Initialize the CUVIS SDK
+#' Initialise the CUVIS SDK
 #'
 #' Must be called before any other cuvis.r function. Loads the Cubert CUVIS
 #' SDK and configures the user settings directory.
@@ -78,7 +78,7 @@ cuvis_init <- function(settings_dir = NULL) {
 .cuvis_state$retired <- FALSE
 
 
-#' Is the CUVIS SDK Currently Initialized?
+#' Is the CUVIS SDK Currently Initialised?
 #'
 #' Reports whether [cuvis_init()] has been called successfully in this R
 #' process and the SDK has not been shut down since.
@@ -129,9 +129,9 @@ cuvis_is_initialized <- function() isTRUE(.cuvis_state$initialized)
 #' Shut Down the CUVIS SDK
 #'
 #' Releases all SDK resources. Call when done using cuvis.r functions.
-#' The vendor permits initialization only once per process. After shutdown,
+#' The vendor permits initialisation only once per process. After shutdown,
 #' existing handles cannot be used and R must be restarted before another
-#' [cuvis_init()] call. Keep one initialized SDK for a batch of measurements.
+#' [cuvis_init()] call. Keep one initialised SDK for a batch of measurements.
 #'
 #' @return Invisible `NULL`.
 #' @examples
@@ -156,7 +156,7 @@ cuvis_shutdown <- function() {
 
 #' Get CUVIS SDK Version
 #'
-#' Note: The SDK must be initialized with [cuvis_init()] before calling
+#' Note: The SDK must be initialised with [cuvis_init()] before calling
 #' this function.
 #'
 #' @return Character string with the SDK version. A stub installation (no SDK
@@ -175,7 +175,7 @@ cuvis_version <- function() {
 #' Check if CUVIS SDK is Available
 #'
 #' Tests whether the Cubert CUVIS SDK library was linked at installation.
-#' This does not initialize the SDK or verify calibration, sample data or
+#' This does not initialise the SDK or verify calibration, sample data or
 #' runtime usability. See [cuvis_is_initialized()].
 #'
 #' @return Logical. `TRUE` if the SDK is available, `FALSE` otherwise.

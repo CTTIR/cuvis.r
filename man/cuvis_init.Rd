@@ -2,7 +2,7 @@
 % Please edit documentation in R/cuvis-init.R
 \name{cuvis_init}
 \alias{cuvis_init}
-\title{Initialize the CUVIS SDK}
+\title{Initialise the CUVIS SDK}
 \usage{
 cuvis_init(settings_dir = NULL)
 }

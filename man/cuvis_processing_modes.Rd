@@ -20,7 +20,7 @@ Used internally by \code{\link[=cuvis_reprocess]{cuvis_reprocess()}}.
 \itemize{
 \item \code{Raw} (0): Raw sensor data, no processing
 \item \code{DarkSubtract} (1): Dark current subtracted
-\item \code{Reflectance} (2): Normalized reflectance (0-1)
+\item \code{Reflectance} (2): Normalised reflectance (0-1)
 \item \code{SpectralRadiance} (3): Calibrated to physical radiance (W/m^2/sr/nm)
 \item \code{Preview} (5): Low-resolution preview only
 }

@@ -16,8 +16,8 @@
 #' `vignette("cuvis-r-intro")` for a display with the image orientation.
 #'
 #' @return A numeric 3D array with dimensions `[rows, cols, bands]`.
-#'   The `"wavelengths"` attribute contains a numeric vector of band center
-#'   wavelengths in nanometers; it is absent when the SDK buffer carries no
+#'   The `"wavelengths"` attribute contains a numeric vector of band centre
+#'   wavelengths in nanometres; it is absent when the SDK buffer carries no
 #'   wavelengths.
 #'
 #' @examples

@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
 
-Provides an interface to the Cubert 'CUVIS' C software development kit (SDK) for reading, processing and exporting hyperspectral imaging data recorded with Cubert snapshot cameras. It supports loading proprietary '.cu3s' session files, applying the full calibration pipeline (dark subtraction, white reference normalization, spectral radiance, reflectance) and exporting to standard formats ('ENVI', 'TIFF'). The interface mirrors the API of 'cuvis.python' \url{https://github.com/cubert-hyperspectral/cuvis.python}. The 'CUVIS' SDK is not distributed with this package and must be installed separately; without it the package installs in a stub mode in which cuvis_available() returns FALSE and SDK operations are unavailable.
+Provides an interface to the Cubert 'CUVIS' C software development kit (SDK) for reading, processing and exporting hyperspectral imaging data recorded with Cubert snapshot cameras. It supports loading proprietary '.cu3s' session files, applying the full calibration pipeline (dark subtraction, white reference normalisation, spectral radiance, reflectance) and exporting to standard formats ('ENVI', 'TIFF'). The interface mirrors the API of 'cuvis.python' \url{https://github.com/cubert-hyperspectral/cuvis.python}. The 'CUVIS' SDK is not distributed with this package and must be installed separately; without it the package installs in a stub mode in which cuvis_available() returns FALSE and SDK operations are unavailable.
 }
 \seealso{
 Useful links:
