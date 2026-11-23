@@ -96,8 +96,8 @@ processing_fixture <- function(has = character()) {
     args <- list(...)
     requests[[length(requests) + 1L]] <<- list(name = name, args = args)
     if (name == "rcuvis_proc_has_reference") {
-      type <- names(cuvis.r:::.ref_type_lookup)[match(args[[2]],
-                                                     cuvis.r:::.ref_type_lookup)]
+      lookup <- cuvis.r:::.ref_type_lookup
+      type <- names(lookup)[match(args[[2]], lookup)]
       return(type %in% has)
     }
     if (name %in% c("rcuvis_proc_create_from_session",

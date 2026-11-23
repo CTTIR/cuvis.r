@@ -50,7 +50,9 @@ cuvis_init <- function(settings_dir = NULL) {
                   normalizePath(settings_dir, mustWork = FALSE))) {
       return(invisible(NULL))
     }
-    cli::cli_abort("The SDK is already initialized with different settings. Restart R to change them.")
+    cli::cli_abort(
+      "The SDK is already initialized with different settings. Restart R to change them."
+    )
   }
   if (!dir.exists(settings_dir) &&
       !dir.create(settings_dir, recursive = TRUE)) {
