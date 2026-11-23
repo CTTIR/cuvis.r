@@ -12,10 +12,22 @@ cuvis_get_cube(measurement)
 \value{
 A numeric 3D array with dimensions \verb{[rows, cols, bands]}.
 The \code{"wavelengths"} attribute contains a numeric vector of band center
-wavelengths in nanometers.
+wavelengths in nanometers; it is absent when the SDK buffer carries no
+wavelengths.
 }
 \description{
 Returns the 3D data cube as an R array with wavelength metadata.
+}
+\details{
+The first index is the image row (the \code{y} coordinate of the SDK image
+buffer, first image line first), the second the column (\code{x}) and the third
+the band. Values are returned as doubles whatever the storage type of the
+SDK buffer. Process the measurement with \code{\link[=cuvis_reprocess]{cuvis_reprocess()}} before
+extracting the cube, as in the example.
+
+\code{\link[graphics:image]{graphics::image()}} draws the first index of a matrix along the x axis from
+the bottom, so a band shown with \code{image(cube[, , i])} appears rotated. See
+\code{vignette("cuvis-r-intro")} for a display with the image orientation.
 }
 \examples{
 # Runs only where the proprietary Cubert CUVIS SDK and its sample data

@@ -10,7 +10,8 @@ cuvis_get_wavelengths(measurement)
 \item{measurement}{A cuvis_measurement object.}
 }
 \value{
-Numeric vector of wavelengths in nm.
+Numeric vector of wavelengths in nm, or \code{NULL} when the SDK buffer
+carries no wavelengths.
 }
 \description{
 Convenience function to extract just the wavelength vector from a

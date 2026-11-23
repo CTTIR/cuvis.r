@@ -50,6 +50,16 @@
 * cli (>= 3.5.0) is now required, the first version with the formatting used
   in these messages.
 
+## Documentation
+
+* The vignettes show a single band with the image orientation (the earlier
+  `image()` call drew it rotated) and plot raw signal and reflectance in
+  separate, labelled panels with colour-blind-safe colours instead of two
+  curves on an unlabelled second axis.
+* `cuvis_get_cube()` documents the index order and orientation of the array.
+  `cuvis_get_wavelengths()` and `cuvis_version()` document their return value
+  when the SDK reports no wavelengths and in a stub installation.
+
 ## Earlier development changes
 
 * Prevent SDK calls through handles after shutdown and reject reinitialization
