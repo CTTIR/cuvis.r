@@ -74,6 +74,8 @@
 * The README lists every exported function, installs with pak from
   `CTTIR/cuvis.r` and keeps the developer notes above the closing sections.
   `URL` and `BugReports` use the organisation name as spelled on GitHub.
+* The README citation, `CITATION.cff` and `.zenodo.json` name the author as
+  R. Heller.
 
 ## Earlier development changes
 

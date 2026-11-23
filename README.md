@@ -170,7 +170,7 @@ Apache License 2.0
 
 If you use this software, please cite it as:
 
-> Heller, R. (2026). *cuvis.r: R bindings for the Cubert CUVIS hyperspectral SDK* [Computer software]. https://github.com/CTTIR/cuvis.r
+> R. Heller (2026). *cuvis.r: R bindings for the Cubert CUVIS hyperspectral SDK* [Computer software]. https://github.com/CTTIR/cuvis.r
 
 The Zenodo metadata is a draft; no published DOI is claimed.
 
