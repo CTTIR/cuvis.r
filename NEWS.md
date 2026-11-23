@@ -47,8 +47,8 @@
   `cuvis_error_file_not_found`) or a directory before the SDK is called.
 * `cuvis_get_measurement()` and `cuvis_session_count()` check `item_type`
   before the SDK is asked and list the valid values in the error.
-* cli (>= 3.5.0) is now required, the first version with the formatting used
-  in these messages.
+* cli (>= 3.4.0) is now required, the first version with the
+  `{.obj_type_friendly}` formatting used in these messages.
 
 ## Documentation
 

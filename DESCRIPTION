@@ -25,7 +25,7 @@ SystemRequirements: Cubert CUVIS SDK (Linux or Windows; optional for stub mode),
 Depends:
     R (>= 4.1.0)
 Imports:
-    cli (>= 3.5.0),
+    cli (>= 3.4.0),
     rlang
 Suggests:
     testthat (>= 3.1.7),
