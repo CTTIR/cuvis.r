@@ -55,7 +55,8 @@
 * The vignettes show a single band with the image orientation (the earlier
   `image()` call drew it rotated) and plot raw signal and reflectance in
   separate, labeled panels with color-blind-safe colors instead of two
-  curves on an unlabeled second axis. The list of calibration stages in the
+  curves on an unlabeled second axis. The reflectance axis follows the data,
+  so the curve is drawn whatever scale the SDK returns. The list of calibration stages in the
   calibration vignette renders as a list again.
 * `cuvis_get_cube()` documents the index order and orientation of the array.
   `cuvis_get_wavelengths()` and `cuvis_version()` document their return value
