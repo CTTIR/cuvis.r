@@ -1,4 +1,4 @@
-# Initialize the CUVIS SDK
+# Initialise the CUVIS SDK
 
 Must be called before any other cuvis.r function. Loads the Cubert CUVIS
 SDK and configures the user settings directory.

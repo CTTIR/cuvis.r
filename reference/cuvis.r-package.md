@@ -4,7 +4,7 @@ Provides an interface to the Cubert 'CUVIS' C software development kit
 (SDK) for reading, processing and exporting hyperspectral imaging data
 recorded with Cubert snapshot cameras. It supports loading proprietary
 '.cu3s' session files, applying the full calibration pipeline (dark
-subtraction, white reference normalization, spectral radiance,
+subtraction, white reference normalisation, spectral radiance,
 reflectance) and exporting to standard formats ('ENVI', 'TIFF'). The
 interface mirrors the API of 'cuvis.python'
 <https://github.com/cubert-hyperspectral/cuvis.python>. The 'CUVIS' SDK

@@ -35,13 +35,13 @@ pak::pak("CTTIR/cuvis.r")
 
 ## Quick Start
 
-The SDK may be initialized only once per R process. Keep it active for
+The SDK may be initialised only once per R process. Keep it active for
 the whole batch, then shut down once. Restart R before another batch
 after shutdown. macOS supports stub installation, not the vendor
 runtime. Exports require a new or empty directory unless
 `overwrite = TRUE` is explicitly requested.
 
-### Initialize the SDK
+### Initialise the SDK
 
 Every cuvis.r session begins with
 [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)

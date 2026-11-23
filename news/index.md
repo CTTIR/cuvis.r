@@ -10,7 +10,7 @@
   [`cuvis_available()`](https://cttir.github.io/cuvis.r/reference/cuvis_available.md)
   is `TRUE` and the data are found;
   [`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md)
-  stays in `\dontrun{}` because the SDK cannot be re-initialized in the
+  stays in `\dontrun{}` because the SDK cannot be re-initialised in the
   same R process.
 - Documented return values for the enumeration vectors,
   [`cuvis_session_count()`](https://cttir.github.io/cuvis.r/reference/cuvis_session_count.md),
@@ -21,9 +21,9 @@
 - Loading the package no longer changes `PATH`. On Windows the SDK `bin`
   directory is put on `PATH` only while an SDK call runs, and `PATH` is
   restored afterwards.
-- Stub builds no longer compile unused SDK finalizers, which removes
+- Stub builds no longer compile unused SDK finalisers, which removes
   `-Wunused-function` compiler warnings when the SDK is absent.
-- Reworded the Title and Description, declared `Language: en-US`, and
+- Reworded the Title and Description, declared `Language: en-GB`, and
   use the standard `Apache License (>= 2)` field without a restating
   LICENSE file in the source package.
 - Removed CRAN badges until the package is on CRAN, excluded development
@@ -75,9 +75,9 @@
 
 - The vignettes show a single band with the image orientation (the
   earlier [`image()`](https://rdrr.io/r/graphics/image.html) call drew
-  it rotated) and plot raw signal and reflectance in separate, labeled
-  panels with color-blind-safe colors instead of two curves on an
-  unlabeled second axis. The reflectance axis follows the data, so the
+  it rotated) and plot raw signal and reflectance in separate, labelled
+  panels with colour-blind-safe colours instead of two curves on an
+  unlabelled second axis. The reflectance axis follows the data, so the
   curve is drawn whatever scale the SDK returns. The list of calibration
   stages in the calibration vignette renders as a list again.
 - [`cuvis_get_cube()`](https://cttir.github.io/cuvis.r/reference/cuvis_get_cube.md)
@@ -87,6 +87,12 @@
   [`cuvis_version()`](https://cttir.github.io/cuvis.r/reference/cuvis_version.md)
   document their return value when the SDK reports no wavelengths and in
   a stub installation.
+- The documentation is written in British English (`Language: en-GB`):
+  help pages, README, vignettes and the entries for this version use
+  “initialise”, “normalised”, “behaviour”, “centre” and “nanometres”.
+  Function names such as
+  [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md)
+  and the messages of the package are unchanged.
 
 ### Packaging
 
@@ -94,20 +100,22 @@
   articles are indexed, with the introduction first.
 - The README lists every exported function, installs with pak from
   `CTTIR/cuvis.r` and keeps the developer notes above the closing
-  sections. `URL` and `BugReports` use the organization name as spelled
+  sections. `URL` and `BugReports` use the organisation name as spelled
   on GitHub.
+- The README citation, `CITATION.cff` and `.zenodo.json` name the author
+  as R. Heller.
 
 ### Earlier development changes
 
 - Prevent SDK calls through handles after shutdown and reject
-  reinitialization or settings changes that violate the vendor’s
-  one-initialization contract.
+  reinitialisation or settings changes that violate the vendor’s
+  one-initialisation contract.
 - Validate cube buffer sizes and use wide offsets before reading native
   memory.
 - Require explicit export overwrite permission, reject oversized paths,
   and validate scalar paths and logical arguments before native calls.
 - Flush SDK output before returning and release exporters immediately;
-  propagate flush failures and preserve primary errors during cleanup.
+  propagate flush failures and preserve primary errors during clean-up.
 - Match sample filenames literally. Improve SDK discovery for Unix and
   Windows, require a matching library, and support explicit stub
   installation.
@@ -116,7 +124,7 @@
   release requirements.
 - Remove an unresolved draft DOI and document supported platforms and
   first use.
-- Standardize the named v5 package logo across README, documentation
+- Standardise the named v5 package logo across README, documentation
   pages and available application headers, with matching light and dark
   artwork.
 - [`cuvis_get_measurement()`](https://cttir.github.io/cuvis.r/reference/cuvis_get_measurement.md)

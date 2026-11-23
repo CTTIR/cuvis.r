@@ -24,7 +24,7 @@ A named integer vector mapping mode names to SDK enum values.
 
 - `DarkSubtract` (1): Dark current subtracted
 
-- `Reflectance` (2): Normalized reflectance (0-1)
+- `Reflectance` (2): Normalised reflectance (0-1)
 
 - `SpectralRadiance` (3): Calibrated to physical radiance (W/m^2/sr/nm)
 

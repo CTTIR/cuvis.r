@@ -1,7 +1,7 @@
 # Check if CUVIS SDK is Available
 
 Tests whether the Cubert CUVIS SDK library was linked at installation.
-This does not initialize the SDK or verify calibration, sample data or
+This does not initialise the SDK or verify calibration, sample data or
 runtime usability. See
 [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md).
 

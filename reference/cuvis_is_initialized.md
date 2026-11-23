@@ -1,4 +1,4 @@
-# Is the CUVIS SDK Currently Initialized?
+# Is the CUVIS SDK Currently Initialised?
 
 Reports whether
 [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)

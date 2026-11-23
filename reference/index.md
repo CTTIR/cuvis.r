@@ -7,9 +7,9 @@ Check for the SDK, initialize it once per R process and shut it down.
 - [`cuvis_available()`](https://cttir.github.io/cuvis.r/reference/cuvis_available.md)
   : Check if CUVIS SDK is Available
 - [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)
-  : Initialize the CUVIS SDK
+  : Initialise the CUVIS SDK
 - [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md)
-  : Is the CUVIS SDK Currently Initialized?
+  : Is the CUVIS SDK Currently Initialised?
 - [`cuvis_version()`](https://cttir.github.io/cuvis.r/reference/cuvis_version.md)
   : Get CUVIS SDK Version
 - [`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md)

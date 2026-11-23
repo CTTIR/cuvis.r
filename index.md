@@ -48,7 +48,7 @@ calibration readiness. For real measurements, also set `CUVIS_SETTINGS`
 to the directory containing the correct factory/user calibration and
 provide a valid `.cu3s` recording.
 
-Initialize once per R process. Repeated initialization with the same
+Initialise once per R process. Repeated initialisation with the same
 settings is safe while the SDK remains active. After
 [`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md),
 restart R before using the SDK again; do not unload/reload the package
@@ -57,7 +57,7 @@ postpone shutdown until the whole batch is finished.
 
 Exports now require a new or empty directory by default. Use
 `overwrite = TRUE` only to permit replacement deliberately. This changes
-the previous overwrite behavior. Successful export waits for the SDK
+the previous overwrite behaviour. Successful export waits for the SDK
 flush and releases the exporter; flush errors propagate to the caller.
 Directory paths longer than the SDK’s 255-byte limit are rejected. Use
 plain paths: SDK 3.6.1 lists special characters in export paths as a
@@ -122,8 +122,8 @@ cuvis_shutdown()
 | Function | Description |
 |----|----|
 | [`cuvis_available()`](https://cttir.github.io/cuvis.r/reference/cuvis_available.md) | Check if the SDK is linked |
-| [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md) | Initialize the CUVIS SDK (once per R process) |
-| [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md) | Check if the SDK is initialized |
+| [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md) | Initialise the CUVIS SDK (once per R process) |
+| [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md) | Check if the SDK is initialised |
 | [`cuvis_version()`](https://cttir.github.io/cuvis.r/reference/cuvis_version.md) | SDK version |
 | [`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md) | Release SDK resources |
 | `cuvis_session(path)` | Load a `.cu3s` session file |
@@ -171,7 +171,7 @@ and export arguments with synthetic SDK responses. It does not validate
 vendor calibration, real files, runtime linking, or camera operation.
 See `MAINTENANCE.md` for the release gates and observed evidence.
 
-## License
+## Licence
 
 Apache License 2.0
 
@@ -179,7 +179,7 @@ Apache License 2.0
 
 If you use this software, please cite it as:
 
-> Heller, R. (2026). *cuvis.r: R bindings for the Cubert CUVIS
+> R. Heller (2026). *cuvis.r: R bindings for the Cubert CUVIS
 > hyperspectral SDK* \[Computer software\].
 > <https://github.com/CTTIR/cuvis.r>
 

@@ -1,6 +1,6 @@
 # Get CUVIS SDK Version
 
-Note: The SDK must be initialized with
+Note: The SDK must be initialised with
 [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md)
 before calling this function.
 

@@ -25,11 +25,11 @@ several stages:
 1.  **Raw** – unprocessed sensor readout
 2.  **Dark subtract** – dark current noise removed
 3.  **Spectral radiance** – calibrated to physical units (W/m^2/sr/nm)
-4.  **Reflectance** – normalized by white reference (values 0–1)
+4.  **Reflectance** – normalised by white reference (values 0–1)
 
 ## Step-by-Step Workflow
 
-### 1. Initialize and Load Data
+### 1. Initialise and Load Data
 
 ``` r
 
