@@ -38,25 +38,29 @@ cuvis_init <- function(settings_dir = NULL) {
   if (is.null(settings_dir)) {
     settings_dir <- .cuvis_default_settings()
   }
-  settings_dir <- normalizePath(.cuvis_path(settings_dir, "settings_dir"),
-                                mustWork = FALSE)
+  settings_dir <- .cuvis_path(settings_dir, "settings_dir")
 
   # Initialising an already-initialised SDK is a no-op, and re-initialising a
   # shut-down one does not restore a usable state: the next
   # cuvis_session_file_load() then dereferences a null handle and takes the R
   # process down. Callers that read several measurements in one session hit
   # this on the second read, so track the state and skip redundant work.
-  if (isTRUE(.cuvis_state$initialized) &&
-      identical(.cuvis_state$settings_dir, settings_dir)) {
-    return(invisible(NULL))
-  }
   if (isTRUE(.cuvis_state$initialized)) {
+    if (identical(.cuvis_state$settings_dir,
+                  normalizePath(settings_dir, mustWork = FALSE))) {
+      return(invisible(NULL))
+    }
     cli::cli_abort("The SDK is already initialized with different settings. Restart R to change them.")
   }
   if (!dir.exists(settings_dir) &&
       !dir.create(settings_dir, recursive = TRUE)) {
     cli::cli_abort("Could not create the CUVIS settings directory.")
   }
+  # Resolve the path only now that the directory exists. A path that does not
+  # exist yet is not made canonical (a relative path stays relative, symbolic
+  # links stay unresolved), so the recorded directory would differ from the
+  # same directory on the next call and that call would be refused.
+  settings_dir <- normalizePath(settings_dir, mustWork = TRUE)
   .cuvis_sdk_call(.Call("rcuvis_init", settings_dir))
   .cuvis_state$initialized <- TRUE
   .cuvis_state$settings_dir <- settings_dir
@@ -153,7 +157,8 @@ cuvis_shutdown <- function() {
 #' Note: The SDK must be initialized with [cuvis_init()] before calling
 #' this function.
 #'
-#' @return Character string with the SDK version.
+#' @return Character string with the SDK version. A stub installation (no SDK
+#'   linked, [cuvis_available()] is `FALSE`) returns `"stub-0.0.0"`.
 #' @examples
 #' # Requires the proprietary Cubert CUVIS SDK.
 #' if (cuvis_available()) {

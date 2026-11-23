@@ -23,6 +23,14 @@
   `inst/WORDLIST`.
 * Updated the maintainer e-mail address to raban.heller@uni-ulm.de.
 
+## Bug fixes
+
+* `cuvis_init()` now records the resolved settings directory after creating
+  it. Before, a settings directory that did not exist yet (a relative path, or
+  a path through a symbolic link such as the macOS temporary directory) was
+  recorded unresolved, so a second `cuvis_init()` call with the same directory
+  was refused as "already initialized with different settings".
+
 ## Earlier development changes
 
 * Prevent SDK calls through handles after shutdown and reject reinitialization

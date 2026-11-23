@@ -66,3 +66,78 @@ test_that("native shutdown failure cannot leave usable handles or permit restart
   expect_false(fixture$cuvis_is_initialized())
   expect_error(fixture$cuvis_init(), "Restart R")
 })
+
+# ---- settings directory discovery -------------------------------------------
+
+test_that("default settings prefer CUVIS_SETTINGS", {
+  settings <- withr::local_tempdir()
+  withr::local_envvar(c(CUVIS_SETTINGS = settings, CUVIS = ""))
+  expect_identical(cuvis.r:::.cuvis_default_settings(), settings)
+})
+
+test_that("default settings use a CUVIS installation that carries factory data", {
+  skip_if(any(dir.exists(c("/etc/cuvis", "/usr/local/etc/cuvis",
+                           "C:/ProgramData/cuvis"))),
+          "a system-wide CUVIS settings directory exists on this machine")
+  root <- withr::local_tempdir()
+  dir.create(file.path(root, "settings", "factory"), recursive = TRUE)
+  withr::local_envvar(c(CUVIS_SETTINGS = "", CUVIS = root))
+  expect_identical(cuvis.r:::.cuvis_default_settings(),
+                   file.path(root, "settings"))
+  # an existing candidate without factory/ or user/ is still preferred to a
+  # temporary directory
+  unlink(file.path(root, "settings", "factory"), recursive = TRUE)
+  expect_identical(cuvis.r:::.cuvis_default_settings(),
+                   file.path(root, "settings"))
+})
+
+test_that("default settings warn before falling back to a temporary directory", {
+  skip_if(any(dir.exists(c("/etc/cuvis", "/usr/local/etc/cuvis",
+                           "C:/ProgramData/cuvis",
+                           "C:/Program Files/Cubert GmbH/Cuvis/settings"))),
+          "a system-wide CUVIS settings directory exists on this machine")
+  withr::local_envvar(c(CUVIS_SETTINGS = "", CUVIS = ""))
+  expect_warning(
+    settings <- cuvis.r:::.cuvis_default_settings(),
+    "No CUVIS settings directory found"
+  )
+  expect_identical(settings, tempdir())
+})
+
+test_that("cuvis_init creates a missing settings directory before the SDK call", {
+  fixture <- init_fixture()
+  settings <- file.path(withr::local_tempdir(), "new", "settings")
+  fixture$cuvis_init(settings)
+  expect_true(dir.exists(settings))
+  expect_identical(fixture$calls[[1]][[1]], "rcuvis_init")
+  expect_identical(fixture$calls[[1]][[2]], normalizePath(settings))
+})
+
+test_that("cuvis_version returns what the native routine reports", {
+  fixture <- native_fixture(function(name) {
+    expect_identical(name, "rcuvis_version")
+    "3.6.1"
+  }, "cuvis_version")
+  expect_identical(fixture$cuvis_version(), "3.6.1")
+})
+
+test_that("repeating cuvis_init with a directory it created is a no-op", {
+  # The settings directory does not exist before the first call. Its recorded
+  # path must be the resolved one, or the second call is taken for a change of
+  # settings (relative paths, and symbolic links such as the macOS tempdir).
+  fixture <- init_fixture()
+  root <- withr::local_tempdir()
+  settings <- file.path(root, "created", "settings")
+  fixture$cuvis_init(settings)
+  expect_no_error(fixture$cuvis_init(settings))
+  expect_length(fixture$calls, 1L)
+
+  fixture <- init_fixture()
+  withr::local_dir(root)
+  fixture$cuvis_init("relative-settings")
+  expect_no_error(fixture$cuvis_init("relative-settings"))
+  expect_no_error(fixture$cuvis_init(file.path(root, "relative-settings")))
+  expect_length(fixture$calls, 1L)
+  expect_identical(fixture$calls[[1]][[2]],
+                   normalizePath(file.path(root, "relative-settings")))
+})

@@ -13,3 +13,19 @@ mock_native <- function(handler) {
     base::.Call(.NAME, ...)
   }
 }
+
+# Copies of package functions that see `handler` instead of the native `.Call`.
+#
+# The copies live in one environment whose parent is the package namespace, so
+# they call each other (and the mocked `.Call`) while every other helper still
+# resolves to the real package code. S3 methods are called by their full name.
+native_fixture <- function(handler, functions) {
+  env <- new.env(parent = asNamespace("cuvis.r"))
+  env$.Call <- mock_native(handler)
+  for (name in functions) {
+    fun <- get(name, asNamespace("cuvis.r"))
+    environment(fun) <- env
+    env[[name]] <- fun
+  }
+  env
+}
