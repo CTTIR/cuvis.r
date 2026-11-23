@@ -55,7 +55,8 @@
 * The vignettes show a single band with the image orientation (the earlier
   `image()` call drew it rotated) and plot raw signal and reflectance in
   separate, labeled panels with color-blind-safe colors instead of two
-  curves on an unlabeled second axis.
+  curves on an unlabeled second axis. The list of calibration stages in the
+  calibration vignette renders as a list again.
 * `cuvis_get_cube()` documents the index order and orientation of the array.
   `cuvis_get_wavelengths()` and `cuvis_version()` document their return value
   when the SDK reports no wavelengths and in a stub installation.
@@ -82,11 +83,8 @@
 * Add native synthetic-response and configure regression checks; keep real SDK,
   calibration and file-format qualification as separate release requirements.
 * Remove an unresolved draft DOI and document supported platforms and first use.
-
 * Standardize the named v5 package logo across README, documentation pages
   and available application headers, with matching light and dark artwork.
-
-
 * `cuvis_get_measurement()` now raises an informative error for an unknown
   `item_type` instead of a cryptic "subscript out of bounds" error.
 

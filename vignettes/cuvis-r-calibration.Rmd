@@ -57,6 +57,7 @@ references, and reprocessing to calibrated reflectance.
 
 Cubert cameras capture raw sensor data that must be calibrated through
 several stages:
+
 1. **Raw** -- unprocessed sensor readout
 2. **Dark subtract** -- dark current noise removed
 3. **Spectral radiance** -- calibrated to physical units (W/m^2/sr/nm)
