@@ -20,10 +20,12 @@ references, and reprocessing to calibrated reflectance.
 ## Calibration Pipeline
 
 Cubert cameras capture raw sensor data that must be calibrated through
-several stages: 1. **Raw** – unprocessed sensor readout 2. **Dark
-subtract** – dark current noise removed 3. **Spectral radiance** –
-calibrated to physical units (W/m^2/sr/nm) 4. **Reflectance** –
-normalized by white reference (values 0–1)
+several stages:
+
+1.  **Raw** – unprocessed sensor readout
+2.  **Dark subtract** – dark current noise removed
+3.  **Spectral radiance** – calibrated to physical units (W/m^2/sr/nm)
+4.  **Reflectance** – normalized by white reference (values 0–1)
 
 ## Step-by-Step Workflow
 
@@ -101,15 +103,16 @@ pixel_raw <- cube_raw[50, 50, ]
 pixel_ref <- cube[50, 50, ]
 wavelengths <- attr(cube, "wavelengths")
 
-plot(wavelengths, pixel_raw, type = "l", col = "gray",
-     xlab = "Wavelength (nm)", ylab = "Value",
-     main = "Raw vs Reflectance")
-par(new = TRUE)
-plot(wavelengths, pixel_ref, type = "l", col = "blue",
-     axes = FALSE, xlab = "", ylab = "")
-axis(4)
-legend("topright", c("Raw", "Reflectance"),
-       col = c("gray", "blue"), lty = 1)
+# Raw counts and reflectance have different units, so each gets its own
+# panel and axis instead of two curves sharing one plot
+op <- par(mfrow = c(1, 2), mar = c(4.5, 4.5, 2.5, 1))
+plot(wavelengths, pixel_raw, type = "l", lwd = 2, col = "#D55E00",
+     xlab = "Wavelength (nm)", ylab = "Raw signal (counts)",
+     main = "Raw")
+plot(wavelengths, pixel_ref, type = "l", lwd = 2, col = "#0072B2",
+     xlab = "Wavelength (nm)", ylab = "Reflectance",
+     main = "Reflectance")
+par(op)
 ```
 
 ### 6. Export Calibrated Data

@@ -30,7 +30,10 @@ cuvis_set_reference(
 
 ## Value
 
-Invisible `ctx` (modified in place via external pointer).
+Invisible `ctx`. The reference is stored in the SDK processing context
+behind the external pointer, so it takes effect whether or not the
+returned object is kept; check it with
+[`cuvis_has_reference()`](https://cttir.github.io/cuvis.r/reference/cuvis_has_reference.md).
 
 ## Examples
 

@@ -54,12 +54,14 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
-    <li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+<li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cttir/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/CTTIR/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -83,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Calibration Workflow with cuvis.r</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/cttir/cuvis.r/blob/main/vignettes/cuvis-r-calibration.Rmd" class="external-link"><code>vignettes/cuvis-r-calibration.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/CTTIR/cuvis.r/blob/main/vignettes/cuvis-r-calibration.Rmd" class="external-link"><code>vignettes/cuvis-r-calibration.Rmd</code></a></small>
       <div class="d-none name"><code>cuvis-r-calibration.Rmd</code></div>
     </div>
 
@@ -121,11 +123,19 @@ references, and reprocessing to calibrated reflectance.</p>
 <h2 id="calibration-pipeline">Calibration Pipeline<a class="anchor" aria-label="anchor" href="#calibration-pipeline"></a>
 </h2>
 <p>Cubert cameras capture raw sensor data that must be calibrated
-through several stages: 1. <strong>Raw</strong> – unprocessed sensor
-readout 2. <strong>Dark subtract</strong> – dark current noise removed
-3. <strong>Spectral radiance</strong> – calibrated to physical units
-(W/m^2/sr/nm) 4. <strong>Reflectance</strong> – normalized by white
-reference (values 0–1)</p>
+through several stages:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Raw</strong> – unprocessed sensor readout</li>
+<li>
+<strong>Dark subtract</strong> – dark current noise removed</li>
+<li>
+<strong>Spectral radiance</strong> – calibrated to physical units
+(W/m^2/sr/nm)</li>
+<li>
+<strong>Reflectance</strong> – normalized by white reference (values
+0–1)</li>
+</ol>
 </div>
 <div class="section level2">
 <h2 id="step-by-step-workflow">Step-by-Step Workflow<a class="anchor" aria-label="anchor" href="#step-by-step-workflow"></a>
@@ -134,7 +144,7 @@ reference (values 0–1)</p>
 <h3 id="initialize-and-load-data">1. Initialize and Load Data<a class="anchor" aria-label="anchor" href="#initialize-and-load-data"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cttir/cuvis.r" class="external-link">cuvis.r</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CTTIR/cuvis.r" class="external-link">cuvis.r</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cuvis_init.html">cuvis_init</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -198,15 +208,16 @@ separate files:</p>
 <span><span class="va">pixel_ref</span> <span class="op">&lt;-</span> <span class="va">cube</span><span class="op">[</span><span class="fl">50</span>, <span class="fl">50</span>, <span class="op">]</span></span>
 <span><span class="va">wavelengths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cube</span>, <span class="st">"wavelengths"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">wavelengths</span>, <span class="va">pixel_raw</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"gray"</span>,</span>
-<span>     xlab <span class="op">=</span> <span class="st">"Wavelength (nm)"</span>, ylab <span class="op">=</span> <span class="st">"Value"</span>,</span>
-<span>     main <span class="op">=</span> <span class="st">"Raw vs Reflectance"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">wavelengths</span>, <span class="va">pixel_ref</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"blue"</span>,</span>
-<span>     axes <span class="op">=</span> <span class="cn">FALSE</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Raw"</span>, <span class="st">"Reflectance"</span><span class="op">)</span>,</span>
-<span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"blue"</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Raw counts and reflectance have different units, so each gets its own</span></span>
+<span><span class="co"># panel and axis instead of two curves sharing one plot</span></span>
+<span><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.5</span>, <span class="fl">4.5</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">wavelengths</span>, <span class="va">pixel_raw</span>, type <span class="op">=</span> <span class="st">"l"</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"#D55E00"</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Wavelength (nm)"</span>, ylab <span class="op">=</span> <span class="st">"Raw signal (counts)"</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Raw"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">wavelengths</span>, <span class="va">pixel_ref</span>, type <span class="op">=</span> <span class="st">"l"</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"#0072B2"</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Wavelength (nm)"</span>, ylab <span class="op">=</span> <span class="st">"Reflectance"</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Reflectance"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="export-calibrated-data">6. Export Calibrated Data<a class="anchor" aria-label="anchor" href="#export-calibrated-data"></a>

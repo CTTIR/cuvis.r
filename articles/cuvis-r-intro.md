@@ -29,7 +29,8 @@ snapshot cameras. It mirrors the API of
 
 ``` r
 
-remotes::install_github("cttir/cuvis.r")
+# install.packages("pak")
+pak::pak("CTTIR/cuvis.r")
 ```
 
 ## Quick Start
@@ -108,12 +109,26 @@ You can subset bands, compute means, or use standard R array operations:
 
 ``` r
 
-# Mean reflectance per band
+# Mean value per band: the spectrum averaged over the whole image
 band_means <- apply(cube, 3, mean, na.rm = TRUE)
 
 # Extract a single band (e.g., band 30)
-single_band <- cube[, , 30]
-image(single_band, main = "Band 30")
+band <- 30
+single_band <- cube[, , band]
+
+# Show it as an image. The cube is indexed [row, col, band] and row 1 is the
+# first image line, whereas image() draws the first index of a matrix along
+# the x axis, starting at the bottom. Transpose the band and reverse the row
+# axis so the picture is not rotated or mirrored; asp = 1 keeps pixels square.
+# Yellow marks high values, dark purple low values (viridis).
+image(
+  x = seq_len(ncol(single_band)), y = seq_len(nrow(single_band)),
+  z = t(single_band),
+  ylim = c(nrow(single_band) + 0.5, 0.5), asp = 1,
+  col = hcl.colors(64, "viridis"),
+  axes = FALSE, xlab = "", ylab = "",
+  main = sprintf("Band %d (%.0f nm)", band, attr(cube, "wavelengths")[band])
+)
 ```
 
 ### Export to Standard Formats

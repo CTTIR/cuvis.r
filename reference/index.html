@@ -28,11 +28,13 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
-    <li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cttir/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/CTTIR/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
@@ -50,9 +52,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="sdk-lifecycle">SDK lifecycle<a class="anchor" aria-label="anchor" href="#sdk-lifecycle"></a></h2>
 
-
+      <div class="section-desc"><p>Check for the SDK, initialize it once per R process and shut it down.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -65,62 +67,6 @@
 
         </dt>
         <dd>Check if CUVIS SDK is Available</dd>
-
-        <dt>
-
-          <code><a href="cuvis_export_envi.html">cuvis_export_envi()</a></code>
-
-        </dt>
-        <dd>Export a Measurement to ENVI Format</dd>
-
-        <dt>
-
-          <code><a href="cuvis_export_session.html">cuvis_export_session()</a></code>
-
-        </dt>
-        <dd>Export a Measurement to a New Session File</dd>
-
-        <dt>
-
-          <code><a href="cuvis_export_tiff.html">cuvis_export_tiff()</a></code>
-
-        </dt>
-        <dd>Export a Measurement to TIFF Format</dd>
-
-        <dt>
-
-          <code><a href="cuvis_get_cube.html">cuvis_get_cube()</a></code>
-
-        </dt>
-        <dd>Extract Hyperspectral Cube from a Measurement</dd>
-
-        <dt>
-
-          <code><a href="cuvis_get_measurement.html">cuvis_get_measurement()</a></code>
-
-        </dt>
-        <dd>Get a Measurement from a Session</dd>
-
-        <dt>
-
-          <code><a href="cuvis_get_metadata.html">cuvis_get_metadata()</a></code>
-
-        </dt>
-        <dd>Get Measurement Metadata</dd>
-
-        <dt>
-
-          <code><a href="cuvis_get_wavelengths.html">cuvis_get_wavelengths()</a></code>
-
-        </dt>
-        <dd>Get Wavelength Vector from a Measurement</dd>
-
-        <dt>
-
-          <code><a href="cuvis_has_reference.html">cuvis_has_reference()</a></code>
-
-        </dt>
-        <dd>Check if a Reference is Set</dd>
 
         <dt>
 
@@ -138,47 +84,28 @@
 
         <dt>
 
-          <code><a href="cuvis_processing_context.html">cuvis_processing_context()</a></code>
+          <code><a href="cuvis_version.html">cuvis_version()</a></code>
 
         </dt>
-        <dd>Create a Processing Context for Calibration</dd>
+        <dd>Get CUVIS SDK Version</dd>
 
         <dt>
 
-          <code><a href="cuvis_processing_modes.html">cuvis_processing_modes</a></code>
+          <code><a href="cuvis_shutdown.html">cuvis_shutdown()</a></code>
 
         </dt>
-        <dd>CUVIS Processing Modes</dd>
+        <dd>Shut Down the CUVIS SDK</dd>
+      </dl></div><div class="section level2">
+      <h2 id="sessions-and-measurements">Sessions and measurements<a class="anchor" aria-label="anchor" href="#sessions-and-measurements"></a></h2>
 
-        <dt>
+      <div class="section-desc"><p>Open <code>.cu3s</code> session files and read measurements and their metadata.</p></div>
 
-          <code><a href="cuvis_reference_types.html">cuvis_reference_types</a></code>
+      <dl></dl></div><div class="section level2">
 
-        </dt>
-        <dd>CUVIS Reference Types</dd>
 
-        <dt>
 
-          <code><a href="cuvis_reprocess.html">cuvis_reprocess()</a></code>
 
-        </dt>
-        <dd>Reprocess a Measurement to a New Calibration Level</dd>
-
-        <dt>
-
-          <code><a href="cuvis_sample_data.html">cuvis_sample_data()</a></code>
-
-        </dt>
-        <dd>Get Path to Sample Data</dd>
-
-        <dt>
-
-          <code><a href="cuvis_sample_session.html">cuvis_sample_session()</a></code>
-
-        </dt>
-        <dd>Load the Default Sample Session</dd>
-
-        <dt>
+      <dl><dt>
 
           <code><a href="cuvis_session.html">cuvis_session()</a></code>
 
@@ -201,6 +128,36 @@
 
         <dt>
 
+          <code><a href="cuvis_get_measurement.html">cuvis_get_measurement()</a></code>
+
+        </dt>
+        <dd>Get a Measurement from a Session</dd>
+
+        <dt>
+
+          <code><a href="cuvis_get_metadata.html">cuvis_get_metadata()</a></code>
+
+        </dt>
+        <dd>Get Measurement Metadata</dd>
+      </dl></div><div class="section level2">
+      <h2 id="calibration-and-processing">Calibration and processing<a class="anchor" aria-label="anchor" href="#calibration-and-processing"></a></h2>
+
+      <div class="section-desc"><p>Set references and reprocess a measurement to a calibration level.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cuvis_processing_context.html">cuvis_processing_context()</a></code>
+
+        </dt>
+        <dd>Create a Processing Context for Calibration</dd>
+
+        <dt>
+
           <code><a href="cuvis_set_reference.html">cuvis_set_reference()</a></code>
 
         </dt>
@@ -208,19 +165,135 @@
 
         <dt>
 
-          <code><a href="cuvis_shutdown.html">cuvis_shutdown()</a></code>
+          <code><a href="cuvis_has_reference.html">cuvis_has_reference()</a></code>
 
         </dt>
-        <dd>Shut Down the CUVIS SDK</dd>
+        <dd>Check if a Reference is Set</dd>
 
         <dt>
 
-          <code><a href="cuvis_version.html">cuvis_version()</a></code>
+          <code><a href="cuvis_reprocess.html">cuvis_reprocess()</a></code>
 
         </dt>
-        <dd>Get CUVIS SDK Version</dd>
+        <dd>Reprocess a Measurement to a New Calibration Level</dd>
+      </dl></div><div class="section level2">
+      <h2 id="data-cube">Data cube<a class="anchor" aria-label="anchor" href="#data-cube"></a></h2>
+
+      <div class="section-desc"><p>Extract the hyperspectral cube and its wavelengths as R objects.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cuvis_get_cube.html">cuvis_get_cube()</a></code>
+
+        </dt>
+        <dd>Extract Hyperspectral Cube from a Measurement</dd>
+
+        <dt>
+
+          <code><a href="cuvis_get_wavelengths.html">cuvis_get_wavelengths()</a></code>
+
+        </dt>
+        <dd>Get Wavelength Vector from a Measurement</dd>
+      </dl></div><div class="section level2">
+      <h2 id="export">Export<a class="anchor" aria-label="anchor" href="#export"></a></h2>
+
+      <div class="section-desc"><p>Write measurements to ENVI, TIFF or a new session file.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cuvis_export_envi.html">cuvis_export_envi()</a></code>
+
+        </dt>
+        <dd>Export a Measurement to ENVI Format</dd>
+
+        <dt>
+
+          <code><a href="cuvis_export_tiff.html">cuvis_export_tiff()</a></code>
+
+        </dt>
+        <dd>Export a Measurement to TIFF Format</dd>
+
+        <dt>
+
+          <code><a href="cuvis_export_session.html">cuvis_export_session()</a></code>
+
+        </dt>
+        <dd>Export a Measurement to a New Session File</dd>
+      </dl></div><div class="section level2">
+      <h2 id="enumerations">Enumerations<a class="anchor" aria-label="anchor" href="#enumerations"></a></h2>
+
+      <div class="section-desc"><p>SDK enumeration values used by the processing functions.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cuvis_processing_modes.html">cuvis_processing_modes</a></code>
+
+        </dt>
+        <dd>CUVIS Processing Modes</dd>
+
+        <dt>
+
+          <code><a href="cuvis_reference_types.html">cuvis_reference_types</a></code>
+
+        </dt>
+        <dd>CUVIS Reference Types</dd>
+      </dl></div><div class="section level2">
+      <h2 id="sample-data">Sample data<a class="anchor" aria-label="anchor" href="#sample-data"></a></h2>
+
+      <div class="section-desc"><p>Locate and load the vendor sample recordings.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cuvis_sample_data.html">cuvis_sample_data()</a></code>
+
+        </dt>
+        <dd>Get Path to Sample Data</dd>
+
+        <dt>
+
+          <code><a href="cuvis_sample_session.html">cuvis_sample_session()</a></code>
+
+        </dt>
+        <dd>Load the Default Sample Session</dd>
+      </dl></div><div class="section level2">
+      <h2 id="package">Package<a class="anchor" aria-label="anchor" href="#package"></a></h2>
+
+      <div class="section-desc"><p>Package overview.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cuvis.r-package.html">cuvis.r</a></code> <code><a href="cuvis.r-package.html">cuvis.r-package</a></code>
+
+        </dt>
+        <dd>cuvis.r: Interface to the Cubert 'CUVIS' Hyperspectral Imaging SDK</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

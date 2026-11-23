@@ -24,8 +24,8 @@ This is the R equivalent of
 
 ``` r
 
-# install.packages("remotes")
-remotes::install_github("cttir/cuvis.r")
+# install.packages("pak")
+pak::pak("CTTIR/cuvis.r")
 ```
 
 For source installation, R \>= 4.1 and a C compiler are required (Rtools
@@ -64,7 +64,7 @@ plain paths: SDK 3.6.1 lists special characters in export paths as a
 known vendor limitation. Do not use the same output directory
 concurrently.
 
-## Quick Start
+## Quick start
 
 ``` r
 
@@ -121,20 +121,28 @@ cuvis_shutdown()
 
 | Function | Description |
 |----|----|
-| [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md) | Initialize the CUVIS SDK |
+| [`cuvis_available()`](https://cttir.github.io/cuvis.r/reference/cuvis_available.md) | Check if the SDK is linked |
+| [`cuvis_init()`](https://cttir.github.io/cuvis.r/reference/cuvis_init.md) | Initialize the CUVIS SDK (once per R process) |
+| [`cuvis_is_initialized()`](https://cttir.github.io/cuvis.r/reference/cuvis_is_initialized.md) | Check if the SDK is initialized |
+| [`cuvis_version()`](https://cttir.github.io/cuvis.r/reference/cuvis_version.md) | SDK version |
 | [`cuvis_shutdown()`](https://cttir.github.io/cuvis.r/reference/cuvis_shutdown.md) | Release SDK resources |
-| [`cuvis_available()`](https://cttir.github.io/cuvis.r/reference/cuvis_available.md) | Check if SDK is linked |
 | `cuvis_session(path)` | Load a `.cu3s` session file |
+| `cuvis_session_count(session, item_type)` | Count measurements, frames or references |
+| `cuvis_session_fps(session)` | Nominal frame rate of a session |
 | `cuvis_get_measurement(session, i)` | Extract measurement by index |
 | `cuvis_get_metadata(mesu)` | Get measurement metadata |
-| `cuvis_get_cube(mesu)` | Extract 3D data array |
-| `cuvis_get_wavelengths(mesu)` | Get wavelength vector |
 | `cuvis_processing_context(session)` | Create calibration context |
 | `cuvis_set_reference(ctx, mesu, type)` | Set dark/white reference |
+| `cuvis_has_reference(ctx, type)` | Check if a reference is set |
 | `cuvis_reprocess(ctx, mesu, mode)` | Reprocess to target level |
+| `cuvis_get_cube(mesu)` | Extract 3D data array |
+| `cuvis_get_wavelengths(mesu)` | Get wavelength vector |
 | `cuvis_export_envi(mesu, dir)` | Export to ENVI format |
 | `cuvis_export_tiff(mesu, dir)` | Export to TIFF format |
 | `cuvis_export_session(mesu, dir)` | Export to .cu3s format |
+| `cuvis_sample_data(file)` | Locate vendor sample data |
+| [`cuvis_sample_session()`](https://cttir.github.io/cuvis.r/reference/cuvis_sample_session.md) | Load the default sample session |
+| `cuvis_processing_modes`, `cuvis_reference_types` | SDK enumeration values |
 
 ## Integration with hyperspectR
 
@@ -148,6 +156,20 @@ library(hyperspectR)
 # hyperspectR uses cuvis.r internally for .cu3s files
 cube <- hs_read_cubert("measurement.cu3s")
 ```
+
+## Developer validation
+
+``` sh
+python3 tools/test-configure.py
+python3 tools/test-native.py /path/to/vendor/cuvis.h
+CUVIS_STUB=1 R CMD build .
+CUVIS_STUB=1 R CMD check --as-cran cuvis.r_0.2.0.tar.gz
+```
+
+The native fixture checks memory layout, malformed buffers, lifecycle
+and export arguments with synthetic SDK responses. It does not validate
+vendor calibration, real files, runtime linking, or camera operation.
+See `MAINTENANCE.md` for the release gates and observed evidence.
 
 ## License
 
@@ -188,17 +210,3 @@ Local software setup: vLLM with Python/PyTorch, plus R and RStudio.
 
 Editable R sources and regeneration instructions are in
 [tools/branding](https://github.com/CTTIR/cuvis.r/tree/main/tools/branding).
-
-## Developer validation
-
-``` sh
-python3 tools/test-configure.py
-python3 tools/test-native.py /path/to/vendor/cuvis.h
-CUVIS_STUB=1 R CMD build .
-CUVIS_STUB=1 R CMD check --as-cran cuvis.r_0.2.0.tar.gz
-```
-
-The native fixture checks memory layout, malformed buffers, lifecycle
-and export arguments with synthetic SDK responses. It does not validate
-vendor calibration, real files, runtime linking, or camera operation.
-See `MAINTENANCE.md` for the release gates and observed evidence.

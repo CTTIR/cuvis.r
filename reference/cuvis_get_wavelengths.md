@@ -17,7 +17,8 @@ cuvis_get_wavelengths(measurement)
 
 ## Value
 
-Numeric vector of wavelengths in nm.
+Numeric vector of wavelengths in nm, or `NULL` when the SDK buffer
+carries no wavelengths.
 
 ## Examples
 

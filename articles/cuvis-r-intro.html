@@ -54,12 +54,14 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
-    <li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+<li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cttir/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/CTTIR/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -83,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Getting Started with cuvis.r</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/cttir/cuvis.r/blob/main/vignettes/cuvis-r-intro.Rmd" class="external-link"><code>vignettes/cuvis-r-intro.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/CTTIR/cuvis.r/blob/main/vignettes/cuvis-r-intro.Rmd" class="external-link"><code>vignettes/cuvis-r-intro.Rmd</code></a></small>
       <div class="d-none name"><code>cuvis-r-intro.Rmd</code></div>
     </div>
 
@@ -129,7 +131,8 @@ install directory</li>
 <li>Install cuvis.r from GitHub:</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cttir/cuvis.r"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"CTTIR/cuvis.r"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
@@ -145,7 +148,7 @@ runtime. Exports require a new or empty directory unless
 <p>Every cuvis.r session begins with <code><a href="../reference/cuvis_init.html">cuvis_init()</a></code> and ends
 with <code><a href="../reference/cuvis_shutdown.html">cuvis_shutdown()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cttir/cuvis.r" class="external-link">cuvis.r</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CTTIR/cuvis.r" class="external-link">cuvis.r</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cuvis_init.html">cuvis_init</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -193,12 +196,26 @@ files. Load one with <code><a href="../reference/cuvis_session.html">cuvis_sessi
 <p>You can subset bands, compute means, or use standard R array
 operations:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Mean reflectance per band</span></span>
+<code class="sourceCode R"><span><span class="co"># Mean value per band: the spectrum averaged over the whole image</span></span>
 <span><span class="va">band_means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">cube</span>, <span class="fl">3</span>, <span class="va">mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Extract a single band (e.g., band 30)</span></span>
-<span><span class="va">single_band</span> <span class="op">&lt;-</span> <span class="va">cube</span><span class="op">[</span>, , <span class="fl">30</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">single_band</span>, main <span class="op">=</span> <span class="st">"Band 30"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">band</span> <span class="op">&lt;-</span> <span class="fl">30</span></span>
+<span><span class="va">single_band</span> <span class="op">&lt;-</span> <span class="va">cube</span><span class="op">[</span>, , <span class="va">band</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Show it as an image. The cube is indexed [row, col, band] and row 1 is the</span></span>
+<span><span class="co"># first image line, whereas image() draws the first index of a matrix along</span></span>
+<span><span class="co"># the x axis, starting at the bottom. Transpose the band and reverse the row</span></span>
+<span><span class="co"># axis so the picture is not rotated or mirrored; asp = 1 keeps pixels square.</span></span>
+<span><span class="co"># Yellow marks high values, dark purple low values (viridis).</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">single_band</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">single_band</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">single_band</span><span class="op">)</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">single_band</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, asp <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">64</span>, <span class="st">"viridis"</span><span class="op">)</span>,</span>
+<span>  axes <span class="op">=</span> <span class="cn">FALSE</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Band %d (%.0f nm)"</span>, <span class="va">band</span>, <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cube</span>, <span class="st">"wavelengths"</span><span class="op">)</span><span class="op">[</span><span class="va">band</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="export-to-standard-formats">Export to Standard Formats<a class="anchor" aria-label="anchor" href="#export-to-standard-formats"></a>

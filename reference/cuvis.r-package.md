@@ -16,18 +16,18 @@ cuvis_available() returns FALSE and SDK operations are unavailable.
 
 Useful links:
 
-- <https://github.com/cttir/cuvis.r>
+- <https://github.com/CTTIR/cuvis.r>
 
 - <https://cttir.github.io/cuvis.r/>
 
-- Report bugs at <https://github.com/cttir/cuvis.r/issues>
+- Report bugs at <https://github.com/CTTIR/cuvis.r/issues>
 
 ## Author
 
 **Maintainer**: R. Heller <raban.heller@uni-ulm.de>
-([ORCID](https://orcid.org/0000-0001-8006-9742))
+([ORCID](https://orcid.org/0000-0001-8006-9742)) \[copyright holder\]
 
 Authors:
 
 - R. Heller <raban.heller@uni-ulm.de>
-  ([ORCID](https://orcid.org/0000-0001-8006-9742))
+  ([ORCID](https://orcid.org/0000-0001-8006-9742)) \[copyright holder\]

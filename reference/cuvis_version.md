@@ -12,7 +12,10 @@ cuvis_version()
 
 ## Value
 
-Character string with the SDK version.
+Character string with the SDK version. A stub installation (no SDK
+linked,
+[`cuvis_available()`](https://cttir.github.io/cuvis.r/reference/cuvis_available.md)
+is `FALSE`) returns `"stub-0.0.0"`.
 
 ## Examples
 

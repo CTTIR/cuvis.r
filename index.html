@@ -57,12 +57,14 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
-    <li><a class="dropdown-item" href="articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+<li><a class="dropdown-item" href="articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cttir/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/CTTIR/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -102,8 +104,8 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cttir/cuvis.r"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"CTTIR/cuvis.r"</span><span class="op">)</span></span></code></pre></div>
 <p>For source installation, R &gt;= 4.1 and a C compiler are required (Rtools on Windows, command-line developer tools on macOS). Set <code>CUVIS_SDK</code> to the SDK installation root before installation; both <code>cuvis.h</code> and a matching library must be present. On Windows, also put the SDK’s runtime <code>bin</code> directory on <code>PATH</code> <strong>before starting R</strong> so Windows can resolve the DLL dependencies. Setting an SDK variable alone does not establish a working runtime. For package exploration without the SDK:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="va">CUVIS_STUB</span><span class="op">=</span>1 <span class="ex">R</span> CMD INSTALL .</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">'library(cuvis.r); stopifnot(!cuvis_available())'</span></span></code></pre></div>
@@ -112,10 +114,10 @@
 <p>Exports now require a new or empty directory by default. Use <code>overwrite = TRUE</code> only to permit replacement deliberately. This changes the previous overwrite behavior. Successful export waits for the SDK flush and releases the exporter; flush errors propagate to the caller. Directory paths longer than the SDK’s 255-byte limit are rejected. Use plain paths: SDK 3.6.1 lists special characters in export paths as a known vendor limitation. Do not use the same output directory concurrently.</p>
 </div>
 <div class="section level2">
-<h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cttir/cuvis.r" class="external-link">cuvis.r</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CTTIR/cuvis.r" class="external-link">cuvis.r</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/cuvis_init.html">cuvis_init</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -166,26 +168,46 @@
 <h2 id="api-reference">API Reference<a class="anchor" aria-label="anchor" href="#api-reference"></a>
 </h2>
 <table class="table">
+<colgroup>
+<col width="43%">
+<col width="56%">
+</colgroup>
 <thead><tr>
 <th>Function</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
 <tr>
+<td><code><a href="reference/cuvis_available.html">cuvis_available()</a></code></td>
+<td>Check if the SDK is linked</td>
+</tr>
+<tr>
 <td><code><a href="reference/cuvis_init.html">cuvis_init()</a></code></td>
-<td>Initialize the CUVIS SDK</td>
+<td>Initialize the CUVIS SDK (once per R process)</td>
+</tr>
+<tr>
+<td><code><a href="reference/cuvis_is_initialized.html">cuvis_is_initialized()</a></code></td>
+<td>Check if the SDK is initialized</td>
+</tr>
+<tr>
+<td><code><a href="reference/cuvis_version.html">cuvis_version()</a></code></td>
+<td>SDK version</td>
 </tr>
 <tr>
 <td><code><a href="reference/cuvis_shutdown.html">cuvis_shutdown()</a></code></td>
 <td>Release SDK resources</td>
 </tr>
 <tr>
-<td><code><a href="reference/cuvis_available.html">cuvis_available()</a></code></td>
-<td>Check if SDK is linked</td>
-</tr>
-<tr>
 <td><code>cuvis_session(path)</code></td>
 <td>Load a <code>.cu3s</code> session file</td>
+</tr>
+<tr>
+<td><code>cuvis_session_count(session, item_type)</code></td>
+<td>Count measurements, frames or references</td>
+</tr>
+<tr>
+<td><code>cuvis_session_fps(session)</code></td>
+<td>Nominal frame rate of a session</td>
 </tr>
 <tr>
 <td><code>cuvis_get_measurement(session, i)</code></td>
@@ -196,14 +218,6 @@
 <td>Get measurement metadata</td>
 </tr>
 <tr>
-<td><code>cuvis_get_cube(mesu)</code></td>
-<td>Extract 3D data array</td>
-</tr>
-<tr>
-<td><code>cuvis_get_wavelengths(mesu)</code></td>
-<td>Get wavelength vector</td>
-</tr>
-<tr>
 <td><code>cuvis_processing_context(session)</code></td>
 <td>Create calibration context</td>
 </tr>
@@ -212,8 +226,20 @@
 <td>Set dark/white reference</td>
 </tr>
 <tr>
+<td><code>cuvis_has_reference(ctx, type)</code></td>
+<td>Check if a reference is set</td>
+</tr>
+<tr>
 <td><code>cuvis_reprocess(ctx, mesu, mode)</code></td>
 <td>Reprocess to target level</td>
+</tr>
+<tr>
+<td><code>cuvis_get_cube(mesu)</code></td>
+<td>Extract 3D data array</td>
+</tr>
+<tr>
+<td><code>cuvis_get_wavelengths(mesu)</code></td>
+<td>Get wavelength vector</td>
 </tr>
 <tr>
 <td><code>cuvis_export_envi(mesu, dir)</code></td>
@@ -227,6 +253,20 @@
 <td><code>cuvis_export_session(mesu, dir)</code></td>
 <td>Export to .cu3s format</td>
 </tr>
+<tr>
+<td><code>cuvis_sample_data(file)</code></td>
+<td>Locate vendor sample data</td>
+</tr>
+<tr>
+<td><code><a href="reference/cuvis_sample_session.html">cuvis_sample_session()</a></code></td>
+<td>Load the default sample session</td>
+</tr>
+<tr>
+<td>
+<code>cuvis_processing_modes</code>, <code>cuvis_reference_types</code>
+</td>
+<td>SDK enumeration values</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -239,6 +279,15 @@
 <span></span>
 <span><span class="co"># hyperspectR uses cuvis.r internally for .cu3s files</span></span>
 <span><span class="va">cube</span> <span class="op">&lt;-</span> <span class="fu">hs_read_cubert</span><span class="op">(</span><span class="st">"measurement.cu3s"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="developer-validation">Developer validation<a class="anchor" aria-label="anchor" href="#developer-validation"></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">python3</span> tools/test-configure.py</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="ex">python3</span> tools/test-native.py /path/to/vendor/cuvis.h</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="va">CUVIS_STUB</span><span class="op">=</span>1 <span class="ex">R</span> CMD build .</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="va">CUVIS_STUB</span><span class="op">=</span>1 <span class="ex">R</span> CMD check <span class="at">--as-cran</span> cuvis.r_0.2.0.tar.gz</span></code></pre></div>
+<p>The native fixture checks memory layout, malformed buffers, lifecycle and export arguments with synthetic SDK responses. It does not validate vendor calibration, real files, runtime linking, or camera operation. See <code>MAINTENANCE.md</code> for the release gates and observed evidence.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
@@ -266,21 +315,12 @@
 </h2>
 <p>Editable R sources and regeneration instructions are in <a href="https://github.com/CTTIR/cuvis.r/tree/main/tools/branding" class="external-link">tools/branding</a>.</p>
 </div>
-<div class="section level2">
-<h2 id="developer-validation">Developer validation<a class="anchor" aria-label="anchor" href="#developer-validation"></a>
-</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">python3</span> tools/test-configure.py</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="ex">python3</span> tools/test-native.py /path/to/vendor/cuvis.h</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="va">CUVIS_STUB</span><span class="op">=</span>1 <span class="ex">R</span> CMD build .</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="va">CUVIS_STUB</span><span class="op">=</span>1 <span class="ex">R</span> CMD check <span class="at">--as-cran</span> cuvis.r_0.2.0.tar.gz</span></code></pre></div>
-<p>The native fixture checks memory layout, malformed buffers, lifecycle and export arguments with synthetic SDK responses. It does not validate vendor calibration, real files, runtime linking, or camera operation. See <code>MAINTENANCE.md</code> for the release gates and observed evidence.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/cttir/cuvis.r/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/cttir/cuvis.r/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/CTTIR/cuvis.r/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/CTTIR/cuvis.r/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 

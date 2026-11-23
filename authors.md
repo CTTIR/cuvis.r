@@ -8,16 +8,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/cttir/cuvis.r/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/CTTIR/cuvis.r/blob/main/DESCRIPTION)
 
 Heller R (2026). *cuvis.r: Interface to the Cubert 'CUVIS' Hyperspectral
 Imaging SDK*. R package version 0.2.0,
-<https://github.com/cttir/cuvis.r>.
+<https://github.com/CTTIR/cuvis.r>.
 
     @Manual{,
       title = {cuvis.r: Interface to the Cubert 'CUVIS' Hyperspectral Imaging SDK},
       author = {R. Heller},
       year = {2026},
       note = {R package version 0.2.0},
-      url = {https://github.com/cttir/cuvis.r},
+      url = {https://github.com/CTTIR/cuvis.r},
     }

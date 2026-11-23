@@ -28,11 +28,13 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
-    <li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cttir/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/CTTIR/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
@@ -47,7 +49,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Extract Hyperspectral Cube from a Measurement</h1>
-      <small class="dont-index">Source: <a href="https://github.com/cttir/cuvis.r/blob/main/R/cuvis-cube.R" class="external-link"><code>R/cuvis-cube.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/CTTIR/cuvis.r/blob/main/R/cuvis-cube.R" class="external-link"><code>R/cuvis-cube.R</code></a></small>
       <div class="d-none name"><code>cuvis_get_cube.Rd</code></div>
     </div>
 
@@ -72,7 +74,19 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A numeric 3D array with dimensions <code>[rows, cols, bands]</code>.
 The <code>"wavelengths"</code> attribute contains a numeric vector of band center
-wavelengths in nanometers.</p>
+wavelengths in nanometers; it is absent when the SDK buffer carries no
+wavelengths.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The first index is the image row (the <code>y</code> coordinate of the SDK image
+buffer, first image line first), the second the column (<code>x</code>) and the third
+the band. Values are returned as doubles whatever the storage type of the
+SDK buffer. Process the measurement with <code><a href="cuvis_reprocess.html">cuvis_reprocess()</a></code> before
+extracting the cube, as in the example.</p>
+<p><code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">graphics::image()</a></code> draws the first index of a matrix along the x axis from
+the bottom, so a band shown with <code>image(cube[, , i])</code> appears rotated. See
+<code><a href="../articles/cuvis-r-intro.html">vignette("cuvis-r-intro")</a></code> for a display with the image orientation.</p>
     </div>
 
     <div class="section level2">

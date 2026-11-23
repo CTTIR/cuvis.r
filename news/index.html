@@ -28,11 +28,13 @@
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
-    <li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cuvis-r-intro.html">Getting Started with cuvis.r</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/cuvis-r-calibration.html">Calibration Workflow with cuvis.r</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cttir/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/CTTIR/cuvis.r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
@@ -47,7 +49,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/cttir/cuvis.r/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/CTTIR/cuvis.r/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
@@ -64,16 +66,43 @@
 <li>Updated the maintainer e-mail address to <a href="mailto:raban.heller@uni-ulm.de" class="email">raban.heller@uni-ulm.de</a>.</li>
 </ul></div>
 <div class="section level3">
+<h3 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
+<ul><li>
+<code><a href="../reference/cuvis_init.html">cuvis_init()</a></code> now records the resolved settings directory after creating it. Before, a settings directory that did not exist yet (a relative path, or a path through a symbolic link such as the macOS temporary directory) was recorded unresolved, so a second <code><a href="../reference/cuvis_init.html">cuvis_init()</a></code> call with the same directory was refused as “already initialized with different settings”.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for a processing context now asks the SDK which references the context holds. References loaded from the session file, or set with <code><a href="../reference/cuvis_set_reference.html">cuvis_set_reference()</a></code> without keeping the returned object, were reported as “No explicit references set”.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> for measurements and sessions no longer fail when the SDK cannot return metadata (for example after <code><a href="../reference/cuvis_shutdown.html">cuvis_shutdown()</a></code>), when a session index has no measurement, or when the processing mode is missing. Print methods now name the object class in their header.</li>
+<li>Functions that take a session, a measurement or a processing context report a wrong object with an error that names the argument and what was supplied, instead of a bare <code><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits()</a></code> assertion. These errors, and the error for an unknown <code>item_type</code>, carry the condition classes <code>cuvis_error_bad_argument</code> and <code>cuvis_error</code>.</li>
+<li>
+<code><a href="../reference/cuvis_session.html">cuvis_session()</a></code> reports a missing file (class <code>cuvis_error_file_not_found</code>) or a directory before the SDK is called.</li>
+<li>
+<code><a href="../reference/cuvis_get_measurement.html">cuvis_get_measurement()</a></code> and <code><a href="../reference/cuvis_session_count.html">cuvis_session_count()</a></code> check <code>item_type</code> before the SDK is asked and list the valid values in the error.</li>
+<li>cli (&gt;= 3.4.0) is now required, the first version with the <code>{.obj_type_friendly}</code> formatting used in these messages.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-2-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-2-0"></a></h3>
+<ul><li>The vignettes show a single band with the image orientation (the earlier <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code> call drew it rotated) and plot raw signal and reflectance in separate, labeled panels with color-blind-safe colors instead of two curves on an unlabeled second axis. The reflectance axis follows the data, so the curve is drawn whatever scale the SDK returns. The list of calibration stages in the calibration vignette renders as a list again.</li>
+<li>
+<code><a href="../reference/cuvis_get_cube.html">cuvis_get_cube()</a></code> documents the index order and orientation of the array. <code><a href="../reference/cuvis_get_wavelengths.html">cuvis_get_wavelengths()</a></code> and <code><a href="../reference/cuvis_version.html">cuvis_version()</a></code> document their return value when the SDK reports no wavelengths and in a stub installation.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="packaging-0-2-0">Packaging<a class="anchor" aria-label="anchor" href="#packaging-0-2-0"></a></h3>
+<ul><li>The pkgdown reference index is grouped by workflow step and the articles are indexed, with the introduction first.</li>
+<li>The README lists every exported function, installs with pak from <code>CTTIR/cuvis.r</code> and keeps the developer notes above the closing sections. <code>URL</code> and <code>BugReports</code> use the organization name as spelled on GitHub.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="earlier-development-changes-0-2-0">Earlier development changes<a class="anchor" aria-label="anchor" href="#earlier-development-changes-0-2-0"></a></h3>
-<ul><li><p>Prevent SDK calls through handles after shutdown and reject reinitialization or settings changes that violate the vendor’s one-initialization contract.</p></li>
-<li><p>Validate cube buffer sizes and use wide offsets before reading native memory.</p></li>
-<li><p>Require explicit export overwrite permission, reject oversized paths, and validate scalar paths and logical arguments before native calls.</p></li>
-<li><p>Flush SDK output before returning and release exporters immediately; propagate flush failures and preserve primary errors during cleanup.</p></li>
-<li><p>Match sample filenames literally. Improve SDK discovery for Unix and Windows, require a matching library, and support explicit stub installation.</p></li>
-<li><p>Add native synthetic-response and configure regression checks; keep real SDK, calibration and file-format qualification as separate release requirements.</p></li>
-<li><p>Remove an unresolved draft DOI and document supported platforms and first use.</p></li>
-<li><p>Standardize the named v5 package logo across README, documentation pages and available application headers, with matching light and dark artwork.</p></li>
-<li><p><code><a href="../reference/cuvis_get_measurement.html">cuvis_get_measurement()</a></code> now raises an informative error for an unknown <code>item_type</code> instead of a cryptic “subscript out of bounds” error.</p></li>
+<ul><li>Prevent SDK calls through handles after shutdown and reject reinitialization or settings changes that violate the vendor’s one-initialization contract.</li>
+<li>Validate cube buffer sizes and use wide offsets before reading native memory.</li>
+<li>Require explicit export overwrite permission, reject oversized paths, and validate scalar paths and logical arguments before native calls.</li>
+<li>Flush SDK output before returning and release exporters immediately; propagate flush failures and preserve primary errors during cleanup.</li>
+<li>Match sample filenames literally. Improve SDK discovery for Unix and Windows, require a matching library, and support explicit stub installation.</li>
+<li>Add native synthetic-response and configure regression checks; keep real SDK, calibration and file-format qualification as separate release requirements.</li>
+<li>Remove an unresolved draft DOI and document supported platforms and first use.</li>
+<li>Standardize the named v5 package logo across README, documentation pages and available application headers, with matching light and dark artwork.</li>
+<li>
+<code><a href="../reference/cuvis_get_measurement.html">cuvis_get_measurement()</a></code> now raises an informative error for an unknown <code>item_type</code> instead of a cryptic “subscript out of bounds” error.</li>
 </ul></div>
 </div>
     <div class="section level2">
