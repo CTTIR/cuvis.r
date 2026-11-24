@@ -1,5 +1,8 @@
 # cuvis.r ![cuvis.r logo](reference/figures/logo-with-name.png)
 
+Zenodo DOI reserved for the release: `10.5281/zenodo.21889930` (not yet
+published).
+
 **cuvis.r** provides R bindings to the [Cubert CUVIS
 SDK](https://cubert-hyperspectral.com/en/knowledge/cuvis-sdk/) for
 reading, calibrating, and exporting hyperspectral data from Cubert
