@@ -7,8 +7,9 @@
 [![Codecov test coverage](https://codecov.io/gh/CTTIR/cuvis.r/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CTTIR/cuvis.r?branch=main)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889930.svg)](https://doi.org/10.5281/zenodo.21889930)
 <!-- badges: end -->
+
+Zenodo DOI reserved for the release: `10.5281/zenodo.21889930` (not yet published).
 
 **cuvis.r** provides R bindings to the [Cubert CUVIS SDK](https://cubert-hyperspectral.com/en/knowledge/cuvis-sdk/)
 for reading, calibrating, and exporting hyperspectral data from Cubert cameras.
